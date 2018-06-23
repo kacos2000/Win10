@@ -4,7 +4,7 @@
 
 **File**|**Description**
 -------------------- | ---------------------------------------------
-[Windows 10 Timeline](WindowsTimeline.pdf) |![Timeline preview](timeline.jpg) <br>Analysis of Windows 10 (v.1803) timeline feature
+[Windows 10 Timeline](https://raw.githubusercontent.com/kacos2000/WindowsTimeline/1e12e7d5851311539661478dfd0aa870c8c159e1/WindowsTimeline.pdf) |![Timeline preview](timeline.jpg) <br>Analysis of Windows 10 (v.1803) timeline feature
 [Background Activity Moderator](BAM%20-%20Background%20Activity%20Moderator.pdf) |![Bam preview](bam.jpg) <br>Background Activity Service and registry entries
 [PowerShell history](ConsoleHost_history.pdf) |History of PowerShell commands
 [Cortana](Cortana.pdf) |![Cortana preview](cortana.jpg) <br>Some notes on Cortana

@@ -13,7 +13,7 @@
 [MS Edge Containers]('MS%20Edge%20AC.pdf') |MS Edge container info
 [USB devices](USB_device.pdf) |USB device history in the registry
 [Unix Hex to Time conversion](Unix_Hex-Time_Calc.xlsx) |Convert UNIX dates in Hexadecimal to readable DateTime
-[Windows Installation and Upgrades](Windows%20install%20date%20-%20registry.pdf) |How to determine the original Windows Installation date
-[Zone.Identifier ADS view](streams.ps1) |![Powershell preview](Z.jpg) PowerShell script to list the Zone.Identifier ADS contents of files in a folder
+[Windows Installation and Upgrades](Windows%20install%20date%20-%20registry.pdf) |![Upgrades preview](upgrades.jpg)<br>How to determine the original Windows Installation date
+[Zone.Identifier ADS view](streams.ps1) |![Powershell preview](Z.jpg) <br>PowerShell script to list the Zone.Identifier ADS contents of files in a folder
 
 

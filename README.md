@@ -4,7 +4,6 @@
 
 **File**|**Description**
 -------------------- | ---------------------------------------------
-[Windows 10 Timeline](https://github.com/kacos2000/WindowsTimeline/blob/master/WindowsTimeline.pdf) |![Timeline preview](timeline.jpg) <br>Analysis of Windows 10 (v.1803) timeline feature
 [Background Activity Moderator](BAM%20-%20Background%20Activity%20Moderator.pdf) |![Bam preview](bam.jpg) <br>Background Activity Service and registry entries
 [PowerShell history](ConsoleHost_history.pdf) |History of PowerShell commands
 [Cortana](Cortana.pdf) |![Cortana preview](cortana.jpg) <br>Some notes on Cortana
@@ -15,5 +14,6 @@
 [Unix Hex to Time conversion](Unix_Hex-Time_Calc.xlsx) |Convert UNIX dates in Hexadecimal to readable DateTime
 [Windows Installation and Upgrades](Windows%20install%20date%20-%20registry.pdf) |![Upgrades preview](upgrades.jpg)<br>How to determine the original Windows Installation date
 [Zone.Identifier ADS view](streams.ps1) |![Powershell preview](Z.jpg) <br>PowerShell script to list the Zone.Identifier ADS contents of files in a folder
+[Windows 10 Timeline](https://github.com/kacos2000/WindowsTimeline/blob/master/WindowsTimeline.pdf) |Analysis of Windows 10 (v.1803) timeline feature
 
 

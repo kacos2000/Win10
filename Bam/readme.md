@@ -32,6 +32,6 @@
 - [**Documentation**](https://github.com/kacos2000/Win10-Research/blob/master/Bam/BAM%20-%20Background%20Activity%20Moderator.pdf) of the Background Activity Moderator service key
 
 
-To Do
-- [**x**] Live Parser 
-- [x] Offline SYSTEM hive parser
+Status
+  [**x**] Live Parser 
+  [**x**] Offline SYSTEM hive parser

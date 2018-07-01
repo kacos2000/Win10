@@ -2,7 +2,7 @@
 
 
 Reads contents of precollected (*not live*) **NTUser.dat** from the location:
-*HKCU -> Software\Microsoft\Windows\CurrentVersion\Search\JumplistData*
+*'HKCU -> Software\Microsoft\Windows\CurrentVersion\Search\JumplistData'*
 
 Starts by allowing user to select NTUser.dat file:
 

@@ -16,7 +16,7 @@
 
   ![bam.ps1 console](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Bam/console.JPG)
   
--  [**bamoffline.ps1** - Offline parser](https://github.com/kacos2000/Win10-Research/blob/master/Bam/bamoffline.ps1) reads an **offline** system hive *(SYSTEM)* and displays the BAM key entries in a pop-up Window with Filestamps in locatime. The script asks the user to select a *SYSTEM* hive file:
+-  [**bamoffline.ps1** - Offline parser](https://github.com/kacos2000/Win10-Research/blob/master/Bam/bamoffline.ps1) reads an **offline** system hive *(SYSTEM)* and displays the BAM key entries in a pop-up Window with Filestamps in locatime. **Note:** *must be run in a PowerShell console with Administrator privileges.* The script asks the user to select a *SYSTEM* hive file:
 
     ![Select SYSTEM hive](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Bam/select.JPG)
 

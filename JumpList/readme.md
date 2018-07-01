@@ -4,6 +4,8 @@
 Reads contents of precollected (*not live*) **NTUser.dat** from the location:
 *'HKCU -> Software\Microsoft\Windows\CurrentVersion\Search\JumplistData'*
 
+**Note:** *must be run in a PowerShell console with Administrator privileges.*
+
 Starts by allowing user to select NTUser.dat file:
 
 ![File selection](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/JumpList/select.JPG)

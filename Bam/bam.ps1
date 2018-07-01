@@ -80,6 +80,7 @@ Foreach ($Sid in $Users){
 }
 
 $Output |Out-GridView -PassThru -Title "BAM Contents"
+[gc]::Collect()
 
 
 

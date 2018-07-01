@@ -1,21 +1,11 @@
 <#
 
-.SOURCE 
-	https://github.com/mgreen27/Powershell-IR/blob/master/Content/Other/BAMParser.ps1
-	
-.SYNOPSIS
-    Invoke-BAMParser.ps1 parses BAM entries from SYSTEM registry hive.
-    
-    Name: Invoke-BAMParser.ps1
-    Version: 0.1
-    Author: Matt Green (@mgreen27)
+.ORIGINALSOURCE 
+   https://github.com/mgreen27/Powershell-IR/blob/master/Content/Other/BAMParser.ps1
 
 .DESCRIPTION
     Background Activity Moderator (BAM) Service has been included from Windows 10 1709
-    The BAM service key is an alternate evidence of execution source however in my testing I have noticed not all executables are populated.
-
-    Invoke-BAMParser.ps1 parses BAM entries from SYSTEM registry hive and returns the data in an easy to read format.
-    Currently only supported in Live Response mode (not against precollected files).
+   Invoke-BAMParser.ps1 parses BAM entries from SYSTEM registry hive and returns the data in an easy to read format.
 
 .NOTES
     References:
@@ -26,15 +16,7 @@
     http://batcmd.com/windows/10/services/bam/
 #>
 
-[CmdletBinding()]
-Param(
-    [Parameter(Mandatory = $False)][Switch]$SortSid=$Null
-)
 
-# Set SortSid if set by switch
-#$SortSid = $PSBoundParameters.ContainsKey('SortSid')
-
-$Output=@()
 $Users=$null
 
 
@@ -93,7 +75,7 @@ $result = Foreach ($Sid in $Users){
    
 }
 
-$result |Out-GridView -PassThru -Title "BAM key entries of ($User)"
+$result |Out-GridView -PassThru -Title "BAM key entries"
 [gc]::Collect()
 
 

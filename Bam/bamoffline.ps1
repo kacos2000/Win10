@@ -1,4 +1,4 @@
-<# <!-- saved from url=(0023) https://kacos2000.github.io/WindowsTimeline/Bam/ --> 
+<#
 
 .Original Script source 
 	https://github.com/mgreen27/Powershell-IR/blob/master/Content/Other/BAMParser.ps1
@@ -53,7 +53,12 @@ Catch{
     exit
 }
 
-Foreach ($Sid in $Users){
+$UserTime = (Get-ItemProperty -Path "HKLM:\Temp\ControlSet001\Control\TimeZoneInformation").TimeZoneKeyName
+$UserBias = (Get-ItemProperty -Path "HKLM:\Temp\ControlSet001\Control\TimeZoneInformation").ActiveTimeBias
+$UserDay = (Get-ItemProperty -Path "HKLM:\Temp\ControlSet001\Control\TimeZoneInformation").DaylightBias
+
+
+$result = Foreach ($Sid in $Users){
     $Items = Get-Item -Path "HKLM:\Temp\ControlSet001\Services\bam\UserSettings\$Sid" -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Property
 
     # Enumerating User - will roll back to SID on error
@@ -64,25 +69,37 @@ Foreach ($Sid in $Users){
     }
     Catch{$User=""}
 
-    Foreach ($Item in $Items){
-        $Key = Get-ItemProperty -Path "HKLM:\Temp\ControlSet001\Services\bam\UserSettings\$Sid" | Select-Object -ExpandProperty $Item
+    ForEach ($Item in $Items){
+		$Key = Get-ItemProperty -Path "HKLM:\Temp\ControlSet001\Services\bam\UserSettings\$Sid" | Select-Object -ExpandProperty $Item
         
+		
         If($key.length -eq 24){
             $Hex=[System.BitConverter]::ToString($key[7..0]) -replace "-",""
             $TimeLocal = Get-Date ([DateTime]::FromFileTime([Convert]::ToInt64($Hex, 16))) -Format o
-
-            # Setting up object for nicest output format
-            $Line = "" | Select 'Last Execution Time', Application, User, Sid
-            $Line.'Last Execution Time' = $TimeLocal
-            $Line.Application = $Item
-            $Line.User = $User
-            $Line.Sid = $Sid
-            $Output += $Line
-        }
-    }
+			$TimeUTC = Get-Date ([DateTime]::FromFileTimeUtc([Convert]::ToInt64($Hex, 16))) -Format o
+			$Bias = ([convert]::ToInt32([Convert]::ToString($UserBias,2),2))
+			$Day = ([convert]::ToInt32([Convert]::ToString($UserDay,2),2))
+			$TImeUser = (Get-Date ([DateTime]::FromFileTimeUtc([Convert]::ToInt64($Hex, 16)))).addminutes(-$Bias) 
+			
+            [PSCustomObject]@{
+                        'Last Execution Time (UTC)'= $TimeUTC
+						'User Timezone' = $UserTime
+						'ActiveBias' = -$Bias
+						'Daylight'= -$Day
+						'User Time' = $TImeUser
+						Application = $Item
+						User = $User
+						Sid = $Sid
+						}
+					 	
+		        }
+				
+   }
+   
 }
 
-$Output |Out-GridView -PassThru -Title "($File) BAM Contents"
+# Output to Window
+$result |Out-GridView -PassThru -Title "BAM key entries of ($File)"
 
 [gc]::Collect()		
 reg unload HKEY_LOCAL_MACHINE\Temp 

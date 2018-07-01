@@ -18,4 +18,4 @@
 
 To Do
 - [x] Live Parser 
-- [ ] Offline NTUSer.dat parser
+- [ ] Offline SYSTEM hive parser

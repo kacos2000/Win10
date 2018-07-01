@@ -1,4 +1,4 @@
-**Windows Search Jumplist Parser**
+**Windows 10 Search Jumplist Parser**
 
 Reads contents of precollected (*not live*) **NTUser.dat** from the location:
 *HKCU -> Software\Microsoft\Windows\CurrentVersion\Search\JumplistData*

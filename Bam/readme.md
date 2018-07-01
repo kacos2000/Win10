@@ -21,7 +21,7 @@
   
    ![Offline results](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Bam/o_results.JPG)
   
-   After result window is closed (user presses the OK button), a new SHA1 hash of the *SYSTEM* hive file is computed and checked against the original:
+   After result window is closed *(user presses the OK button)*, a new SHA1 hash of the *SYSTEM* hive file is computed and checked against the original:
   
    ![Offline console](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Bam/o_console.JPG)
   

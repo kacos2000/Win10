@@ -4,7 +4,7 @@
 
 **File**|**Description**
 -------------------- | ---------------------------------------------
-[Background Activity Moderator](BAM%20-%20Background%20Activity%20Moderator.pdf) |![Bam preview](bam.jpg) <br>Background Activity Service and registry entries
+[Background Activity Moderator](https://github.com/kacos2000/Win10-Research/blob/master/Bam/readme.md) |![Bam preview](bam.jpg) <br>Background Activity Service and registry entries
 [PowerShell history](ConsoleHost_history.pdf) |History of PowerShell commands
 [Cortana](Cortana.pdf) |![Cortana preview](cortana.jpg) <br>Some notes on Cortana
 [Desktop Icon Layouts](Desktop_IconLayouts.pdf) |![Desktop preview](desktop.jpg) <br>List of user desktop icon/shortcuts/files (registry)

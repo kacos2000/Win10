@@ -35,7 +35,7 @@
    
    - *[Text file output]("https://raw.githubusercontent.com/kacos2000/Win10-Research/master/ads_streams/streams%2002-07-2018%2007-44.txt")* 
    
-       Sample text file: ![txt file](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/ads_streams/txt.JPG)
+       ![txt file](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/ads_streams/txt.JPG)
        
        
      

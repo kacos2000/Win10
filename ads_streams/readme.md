@@ -5,25 +5,25 @@
 
    The [script](https://github.com/kacos2000/Win10-Research/blob/master/ads_streams/streams.ps1) *(preferably executed in an Administrator console)* will parse recursively any selected folder and provide:
 
-         *Field*                     | *Description*
-         ------------              | -------------
-         Path                      | File path
-         File/Directory Name       | File or subdirectory name
-         MD5 Hash (File Hash only) | The MD5 hash of the File
-         Owner / sid               | The owner (name if run on local machine) or SID descriptor
-         Length                    | File Size
-         LastWriteTime             | Last time file was written
-         Attributes                | File Attributes
-         Stream1                   | Alternate Data Stream 1 (usually :$Data)
-         Stream2                   | Alternate Data Stream 2
-         Stream3                   | Alternate Data Stream 3
-         ZoneId1                   | Zone.Identifier *(if exists)* entry 1
-         ZoneId2                   | Zone.Identifier *(if exists)* entry 2
-         ZoneId3                   | Zone.Identifier *(if exists)* entry 3
-         ZoneId4                   | Zone.Identifier *(if exists)* entry 4
+   -  Field                     | Description
+      ------------              | -------------
+      Path                      | File path
+      File/Directory Name       | File or subdirectory name
+      MD5 Hash (File Hash only) | The MD5 hash of the File
+      Owner / sid               | The owner (name if run on local machine) or SID descriptor
+      Length                    | File Size
+      LastWriteTime             | Last time file was written
+      Attributes                | File Attributes
+      Stream1                   | Alternate Data Stream 1 (usually :$Data)
+      Stream2                   | Alternate Data Stream 2
+      Stream3                   | Alternate Data Stream 3
+      ZoneId1                   | Zone.Identifier *(if exists)* entry 1
+      ZoneId2                   | Zone.Identifier *(if exists)* entry 2
+      ZoneId3                   | Zone.Identifier *(if exists)* entry 3
+      ZoneId4                   | Zone.Identifier *(if exists)* entry 4
 
 
-   - *File Open:* User is asked to select a folder:
+   - *File Open Dialog:* User is asked to select a folder:
   
       ![File Open](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/ads_streams/s_o.JPG)
    

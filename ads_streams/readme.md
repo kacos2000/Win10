@@ -10,7 +10,7 @@
       Path                      | File path
       File/Directory Name       | File or subdirectory name
       MD5 Hash (File Hash only) | The MD5 hash of the File
-      Owner / sid               | The owner (name if run on local machine) or SID descriptor
+      Owner / sid               | The owner name *(if run on local machine)* or SID descriptor
       Length                    | File Size
       LastWriteTime             | Last time file was written
       Attributes                | File Attributes

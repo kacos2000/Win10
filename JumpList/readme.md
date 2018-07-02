@@ -15,6 +15,6 @@ User can select all lines (Ctrl+A) or specific lines (Ctrl+click) and copy/paste
 
 ![Jumplist data](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/JumpList/results.JPG)
 
-After the result window is closed *(user presses the OK button)*, a new SHA1 hash of the *NTUSer.dat* hive is computed and checked against the original:
+After the result window is closed *(user presses the OK button)*, a new SHA1 hash of the *NTUSer.dat* hive is calculated and checked against the original:
 
 ![Hash Check](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/JumpList/HashCheck.JPG)

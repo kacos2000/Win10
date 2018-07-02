@@ -6,7 +6,7 @@
 
    - *File Open:*
   
-      ![Results](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/ads_streams/s_o.JPG)
+      ![File Open](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/ads_streams/s_o.JPG)
    
 
    - *Results window:*
@@ -16,5 +16,5 @@
    
    - *Text file output*
    
-      [![txt file](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/ads_streams/TXT.JPG)](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/ads_streams/streams 02-07-2018 07-44.txt)
+       [![txt file](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/ads_streams/txt.JPG)](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/ads_streams/streams 02-07-2018 07-44.txt)
    

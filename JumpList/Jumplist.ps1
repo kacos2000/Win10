@@ -1,6 +1,6 @@
 # Show an Open File Dialog and return the file selected by the user
 Function Get-FileName($initialDirectory)
-[gc]::Collect()	
+	
 {  
 [System.Reflection.Assembly]::LoadWithPartialName("System.windows.forms") |
 Out-Null

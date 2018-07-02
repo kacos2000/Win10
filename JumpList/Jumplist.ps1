@@ -1,6 +1,6 @@
 # Show an Open File Dialog and return the file selected by the user
 Function Get-FileName($initialDirectory)
-
+[gc]::Collect()	
 {  
 [System.Reflection.Assembly]::LoadWithPartialName("System.windows.forms") |
 Out-Null
@@ -9,7 +9,6 @@ $OpenFileDialog.Title = 'Select NTUSER.dat file to open (the file will be access
 $OpenFileDialog.initialDirectory = $initialDirectory
 $OpenFileDialog.Filter = "NTuser.dat (*.dat)|NTuser.dat"
 $OpenFileDialog.ShowDialog() | Out-Null
-$OpenFileDialog.ReadOnlyChecked = $true
 $OpenFileDialog.filename
 $OpenFileDialog.ShowHelp = $true
 } #end function Get-FileName 

@@ -9,6 +9,7 @@ $OpenFileDialog.Title = 'Select NTUSER.dat file to open (the file will be access
 $OpenFileDialog.initialDirectory = $initialDirectory
 $OpenFileDialog.Filter = "NTuser.dat (*.dat)|NTuser.dat"
 $OpenFileDialog.ShowDialog() | Out-Null
+$OpenFileDialog.ShowReadOnly = $true
 $OpenFileDialog.filename
 $OpenFileDialog.ShowHelp = $true
 } #end function Get-FileName 

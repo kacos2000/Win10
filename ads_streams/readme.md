@@ -18,5 +18,7 @@
    
        ![txt file](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/ads_streams/txt.JPG)
        
-       [*demo txt file output*](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/ads_streams/streams 02-07-2018 07-44.txt)
-   
+       
+       *[demo txt file output]("https://github.com/kacos2000/Win10-Research/blob/master/ads_streams/streams%2002-07-2018%2007-44.txt")*
+       
+         

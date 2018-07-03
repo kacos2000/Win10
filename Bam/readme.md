@@ -16,6 +16,10 @@
 
   ![bam.ps1 console](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Bam/console.JPG)
   
+- [**bam1.ps1** - 2nd Modification of the above script](https://github.com/kacos2000/Win10-Research/blob/master/Bam/bam1.ps1) - This one is like bam.ps1 but includes separate filename & path and 3 different dates: UTC, localtime and calculated user time (utc +- the Active Time Bias. Information on the Timezone, Daylight savings and Active time bias are in the header:
+    
+  ![bam1.ps1 output](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Bam/o_o.JPG)
+
 -  [**bamoffline.ps1** - Offline parser](https://github.com/kacos2000/Win10-Research/blob/master/Bam/bamoffline.ps1) reads an **offline** system hive *(SYSTEM)* and displays the BAM key entries in a pop-up Window with Filestamps in UTC and the *SYSTEM* hive's timezone (calculated from the *ActiveTimeBias*). It can also read *SYSTEM* hives directly from FTK image mounted logical drives. **Note:** *must be run in a PowerShell console with Administrator privileges.* The script asks the user to select a *SYSTEM* hive file:
 
     ![Select SYSTEM hive](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Bam/select.JPG)
@@ -27,6 +31,14 @@
    After the result window is closed *(user presses the OK button)*, a new SHA1 hash of the *SYSTEM* hive file is calculated and checked against the original:
   
    ![Offline console](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Bam/o_console.JPG)
+   
+  - [**bamoffline1.ps1** - Offline parser](https://github.com/kacos2000/Win10-Research/blob/master/Bam/bamoffline1.ps1) is similar to the above except that it includes separate filename & path and 3 different dates: Examiner local time, UTC, and calculated user time (utc +- the Active Time Bias. Information on the Timezone, Daylight savings and Active time bias are in the header:
+  
+    ![Offline results](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Bam/0_01.JPG)
+  
+    console example:
+   
+    ![console example](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Bam/0_02.JPG)
   
 
 - [**Documentation**](https://github.com/kacos2000/Win10-Research/blob/master/Bam/BAM%20-%20Background%20Activity%20Moderator.pdf) of the Background Activity Moderator service key

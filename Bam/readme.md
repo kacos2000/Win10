@@ -24,11 +24,11 @@
 
     ![Select SYSTEM hive](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Bam/select.JPG)
 
-    Calculates the SHA1 hash of the *SYSTEM* hive file and opens it (Read Only). The results are shown in a popup window with Filestamp in user localtime. User can select all lines (Ctrl+A) or specific lines (Ctrl+click) and copy/paste (Ctrl+C and Ctrl+V) the data to a text file or MS Excel spreadsheet. The Selected lines are also displayed in the console after the user presses the OK button.
+    Calculates the SHA256 hash of the *SYSTEM* hive file and opens it (Read Only). The results are shown in a popup window with Filestamp in user localtime. User can select all lines (Ctrl+A) or specific lines (Ctrl+click) and copy/paste (Ctrl+C and Ctrl+V) the data to a text file or MS Excel spreadsheet. The Selected lines are also displayed in the console after the user presses the OK button.
   
    ![Offline results](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Bam/o_results.JPG)
   
-   After the result window is closed *(user presses the OK button)*, a new SHA1 hash of the *SYSTEM* hive file is calculated and checked against the original:
+   After the result window is closed *(user presses the OK button)*, a new SHA256 hash of the *SYSTEM* hive file is calculated and checked against the original:
   
    ![Offline console](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Bam/o_console.JPG)
    

@@ -76,10 +76,10 @@ $result = Foreach ($Sid in $Users){
         If($key.length -eq 24){
             $Hex=[System.BitConverter]::ToString($key[7..0]) -replace "-",""
             $TimeLocal = Get-Date ([DateTime]::FromFileTime([Convert]::ToInt64($Hex, 16))) -Format o
-			$TimeUTC = Get-Date ([DateTime]::FromFileTimeUtc([Convert]::ToInt64($Hex, 16))) -Format o
+			$TimeUTC = Get-Date ([DateTime]::FromFileTimeUtc([Convert]::ToInt64($Hex, 16))) -Format u
 			$Bias = ([convert]::ToInt32([Convert]::ToString($UserBias,2),2))
 			$Day = ([convert]::ToInt32([Convert]::ToString($UserDay,2),2))
-			$TImeUser = (Get-Date ([DateTime]::FromFileTimeUtc([Convert]::ToInt64($Hex, 16)))).addminutes(-$Bias) 
+			$TImeUser = (Get-Date ([DateTime]::FromFileTimeUtc([Convert]::ToInt64($Hex, 16))).addminutes(-$Bias) -Format s )
 			
             [PSCustomObject]@{
                         'Last Execution Time (UTC)'= $TimeUTC

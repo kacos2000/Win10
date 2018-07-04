@@ -19,7 +19,7 @@ $Folder = Get-Folder
 
 #Enumerate the files in the selected folder ( if -recurse below, recursively)
 $Files = Get-ChildItem -Path $Folder -recurse -ErrorAction Ignore
-
+$1=1
 
 			  
 #Display the following results for each file in the Directory:
@@ -36,6 +36,9 @@ $results = ForEach ($File in $Files) {
 	# Check the Hash function: if a directory or file is in use, the hash will be left blank
 	try{$hashMD5 = (Get-FileHash -literalpath $File.FullName -Algorithm MD5 -ErrorAction Ignore).Hash}catch{$hash=""}
 	
+	#Progress Report
+	Write-Progress -Activity "Collecting information for File: $file" -Status "File $i of $($Files.Count))" -PercentComplete (($i / $Files.Count) * 100)  
+    $i++
 	
 	[PSCustomObject]@{ 
 	Path = Split-Path -literalpath $File.FullName 

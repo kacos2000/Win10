@@ -28,7 +28,7 @@ $OpenFileDialog.ShowHelp = $true
 $DesktopPath = [Environment]::GetFolderPath("Desktop")
 $File = Get-FileName -initialDirectory $DesktopPath
  
-$before = (Get-FileHash $File -Algorithm SHA1).Hash 
+$before = (Get-FileHash $File -Algorithm SHA256).Hash 
 write-host "Hash of ($File) before access = ($before)" -ForegroundColor Magenta
 
 
@@ -103,7 +103,7 @@ $result |Out-GridView -PassThru -Title "BAM key entries of ($File)"
 
 [gc]::Collect()		
 reg unload HKEY_LOCAL_MACHINE\Temp 
-$after = (Get-FileHash $File -Algorithm SHA1).Hash 
+$after = (Get-FileHash $File -Algorithm SHA256).Hash 
 write-host "Hash of ($File) after access = ($after)" -ForegroundColor Magenta
 $result = (compare-object -ReferenceObject $before -DifferenceObject $after -IncludeEqual).SideIndicator 
 write-host "The before and after Hashes of ($File) are ($result) `n `n" -ForegroundColor White

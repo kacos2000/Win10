@@ -1,3 +1,4 @@
+#Requires -RunAsAdministrator
 <#
 .Original Script source 
 	https://github.com/mgreen27/Powershell-IR/blob/master/Content/Other/BAMParser.ps1

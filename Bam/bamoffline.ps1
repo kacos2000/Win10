@@ -1,3 +1,4 @@
+#Requires -RunAsAdministrator
 <#
 
 .Original Script source 

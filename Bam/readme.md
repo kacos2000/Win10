@@ -46,8 +46,8 @@
     *Other References*:
     
      1.  *[Background Activity Moderator Driver](http://batcmd.com/windows/10/services/bam/)* 
-     2.  *[About BAM key (execution trace #1](https://padawan-4n6.hatenablog.com/entry/2018/02/22/131110)*
-     3.  *[About BAM key (execution trace #2](https://padawan-4n6.hatenablog.com/entry/2018/03/07/191419)*
+     2.  *[About BAM key (execution trace #1) -in Japanese](https://padawan-4n6.hatenablog.com/entry/2018/02/22/131110)*
+     3.  *[About BAM key (execution trace #2) -in Japanese](https://padawan-4n6.hatenablog.com/entry/2018/03/07/191419)*
      4.  *[BAM Key and Process Execution, Updated Plugins](http://windowsir.blogspot.com.au/2018/03/new-and-updated-plugins-other-items.html)*
      5. *[Bam - Alternative to Prefetch](https://www.linkedin.com/pulse/alternative-prefetch-bam-costas-katsavounidis/)*
 

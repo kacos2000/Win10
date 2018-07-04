@@ -26,24 +26,25 @@ $Files = Get-ChildItem -Path $Folder -recurse -ErrorAction Ignore
 $results = ForEach ($File in $Files) {
 
 	# Check that Alternate Data Streams exist, and if so split the output up to 5 variables
-	try{$Stream = (Get-Item $File.FullName -Stream *).stream|out-string|ConvertFrom-String -PropertyNames St1, St2, St3, Stl4, Stl5}
+	try{$Stream = (Get-Item -literalpath $File.FullName -Stream *).stream|out-string|ConvertFrom-String -PropertyNames St1, St2, St3, Stl4, Stl5}
 		Catch{$Stream = ""}
 	
 	# Check that Zone.Identifier exists, and if so split the output up to 5 variables
-	try{$Zone = Get-Content -Stream Zone.Identifier $File.FullName -ErrorAction Ignore|out-string|ConvertFrom-String -PropertyNames Z1, Z2, Z3, Z4, Z5}
+	try{$Zone = Get-Content -Stream Zone.Identifier -literalpath $File.FullName -ErrorAction Ignore|out-string|ConvertFrom-String -PropertyNames Z1, Z2, Z3, Z4, Z5}
 		Catch{$Zone = ""}
 
 	# Check the Hash function: if a directory or file is in use, the hash will be left blank
-	try{$hash = (Get-FileHash $File.FullName -Algorithm MD5 -ErrorAction Ignore).Hash}catch{$hash=""} 	
+	try{$hashMD5 = (Get-FileHash -literalpath $File.FullName -Algorithm MD5 -ErrorAction Ignore).Hash}catch{$hash=""}
+	
 	
 	[PSCustomObject]@{ 
-	Path = Split-Path -Path $File.FullName 
+	Path = Split-Path -literalpath $File.FullName 
 	'File/Directory Name' = $File 
-	'MD5 Hash (File Hash only)' = $hash
-	'Owner / sid' = (Get-Acl $file.FullName).owner
-	Length = (Get-ItemProperty $File.FullName).length
-	LastWriteTime = (Get-ItemProperty $File.FullName).lastwritetime
-	Attributes = (Get-ItemProperty $File.FullName).Mode
+	'MD5 Hash (File Hash only)' = $hashMD5
+	'Owner (name/sid)' = (Get-Acl -literalpath $file.FullName).owner
+	Length = (Get-ChildItem -literalpath $File.FullName -force).length
+	LastWriteTime = (Get-ItemProperty -literalpath $File.FullName).lastwritetime
+	Attributes = (Get-ItemProperty -literalpath $File.FullName).Mode
 	Stream1 = $Stream.St1
 	Stream2 = $Stream.St2
 	Stream3 = $Stream.St3
@@ -59,6 +60,6 @@ $results = ForEach ($File in $Files) {
 $filenameFormat = $env:userprofile + "\desktop\streams" + " "  + (Get-Date -Format "dd-MM-yyyy hh-mm") + ".txt"
 
 #Output results to screen table (and saves selected rows to txt) 
-$results|Out-GridView -PassThru -Title "File Zone.Identifier Stream Contents" |Out-File -FilePath $filenameFormat -Encoding Unicode
+$results|Out-GridView -PassThru -Title "File Zone.Identifier Stream contents files in folder $Folder" |Out-File -FilePath $filenameFormat -Encoding Unicode
 [gc]::Collect()
 

@@ -35,7 +35,7 @@ Catch{
         Write-Host "(Streams.ps1):" -f Yellow -nonewline; Write-Host " User Cancelled" -f White
 		exit
 }
-write-host "Hash of ($File) before access = ($before)" -ForegroundColor Magenta
+write-host "SHA256 Hash of ($File) before access = " -f magenta -nonewline;write-host "($before)" -f Yellow
 
 
 reg load HKEY_LOCAL_MACHINE\Temp $File
@@ -62,9 +62,9 @@ Catch{
 $UserTime = (Get-ItemProperty -Path "HKLM:\Temp\ControlSet001\Control\TimeZoneInformation").TimeZoneKeyName
 $UserBias = (Get-ItemProperty -Path "HKLM:\Temp\ControlSet001\Control\TimeZoneInformation").ActiveTimeBias
 $UserDay = (Get-ItemProperty -Path "HKLM:\Temp\ControlSet001\Control\TimeZoneInformation").DaylightBias
+$1=1
 
-
-$result = Foreach ($Sid in $Users){
+$result = Foreach ($Sid in $Users){$i++
     $Items = Get-Item -Path "HKLM:\Temp\ControlSet001\Services\bam\UserSettings\$Sid" -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Property
 
     # Enumerating User - will roll back to SID on error
@@ -74,7 +74,7 @@ $result = Foreach ($Sid in $Users){
         $User = $User.Value
     }
     Catch{$User=""}
-
+	Write-Progress -Activity "Collecting BAM entries for each User (sid)" -Status "Entry $i of $($Users.Count))" -PercentComplete (($i / $Users.Count)*100)
     ForEach ($Item in $Items){
 		$Key = Get-ItemProperty -Path "HKLM:\Temp\ControlSet001\Services\bam\UserSettings\$Sid" | Select-Object -ExpandProperty $Item
         
@@ -86,7 +86,7 @@ $result = Foreach ($Sid in $Users){
 			$Bias = ([convert]::ToInt32([Convert]::ToString($UserBias,2),2))
 			$Day = ([convert]::ToInt32([Convert]::ToString($UserDay,2),2))
 			$TImeUser = (Get-Date ([DateTime]::FromFileTimeUtc([Convert]::ToInt64($Hex, 16))).addminutes(-$Bias) -Format s ) 
-			
+
             [PSCustomObject]@{
                         'Last Execution Time (UTC)'= $TimeUTC
 						'User Timezone' = $UserTime
@@ -110,6 +110,6 @@ $result |Out-GridView -PassThru -Title "BAM key entries of ($File)"
 [gc]::Collect()		
 reg unload HKEY_LOCAL_MACHINE\Temp 
 $after = (Get-FileHash $File -Algorithm SHA256).Hash 
-write-host "Hash of ($File) after access = ($after)" -ForegroundColor Magenta
+write-host "SHA256 Hash of ($File) after access = " -f magenta -nonewline;write-host "($after)" -f Yellow
 $result = (compare-object -ReferenceObject $before -DifferenceObject $after -IncludeEqual).SideIndicator 
 write-host "The before and after Hashes of ($File) are ($result) `n `n" -ForegroundColor White

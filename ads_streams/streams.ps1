@@ -8,14 +8,24 @@ Function Get-Folder($initialDirectory)
     [System.Reflection.Assembly]::LoadWithPartialName("System.windows.forms")|Out-Null
     $foldername = New-Object System.Windows.Forms.FolderBrowserDialog
     $foldername.rootfolder = "MyComputer"
+	$foldername.Description = "Select a directory to scan files for Alternate Data Streams"
+	$foldername.ShowNewFolderButton = $false
+	
     if($foldername.ShowDialog() -eq "OK")
-    {
+		{
         $folder += $foldername.SelectedPath
-    }
-    return $folder
-}
+		 }
+	        else  
+        {
+            Write-Host "(Streams.ps1):" -f Yellow -nonewline; Write-Host " User Cancelled" -f White
+			exit
+        }
+    return $Folder
+
+	}
 
 $Folder = Get-Folder
+Write-Host "(Streams.ps1):" -f Yellow -nonewline; write-host " Selected directory: ($Folder)" -f White
 
 #Enumerate the files in the selected folder ( if -recurse below, recursively)
 $Files = Get-ChildItem -Path $Folder -recurse -ErrorAction Ignore
@@ -23,7 +33,7 @@ $1=1
 
 			  
 #Display the following results for each file in the Directory:
-$results = ForEach ($File in $Files) {
+$results = ForEach ($File in $Files) {$i++
 
 	# Check that Alternate Data Streams exist, and if so split the output up to 5 variables
 	try{$Stream = (Get-Item -literalpath $File.FullName -Stream *).stream|out-string|ConvertFrom-String -PropertyNames St1, St2, St3, Stl4, Stl5}
@@ -38,19 +48,20 @@ $results = ForEach ($File in $Files) {
 	
 	#Progress Report
 	Write-Progress -Activity "Collecting information for File: $file" -Status "File $i of $($Files.Count))" -PercentComplete (($i / $Files.Count) * 100)  
-    $i++
-	
+
 	[PSCustomObject]@{ 
 	Path = Split-Path -literalpath $File.FullName 
 	'File/Directory Name' = $File 
 	'MD5 Hash (File Hash only)' = $hashMD5
 	'Owner (name/sid)' = (Get-Acl -literalpath $file.FullName).owner
 	Length = (Get-ChildItem -literalpath $File.FullName -force).length
+	LastAccessTime = (Get-ItemProperty -literalpath $File.FullName).lastaccesstime
 	LastWriteTime = (Get-ItemProperty -literalpath $File.FullName).lastwritetime
 	Attributes = (Get-ItemProperty -literalpath $File.FullName).Mode
 	Stream1 = $Stream.St1
 	Stream2 = $Stream.St2
 	Stream3 = $Stream.St3
+	Stream4 = $Stream.St4
 	ZoneId1 = $Zone.Z2
 	ZoneId2 = $Zone.Z3
 	ZoneId3 = $Zone.Z4

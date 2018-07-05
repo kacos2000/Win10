@@ -8,8 +8,7 @@
 # Show an Open File Dialog and return the file selected by the user
 Function Get-FileName($initialDirectory)
 {  
-[System.Reflection.Assembly]::LoadWithPartialName("System.windows.forms") |
-Out-Null
+[System.Reflection.Assembly]::LoadWithPartialName("System.windows.forms") |Out-Null
 $OpenFileDialog = New-Object System.Windows.Forms.OpenFileDialog
 $OpenFileDialog.Title = 'Select SYSTEM hive file to open (the file will be accessed Read Only)'
 $OpenFileDialog.initialDirectory = $initialDirectory
@@ -17,8 +16,9 @@ $OpenFileDialog.Filter = "SYSTEM (*.*)|SYSTEM"
 $OpenFileDialog.ShowDialog() | Out-Null
 $OpenFileDialog.ShowReadOnly = $true
 $OpenFileDialog.filename
-$OpenFileDialog.ShowHelp = $true
+$OpenFileDialog.ShowHelp = $false
 } #end function Get-FileName 
+
 $DesktopPath = [Environment]::GetFolderPath("Desktop")
 
 #  Note: OpenFile will always open the file in read-only mode.
@@ -26,7 +26,8 @@ $DesktopPath = [Environment]::GetFolderPath("Desktop")
 
 $File = Get-FileName -initialDirectory $DesktopPath
  
-$before = (Get-FileHash $File -Algorithm SHA256).Hash 
+Try{$before = (Get-FileHash $File -Algorithm SHA256).Hash}
+Catch{Write-Host "(Streams.ps1):" -f Yellow -nonewline; Write-Host " User Cancelled" -f White; exit}
 write-host "Hash of ($File) before access = ($before)" -ForegroundColor Magenta
 
 

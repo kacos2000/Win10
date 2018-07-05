@@ -1,6 +1,6 @@
 #Requires -RunAsAdministrator
-<#
 
+<#
 .Original Script source 
 	https://github.com/mgreen27/Powershell-IR/blob/master/Content/Other/BAMParser.ps1
 #>
@@ -14,22 +14,27 @@ Param(
 Function Get-FileName($initialDirectory)
 
 {  
-[System.Reflection.Assembly]::LoadWithPartialName("System.windows.forms") |
-Out-Null
+[System.Reflection.Assembly]::LoadWithPartialName("System.windows.forms") |Out-Null
 $OpenFileDialog = New-Object System.Windows.Forms.OpenFileDialog
 $OpenFileDialog.Title = 'Select SYSTEM hive file to open (the file will be accessed Read Only)'
 $OpenFileDialog.initialDirectory = $initialDirectory
 $OpenFileDialog.Filter = "SYSTEM (*.*)|SYSTEM"
-$OpenFileDialog.ShowDialog() | Out-Null
+$OpenFileDialog.ShowDialog()| Out-Null   
 $OpenFileDialog.ReadOnlyChecked = $true
 $OpenFileDialog.filename
-$OpenFileDialog.ShowHelp = $true
+$OpenFileDialog.ShowHelp = $false
 } #end function Get-FileName 
-
 $DesktopPath = [Environment]::GetFolderPath("Desktop")
+
+#  Note: OpenFile will always open the file in read-only mode.
+#  https://technet.microsoft.com/en-us/library/system.windows.forms.openfiledialog.openfile(v=vs.100)
 $File = Get-FileName -initialDirectory $DesktopPath
- 
-$before = (Get-FileHash $File -Algorithm SHA256).Hash 
+
+Try{$before = (Get-FileHash $File -Algorithm SHA256).Hash}
+Catch{
+        Write-Host "(Streams.ps1):" -f Yellow -nonewline; Write-Host " User Cancelled" -f White
+		exit
+}
 write-host "Hash of ($File) before access = ($before)" -ForegroundColor Magenta
 
 
@@ -80,7 +85,7 @@ $result = Foreach ($Sid in $Users){
 			$TimeUTC = Get-Date ([DateTime]::FromFileTimeUtc([Convert]::ToInt64($Hex, 16))) -Format u
 			$Bias = ([convert]::ToInt32([Convert]::ToString($UserBias,2),2))
 			$Day = ([convert]::ToInt32([Convert]::ToString($UserDay,2),2))
-			$TImeUser = (Get-Date ([DateTime]::FromFileTimeUtc([Convert]::ToInt64($Hex, 16))).addminutes(-$Bias) -Format s )
+			$TImeUser = (Get-Date ([DateTime]::FromFileTimeUtc([Convert]::ToInt64($Hex, 16))).addminutes(-$Bias) -Format s ) 
 			
             [PSCustomObject]@{
                         'Last Execution Time (UTC)'= $TimeUTC
@@ -108,34 +113,3 @@ $after = (Get-FileHash $File -Algorithm SHA256).Hash
 write-host "Hash of ($File) after access = ($after)" -ForegroundColor Magenta
 $result = (compare-object -ReferenceObject $before -DifferenceObject $after -IncludeEqual).SideIndicator 
 write-host "The before and after Hashes of ($File) are ($result) `n `n" -ForegroundColor White
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

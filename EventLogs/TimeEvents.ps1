@@ -30,7 +30,7 @@ $DesktopPath = ($Env:WinDir+"\System32\winevt\Logs\")
 
 $File = $Folder + "security.evtx"
 Write-Host "(TimeEvents.ps1):" -f Yellow -nonewline; write-host " Selected Event Log: ($File)" -f White
-$c=1
+$c = 0
 
 Try {
 	$Event = (Get-WinEvent -FilterHashtable @{path = $File; ID=4616} -ErrorAction Stop)    
@@ -44,10 +44,13 @@ Try {
 [xml[]]$xmllog = $log.toXml()
 
 $Events = foreach ($i in $xmllog) {$c++
-			Write-Progress -Activity "Collecting event entries with ID = 4616" -Status "Entry $c of $($xmllog.Count))" -PercentComplete (($c / $xmllog.Count)*100)
+			
+			$count = $xmllog.Count
 			$Previous = [DateTime] ($i.Event.EventData.Data[4].'#text')
 			$New = [DateTime] ($i.Event.EventData.Data[5].'#text')
-						
+			
+			#Progress Bar
+			write-progress -activity "Collecting entries with EventID=4616 - $c of $($xmllog.Count)" 		
 			# Format output fields
 			
 			[PSCustomObject]@{ 
@@ -63,6 +66,7 @@ $Events = foreach ($i in $xmllog) {$c++
 			'Change' = ($New - $Previous) 
 			'Process Name' = $i.Event.EventData.Data[7].'#text'
 			}
+
 	}
 			
 #Format of the txt filename and path:
@@ -70,6 +74,6 @@ $filenameFormat = $env:userprofile + "\desktop\TimeEvents_" + (Get-Date -Format 
 Write-host "Selected Rows will be saved as: " -f Yellow -nonewline; Write-Host $filenameFormat -f White
 
 #Output results to screen table (and saves selected rows to txt) 		
-$Events|Out-GridView -PassThru -Title "$File events related to ID 4616 (The system time was changed)"|Export-Csv -Path $filenameFormat
+$Events|Out-GridView -PassThru -Title "A total of $count entries were found with EventID=4616 (The system time was changed) in $File "|Export-Csv -Path $filenameFormat
 #notepad $filenameFormat
 [gc]::Collect() 

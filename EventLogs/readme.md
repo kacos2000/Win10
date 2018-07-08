@@ -1,7 +1,7 @@
 <!-- saved from url=(0023) https://kacos2000.github.io/Win10-Research/EventLogs/ --> 
 <!-- https://guides.github.com/features/mastering-markdown/ --> 
 
-**[Win 10 Event log ID: 4616 parser.](https://github.com/kacos2000/Win10-Research/blob/master/EventLogs/TimeEvents.ps1)** PowerShell script to read a live or offline **security.evtx** log and list all the EventID:4616 entries *(The system time was changed)* in a window. Selected rows are saved in a comma separated file (csv).  
+**[Win 10 EventID: 4616 parser.](https://github.com/kacos2000/Win10-Research/blob/master/EventLogs/TimeEvents.ps1)** PowerShell script to read a live or offline **security.evtx** log and list all the EventID:4616 entries *(The system time was changed)* in a window. Selected rows are saved in a comma separated file (csv).  
 
    The [script](https://github.com/kacos2000/Win10-Research/blob/master/EventLogs/TimeEvents.ps1) *(needs to be executed from an Administrator console)* will parse the following information for any 4616 event ID:
 

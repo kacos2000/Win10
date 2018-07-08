@@ -8,11 +8,11 @@
    -  Field              | Description
       ------------       | -------------
       Time Created       | DateTime the event was recorded
-      EventRecordID      | Record ID of the Event
-      ProcessID          | Process ID
+      EventID            | Record ID of the Event
+      PID                | Process ID
       ThreadID           | Thread ID
       User Name          | UserName associated with the event 
-      SID                | SID descriptor
+      SID                | Security descriptor
       Domain Name        | Domain Name
       New Time           | New Time
       Previous Time      | Previous Time

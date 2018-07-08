@@ -70,6 +70,6 @@ $filenameFormat = $env:userprofile + "\desktop\TimeEvents_" + (Get-Date -Format 
 Write-host "Selected Rows will be saved as: " -f Yellow -nonewline; Write-Host $filenameFormat -f White
 
 #Output results to screen table (and saves selected rows to txt) 		
-$Events|Out-GridView -PassThru -Title "$File events related to ID 4616 (The system time was changed)"
+$Events|Out-GridView -PassThru -Title "$File events related to ID 4616 (The system time was changed)"|Export-Csv -Path $filenameFormat
 #notepad $filenameFormat
 [gc]::Collect() 

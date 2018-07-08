@@ -58,8 +58,8 @@ $Events = foreach ($i in $xmllog) {$c++
 			'User Name' = $i.Event.EventData.Data[1].'#text'
 			'SID' = $i.Event.EventData.Data[0].'#text'
 			'Domain Name' = $i.Event.EventData.Data[2].'#text'
-			'New Time UTC' = Get-Date ($i.Event.EventData.Data[5].'#text') 
-			'Previous Time UTC' = Get-Date ($i.Event.EventData.Data[4].'#text') 
+			'New Time' = Get-Date ($i.Event.EventData.Data[5].'#text') 
+			'Previous Time' = Get-Date ($i.Event.EventData.Data[4].'#text') 
 			'Change' = ($New - $Previous) 
 			'Process Name' = $i.Event.EventData.Data[7].'#text'
 			}

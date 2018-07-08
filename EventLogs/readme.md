@@ -20,9 +20,15 @@
       Process Name       | The process that initiated the Time change 
       
    ![File Open](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/EventLogs/O.JPG)
+  
+  - [EventID 4616](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4616)  
+  - [EventID 4688](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4688)
+  
+  __________________
    
-   
-   Original idea came from the [Swanepoel Method blog post](https://www.dfir.co.za/2018/07/07/detecting-time-changes-with-l2t-aint-nobody-got-time-for-that/).
+   Original idea came from the [Jaco](https://twitter.com/jaco_ZA/status/1015495669988122624)'s [Swanepoel Method blog post](https://www.dfir.co.za/2018/07/07/detecting-time-changes-with-l2t-aint-nobody-got-time-for-that/).
    
    ![File Open](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/EventLogs/T.JPG)
+   
+  __________________
    

@@ -32,7 +32,7 @@ $File = Get-FileName -initialDirectory $DesktopPath
 
 Try{$before = (Get-FileHash $File -Algorithm SHA256).Hash}
 Catch{
-        Write-Host "(Streams.ps1):" -f Yellow -nonewline; Write-Host " User Cancelled" -f White
+        Write-Host "(BamOffline.ps1):" -f Yellow -nonewline; Write-Host " User Cancelled" -f White
 		exit
 }
 write-host "SHA256 Hash of ($File) before access = " -f magenta -nonewline;write-host "($before)" -f Yellow

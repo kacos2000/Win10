@@ -1,7 +1,9 @@
 <!-- saved from url=(0056) https://kacos2000.github.io/Win10-Research/ads_streams/ --> 
 <!-- https://guides.github.com/features/mastering-markdown/ --> 
 
-**[Zone.Identifier ADS view](https://github.com/kacos2000/Win10-Research/blob/master/ads_streams/streams.ps1)** PowerShell script to list the Zone.Identifier ADS contents of files in a folder.  
+# [ADS Streams view](https://github.com/kacos2000/Win10-Research/blob/master/ads_streams/streams.ps1) #
+
+PowerShell script to list [Alternate Data Stream](https://blogs.technet.microsoft.com/askcore/2013/03/24/alternate-data-streams-in-ntfs/) *(NTFS)* and view the Zone.Identifier contents of files in a folder.  
 
    The [script](https://github.com/kacos2000/Win10-Research/blob/master/ads_streams/streams.ps1) *(preferably executed in an Administrator console)* will parse recursively any selected folder and provide:
 

@@ -1,7 +1,7 @@
 <!-- saved from url=(0056) https://kacos2000.github.io/Win10-Research/ads_streams/ --> 
 <!-- https://guides.github.com/features/mastering-markdown/ --> 
 
-**[Zone.Identifier ADS view](https://github.com/kacos2000/Win10-Research/blob/master/ads_streams/streams.ps1)** PowerShell script to list the Zone.Identifier ADS contents of files in a folder.  More info at [Phill Moore's blog](https://thinkdfir.com/2018/06/17/zone-identifier-kmditemwherefroms/) and at [Hacking Exposed](http://www.hecfblog.com/2018/06/daily-blog-402-solution-saturday-62318.html).
+**[Zone.Identifier ADS view](https://github.com/kacos2000/Win10-Research/blob/master/ads_streams/streams.ps1)** PowerShell script to list the Zone.Identifier ADS contents of files in a folder.  
 
    The [script](https://github.com/kacos2000/Win10-Research/blob/master/ads_streams/streams.ps1) *(preferably executed in an Administrator console)* will parse recursively any selected folder and provide:
 
@@ -39,5 +39,23 @@
        
        
      
-       
-         
+   - **References:**<br> 
+   
+      Zone.Identifier Zones:
+   
+       **ZoneID** | **Description**
+        -- | -----
+        0 | Computer
+        1 | Local intranet
+        2 | Trusted sites
+        **3** | **Internet**
+        4 | Restricted sites
+      
+      - [Mark of the Web](https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/compatibility/ms537628(v=vs.85))<br>
+      - [Internet Explorer Local Machine Zone Lockdown](https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2003/cc782928(v=ws.10))<br> 
+      - [About URL Security Zones](https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/platform-apis/ms537183(v=vs.85))<br>
+      - [URL Policy Flags](https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/platform-apis/ms537179%28v%3dvs.85%29)<br>
+      - [Adding Sites to the Enhanced Security Configuration Zones](https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/platform-apis/ms537181(v%3dvs.85))<br>
+      - [Zone Identifier == kMDItemWhereFroms?](https://thinkdfir.com/2018/06/17/zone-identifier-kmditemwherefroms/)<br>
+      - [Hacking Exposed](http://www.hecfblog.com/2018/06/daily-blog-402-solution-saturday-62318.html)<br>
+      - [The Tale of SettingContent-ms Files](https://posts.specterops.io/the-tale-of-settingcontent-ms-files-f1ea253e4d39?gi=57a1d1779f80)

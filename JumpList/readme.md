@@ -1,3 +1,5 @@
+<!-- saved from url=(0053) https://kacos2000.github.io/Win10-Research/JumpList/ --> 
+
 ** [Windows 10 Search Jumplist Parser](https://github.com/kacos2000/Win10-Research/blob/master/JumpList/Jumplist.ps1)**
 
 

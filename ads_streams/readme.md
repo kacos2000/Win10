@@ -1,4 +1,4 @@
-<!-- saved from url=(0023) https://kacos2000.github.io/Win10-Research/ads_streams/ --> 
+<!-- saved from url=(0056) https://kacos2000.github.io/Win10-Research/ads_streams/ --> 
 <!-- https://guides.github.com/features/mastering-markdown/ --> 
 
 **[Zone.Identifier ADS view](https://github.com/kacos2000/Win10-Research/blob/master/ads_streams/streams.ps1)** PowerShell script to list the Zone.Identifier ADS contents of files in a folder.  More info at [Phill Moore's blog](https://thinkdfir.com/2018/06/17/zone-identifier-kmditemwherefroms/) and at [Hacking Exposed](http://www.hecfblog.com/2018/06/daily-blog-402-solution-saturday-62318.html).

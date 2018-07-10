@@ -1,10 +1,10 @@
 <!-- saved from url=(0053) https://kacos2000.github.io/Win10-Research/JumpList/ --> 
 
-** [Windows 10 Search Jumplist Parser](https://github.com/kacos2000/Win10-Research/blob/master/JumpList/Jumplist.ps1)**
+# [Windows 10 - *(Search)* Jumplist Parser](https://github.com/kacos2000/Win10-Research/blob/master/JumpList/Jumplist.ps1) #
 
 
-PowerShell script that reads the contents the location:
-*'HKCU -> Software\Microsoft\Windows\CurrentVersion\Search\JumplistData'* from a precollected (*not live*) **NTUser.dat** file. 
+PowerShell script that reads the contents the location:<br>
+*'HKCU -> Software\Microsoft\Windows\CurrentVersion\Search\JumplistData'*<br> from a precollected (*not live*) **NTUser.dat** file. 
 
 **Note:** *must be run in a PowerShell console with Administrator privileges.*
 

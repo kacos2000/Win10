@@ -7,7 +7,7 @@ Function Get-Folder($initialDirectory)
     [System.Reflection.Assembly]::LoadWithPartialName("System.windows.forms")|Out-Null
     $foldername = New-Object System.Windows.Forms.FolderBrowserDialog
     $foldername.SelectedPath = "C:\Windows\System32\WinEvt\logs\"
-	$foldername.Description = "Select the location of Security.evtx log"
+	$foldername.Description = "Select the location of Security.evtx log (\System32\WinEvt\logs\)"
 	$foldername.ShowNewFolderButton = $false
 	
     if($foldername.ShowDialog() -eq "OK")
@@ -50,7 +50,7 @@ $Events = foreach ($i in $xmllog) {$c++
 			$New = [DateTime] ($i.Event.EventData.Data[5].'#text')
 			
 			#Progress Bar
-			write-progress -activity "Collecting entries with EventID=4616 - $c of $($xmllog.Count)" 		
+			write-progress -activity "Collecting entries with EventID=4616 - $c of $($xmllog.count)"  -PercentComplete (($c / $xmllog.count) * 100)		
 			# Format output fields
 			
 			[PSCustomObject]@{ 

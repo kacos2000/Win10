@@ -35,10 +35,12 @@ Catch{
 $UserTime = (Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\TimeZoneInformation").TimeZoneKeyName
 $UserBias = (Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\TimeZoneInformation").ActiveTimeBias
 $UserDay = (Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\TimeZoneInformation").DaylightBias
-
-$result = Foreach ($Sid in $Users){
+$u=0
+$result = Foreach ($Sid in $Users){$u++
     $Items = Get-Item -Path "HKLM:\SYSTEM\CurrentControlSet\Services\bam\UserSettings\$Sid" -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Property
-
+	Write-Progress -id 1 -Activity "Collecting Security ID (sid) entries" -Status "SID $u of $($Users.Count))" -PercentComplete (($u / $Users.Count)*100)
+    $i = 0 
+	
     # Enumerating User - will roll back to SID on error
     Try{
         $objSID = New-Object System.Security.Principal.SecurityIdentifier($Sid) 
@@ -47,9 +49,10 @@ $result = Foreach ($Sid in $Users){
     }
     Catch{$User=""}
 
-    Foreach ($Item in $Items){
+    Foreach ($Item in $Items){$i++
         $Key = Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\bam\UserSettings\$Sid" | Select-Object -ExpandProperty $Item
-        
+        Write-Progress -id 2 -Activity "Collecting BAM entries for each User (sid)" -Status "Entry $i of $($Items.Count))"  -ParentId 1 -PercentComplete (([double]$i / $items.Count)*100)
+		
         If($key.length -eq 24){
             $Hex=[System.BitConverter]::ToString($key[7..0]) -replace "-",""
             $TimeLocal = Get-Date ([DateTime]::FromFileTime([Convert]::ToInt64($Hex, 16))) -Format o

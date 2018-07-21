@@ -1,7 +1,7 @@
 <!-- saved from url=(0048) https://kacos2000.github.io/Win10-Research/Bam/ --> 
 <!-- https://guides.github.com/features/mastering-markdown/ --> 
 
-# Windows 10 *(1703+)* Background Activity Moderator #
+## Windows 10 *(1703+)* Background Activity Moderator ##
 
 - [**BAMparser.ps1** - PowerShell script](https://github.com/kacos2000/Win10-Research/blob/master/Bam/BAMParser.ps1) by [Matthew Green](https://github.com/mgreen27) *(original is [here](https://github.com/mgreen27/Powershell-IR/blob/master/Content/Other/BAMParser.ps1))* for live parsing of the BAM service key:
 

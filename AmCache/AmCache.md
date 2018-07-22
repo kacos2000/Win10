@@ -1,3 +1,6 @@
+<!-- saved from url=(0051) https://kacos2000.github.io/Win10-Research/AmCache/ --> 
+<!-- https://guides.github.com/features/mastering-markdown/ --> 
+
 ## Windows 10 *(1703+)* AmCache.hve ##      
  
  

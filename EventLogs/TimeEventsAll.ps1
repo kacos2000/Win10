@@ -44,7 +44,7 @@ $File = $Folder + "Security.evtx"
 Try {
 	$Event = (Get-WinEvent -FilterHashtable @{path = $File; ID=4616} -ErrorAction Stop)    
 	$log = (Get-WinEvent -FilterHashtable @{path = $File; ID=4616})
-    Write-Host "(TimeEvents.ps1):" -f Yellow -nonewline; write-host " Selected Security Event Log: ($File)" -f White
+    Write-Host "(TimeEventsAll.ps1):" -f Yellow -nonewline; write-host " Selected Security Event Log: ($File)" -f White
 	}
 	catch [Exception] {
         if ($_.Exception -match "No events were found that match the specified selection criteria") 
@@ -56,7 +56,7 @@ $File1 = $Folder + "System.evtx"
 Try {
 	$Event1 = (Get-WinEvent -FilterHashtable @{path = $File1; ID=1; ProviderName="Microsoft-Windows-Kernel-General"} -ErrorAction Stop)    
 	$log1 = (Get-WinEvent -FilterHashtable @{path = $File1; ID=1; ProviderName="Microsoft-Windows-Kernel-General"})
-    Write-Host "(TimeEvents.ps1):" -f Yellow -nonewline; write-host " Selected System Event Log: ($File1)" -f White
+    Write-Host "(TimeEventsAll.ps1):" -f Yellow -nonewline; write-host " Selected System Event Log: ($File1)" -f White
 	}
 	catch [Exception] {
         if ($_.Exception -match "No events were found that match the specified selection criteria") 
@@ -110,6 +110,8 @@ $Events1 = foreach ($e in $xmllog1) {$d++
 			$NewTime = [DateTime] $e.Event.EventData.Data[0].'#text'
             $Reason = if($e.Event.EventData.Data[2].'#text' -eq 1){"An application or system component changed the time"} 
                         elseif ($e.Event.EventData.Data[2].'#text' -eq 2){"System time synchronized with the hardware clock"} 
+                        elseif ($e.Event.EventData.Data[2].'#text' -eq 3){"System time adjusted to the new time zone"}
+                        else {$e.Event.EventData.Data[2].'#text'}
 
 			#Progress Bar
 			write-progress -id 2 -activity "Collecting System entries with EventID=1 - $d of $count1)"  -PercentComplete (($d / $count1) * 100)		

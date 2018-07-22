@@ -49,9 +49,14 @@
   
   __________________
    
-   Original idea came from the [Jaco](https://twitter.com/jaco_ZA/status/1015495669988122624)'s ["Detecting Time Changes with L2T"](https://www.dfir.co.za/2018/07/07/detecting-time-changes-with-l2t-aint-nobody-got-time-for-that/) *blog post*.
+     Original idea came from the [Jaco](https://twitter.com/jaco_ZA/status/1015495669988122624)'s ["Detecting Time Changes with L2T"](https://www.dfir.co.za/2018/07/07/detecting-time-changes-with-l2t-aint-nobody-got-time-for-that/) *blog post*.
    
-   ![File Open](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/EventLogs/T.JPG)
+     ![File Open](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/EventLogs/T.JPG)
    
   __________________
    
+     - To Do:
+       - [ ] Parse 4624
+       - [ ] Correlate event id entries in 4616, 4624, 4688 etc
+       - [ ] Check Event ID 1006 of the Partition/Diagnostic event log [USB Device Tracking ..](https://df-stream.com/2018/07/partition-diagnostic-event-log-and-usb-device-tracking-p2/)
+      

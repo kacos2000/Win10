@@ -58,5 +58,5 @@
      - To Do:
        - [ ] Parse 4624
        - [ ] Correlate event id entries in 4616, 4624, 4688 etc
-       - [ ] Check Event ID 1006 of the Partition/Diagnostic event log [USB Device Tracking ..](https://df-stream.com/2018/07/partition-diagnostic-event-log-and-usb-device-tracking-p2/)
+       - [ ] Check Event ID 1006 of Microsoft-Windows-Partition%4Diagnostic.evtx [(USB Device Tracking ..)](https://df-stream.com/2018/07/partition-diagnostic-event-log-and-usb-device-tracking-p2/)
       

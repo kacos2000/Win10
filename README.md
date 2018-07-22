@@ -15,5 +15,5 @@
 |[Zone.Identifier ADS view](https://github.com/kacos2000/Win10-Research/blob/master/ads_streams/readme.md) |![Powershell preview](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/ads_streams/s_results.JPG) <br>PowerShell script to list Alternate Data Streams and view the Zone.Identifier ADS contents of files in a folder.  More info at [Phill Moore's blog](https://thinkdfir.com/2018/06/17/zone-identifier-kmditemwherefroms/) and at [Hacking Exposed](http://www.hecfblog.com/2018/06/daily-blog-402-solution-saturday-62318.html)
 |[Windows 10 Timeline](https://kacos2000.github.io/WindowsTimeline/) |Analysis of Windows 10 (v.1803) timeline feature
 |[Windows 10 EventID: 4616 parser](https://github.com/kacos2000/Win10-Research/blob/master/EventLogs/readme.md)| PowerShell script to read a live or offline **security.evtx** log and list all EventID:4616 entries *(The system time was changed)*
-|[Windows 10 AmCache.hve parser](https://github.com/kacos2000/Win10-Research/blob/master/AmCache/AmCache.md)| PowerShell scripts 
+|[Windows 10 AmCache.hve parser](https://github.com/kacos2000/Win10-Research/blob/master/AmCache/readme.md)| PowerShell scripts 
 

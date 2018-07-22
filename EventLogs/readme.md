@@ -11,9 +11,10 @@
      - "Microsoft-Windows-Kernel-General" (ID: 1)<br>
         `(Get-WinEvent -ListProvider "Microsoft-Windows-Kernel-General").Events|Where-Object {$_.Id -eq 1}`<br>
         
-        * Event reason Nr#:<br>
+        * Event **Reason** Nr#:<br>
           1 = An application or system component changed the time<br>
-          2 = System time synchronized with the hardware clock<br>      
+          2 = System time synchronized with the hardware clock<br>
+          3 = System time adjusted to the new time zone
       
      - "Microsoft-Windows-Security-Auditing" (ID: 4616)<br>
         `(Get-WinEvent -ListProvider "Microsoft-Windows-Security-Auditing").Events|Where-Object {$_.Id -eq 4616}`

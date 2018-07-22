@@ -7,7 +7,7 @@
   
   The [script](https://github.com/kacos2000/Win10-Research/blob/master/EventLogs/TimeEventsAll.ps1) *(needs to be executed from an Administrator console)*. 
 
-  - Event Providers *(type the following in a powershell prompt to see local event entries)*: 
+  - Event Providers *(type the following in a powershell prompt to see the event template)*: 
      - "Microsoft-Windows-Kernel-General" (ID: 1)<br>
         `(Get-WinEvent -ListProvider "Microsoft-Windows-Kernel-General").Events|Where-Object {$_.Id -eq 1}`<br>
         
@@ -45,6 +45,7 @@
     - [EventID 4624](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4624) An account was successfully logged on
     - [EventID 4688](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4688) A new process has been created
     - [Are Windows timezone written in registry reliable?](https://stackoverflow.com/questions/47104967/are-windows-timezone-written-in-registry-reliable)
+    - `tzutil  /l` : List timezones
   
   __________________
    

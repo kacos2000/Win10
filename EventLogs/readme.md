@@ -5,9 +5,16 @@
 
 - [Win 10 Security EventID: 4616 & System EventID: 1 parser](https://github.com/kacos2000/Win10-Research/blob/master/EventLogs/TimeEventsAll.ps1) - PowerShell script to read both **security.evtx** and **security.evtx** logs from a live or offline Win 10 PC, and list all the [EventID:1](http://www.eventid.net/display-eventid-1-source-Microsoft-Windows-Kernel-General-eventno-10866-phase-1.htm) and [EventID:4616](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4616) entries *(The system time was changed)* in a window. Selected rows are saved in a comma separated file (csv).  
 
-  - Event Providers: 
+The [script](https://github.com/kacos2000/Win10-Research/blob/master/EventLogs/TimeEventsAll.ps1) *(needs to be executed from an Administrator console)*. 
+
+  - Event Providers *(type the following in a powershell prompt to see local event entries)*: 
      - "Microsoft-Windows-Kernel-General" (ID: 1)<br>
-        `(Get-WinEvent -ListProvider "Microsoft-Windows-Kernel-General").Events|Where-Object {$_.Id -eq 1}`
+        `(Get-WinEvent -ListProvider "Microsoft-Windows-Kernel-General").Events|Where-Object {$_.Id -eq 1}`<br>
+        
+        * Event reason Nr#:<br>
+          1 = An application or system component changed the time<br>
+          2 = System time synchronized with the hardware clock<br>      
+      
      - "Microsoft-Windows-Security-Auditing" (ID: 4616)<br>
         `(Get-WinEvent -ListProvider "Microsoft-Windows-Security-Auditing").Events|Where-Object {$_.Id -eq 4616}`
 
@@ -31,10 +38,10 @@
       Change             | Difference between New and Previous times
       Process Name       | The process that initiated the Time change 
       
-   ![File Open](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/EventLogs/O.JPG)
+       ![File Open](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/EventLogs/O.JPG)
   
-  - [EventID 4616](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4616)  
-  - [EventID 4688](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4688)
+    - [EventID 4616](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4616)  
+    - [EventID 4688](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4688)
   
   __________________
    

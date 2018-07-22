@@ -41,8 +41,9 @@
       
        ![File Open](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/EventLogs/O.JPG)
   
-    - [EventID 4616](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4616)  
-    - [EventID 4688](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4688)
+    - [EventID 4616](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4616) The system time was changed
+    - [EventID 4624](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4624) An account was successfully logged on
+    - [EventID 4688](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4688) A new process has been created
   
   __________________
    

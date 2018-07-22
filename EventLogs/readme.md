@@ -44,6 +44,7 @@
     - [EventID 4616](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4616) The system time was changed
     - [EventID 4624](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4624) An account was successfully logged on
     - [EventID 4688](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4688) A new process has been created
+    - [Are Windows timezone written in registry reliable?](https://stackoverflow.com/questions/47104967/are-windows-timezone-written-in-registry-reliable)
   
   __________________
    

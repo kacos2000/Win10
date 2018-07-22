@@ -4,8 +4,8 @@
 ###  Win 10 Security.evtx EventID: 4616 & System.evtx EventID: 1 parser ###
 
 - [Win 10 Security EventID: 4616 & System EventID: 1 parser](https://github.com/kacos2000/Win10-Research/blob/master/EventLogs/TimeEventsAll.ps1) - PowerShell script to read both **security.evtx** and **security.evtx** logs from a live or offline Win 10 PC, and list all the [EventID:1](http://www.eventid.net/display-eventid-1-source-Microsoft-Windows-Kernel-General-eventno-10866-phase-1.htm) and [EventID:4616](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4616) entries *(The system time was changed)* in a window. Selected rows are saved in a comma separated file (csv).  
-
-The [script](https://github.com/kacos2000/Win10-Research/blob/master/EventLogs/TimeEventsAll.ps1) *(needs to be executed from an Administrator console)*. 
+  
+  The [script](https://github.com/kacos2000/Win10-Research/blob/master/EventLogs/TimeEventsAll.ps1) *(needs to be executed from an Administrator console)*. 
 
   - Event Providers *(type the following in a powershell prompt to see local event entries)*: 
      - "Microsoft-Windows-Kernel-General" (ID: 1)<br>

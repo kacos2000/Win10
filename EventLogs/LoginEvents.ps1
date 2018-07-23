@@ -46,11 +46,10 @@ $F = Get-Folder +"\"
 $Folder = $F +"\"
 $DesktopPath = ($Env:WinDir+"\System32\winevt\Logs\")
 
-$File = $Folder + "security.evtx"
+$File = $Folder + "Security.evtx"
 Write-Host "(LoginEvents.ps1):" -f Yellow -nonewline; write-host " Selected Event Log: ($File)" -f White
 $e=0
 
-$File = $Folder + "Security.evtx"
 $sw = [Diagnostics.Stopwatch]::StartNew()
 Try {  
 	$log2 = Get-WinEvent -FilterHashtable @{path = $File; ProviderName="Microsoft-Windows-Security-Auditing" ; ID=4624} -ErrorAction Stop

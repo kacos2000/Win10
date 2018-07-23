@@ -32,9 +32,8 @@ $File = $Folder + "security.evtx"
 Write-Host "(TimeEvents.ps1):" -f Yellow -nonewline; write-host " Selected Event Log: ($File)" -f White
 $c = 0
 
-Try {
-	$Event = (Get-WinEvent -FilterHashtable @{path = $File; ID=4616} -ErrorAction Stop)    
-	$log = (Get-WinEvent -FilterHashtable @{path = $File; ID=4616})
+Try {   
+	$log = (Get-WinEvent -FilterHashtable @{path = $File; ID=4616} -ErrorAction Stop) 
 	}
 	catch [Exception] {
         if ($_.Exception -match "No events were found that match the specified selection criteria") 
@@ -42,10 +41,10 @@ Try {
 		}
 
 [xml[]]$xmllog = $log.toXml()
+$count = $xmllog.Count
 
 $Events = foreach ($i in $xmllog) {$c++
 			
-			$count = $xmllog.Count
 			$Previous = [DateTime] ($i.Event.EventData.Data[4].'#text')
 			$New = [DateTime] ($i.Event.EventData.Data[5].'#text')
 			
@@ -58,6 +57,7 @@ $Events = foreach ($i in $xmllog) {$c++
 			'EventID' = $i.Event.System.EventRecordID
 			'PID' = $i.Event.System.Execution.ProcessID
 			'ThreadID' = $i.Event.System.Execution.ThreadID
+            'LogonID' = $i.Event.EventData.Data[6].'#text'
 			'User Name' = $i.Event.EventData.Data[1].'#text'
 			'SID' = $i.Event.EventData.Data[0].'#text'
 			'Domain Name' = $i.Event.EventData.Data[2].'#text'

@@ -7,6 +7,7 @@
 # (Get-WinEvent -ListProvider "Microsoft-Windows-Security-Auditing").Events|Where-Object {$_.Id -eq 4616}
 #
 # Reference: https://blogs.technet.microsoft.com/ashleymcglone/2013/08/28/powershell-get-winevent-xml-madness-getting-details-from-event-logs/ 
+# https://dfirblog.wordpress.com/2016/03/13/how-to-parse-windows-eventlog/
 
 # Show an Open File Dialog and return the file selected by the user
 Function Get-Folder($initialDirectory)
@@ -41,9 +42,8 @@ $c = 0
 $d = 0
 
 $File = $Folder + "Security.evtx"
-Try {
-	$Event = (Get-WinEvent -FilterHashtable @{path = $File; ID=4616} -ErrorAction Stop)    
-	$log = (Get-WinEvent -FilterHashtable @{path = $File; ID=4616})
+Try {   
+	$log = (Get-WinEvent -FilterHashtable @{path = $File; ID=4616} -ErrorAction Stop)
     Write-Host "(TimeEventsAll.ps1):" -f Yellow -nonewline; write-host " Selected Security Event Log: ($File)" -f White
 	}
 	catch [Exception] {
@@ -53,9 +53,8 @@ Try {
 
 
 $File1 = $Folder + "System.evtx"
-Try {
-	$Event1 = (Get-WinEvent -FilterHashtable @{path = $File1; ID=1; ProviderName="Microsoft-Windows-Kernel-General"} -ErrorAction Stop)    
-	$log1 = (Get-WinEvent -FilterHashtable @{path = $File1; ID=1; ProviderName="Microsoft-Windows-Kernel-General"})
+Try {  
+	$log1 = (Get-WinEvent -FilterHashtable @{path = $File1; ID=1; ProviderName="Microsoft-Windows-Kernel-General"} -ErrorAction Stop)
     Write-Host "(TimeEventsAll.ps1):" -f Yellow -nonewline; write-host " Selected System Event Log: ($File1)" -f White
 	}
 	catch [Exception] {
@@ -64,10 +63,10 @@ Try {
 		}
 
 [xml[]]$xmllog = $log.toXml()
+$count = $xmllog.Count
 
 $Events = foreach ($i in $xmllog) {$c++
 			
-			$count = $xmllog.Count
 			$Previous = [DateTime] ($i.Event.EventData.Data[4].'#text')
 			$New = [DateTime] ($i.Event.EventData.Data[5].'#text')
 			
@@ -85,6 +84,7 @@ $Events = foreach ($i in $xmllog) {$c++
             'Opcode' = $i.Event.System.Opcode
 			'PID' = $i.Event.System.Execution.ProcessID
 			'ThreadID' = $i.Event.System.Execution.ThreadID
+            'LogonID' = $i.Event.EventData.Data[6].'#text'
 			'User Name' = $i.Event.EventData.Data[1].'#text'
 			'SID' = $i.Event.EventData.Data[0].'#text'
 			'Domain Name' = $i.Event.EventData.Data[2].'#text'
@@ -92,7 +92,7 @@ $Events = foreach ($i in $xmllog) {$c++
 			'New Time' = Get-Date $i.Event.EventData.Data[5].'#text' -f s
 			'Previous Time' = Get-Date $i.Event.EventData.Data[4].'#text' -f s
 			'Change' = $New - $Previous
-            'ProcessId' = $i.Event.EventData.Data[6].'#text'
+            'ProcessId' = ""
 			'Reason' = ""
             'Process Name' = $i.Event.EventData.Data[7].'#text'
             'Channel' = $i.Event.System.Channel
@@ -102,10 +102,11 @@ $Events = foreach ($i in $xmllog) {$c++
 	}
 
 [xml[]]$xmllog1 = $log1.toXml()
+$count1 = $xmllog1.Count
 
 $Events1 = foreach ($e in $xmllog1) {$d++
 			
-			$count1 = $xmllog1.Count
+			
 			$OldTime = [DateTime] $e.Event.EventData.Data[1].'#text'
 			$NewTime = [DateTime] $e.Event.EventData.Data[0].'#text'
             $Reason = if($e.Event.EventData.Data[2].'#text' -eq 1){"An application or system component changed the time"} 

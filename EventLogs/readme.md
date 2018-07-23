@@ -19,6 +19,11 @@
      - "Microsoft-Windows-Security-Auditing" (ID: 4616)<br>
         `(Get-WinEvent -ListProvider "Microsoft-Windows-Security-Auditing").Events|Where-Object {$_.Id -eq 4616}`
 
+###  Win 10 Security.evtx EventID: 4624 parser  ###
+
+- [Win 10 EventID: 4616 parser](https://github.com/kacos2000/Win10-Research/blob/master/EventLogs/LoginEvents.ps1) - PowerShell script to read a live or offline **security.evtx** log and list all the [EventID:4624](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4624) entries *(An account was successfully logged on)* in a window. Selected rows are saved in a comma separated file (csv).  
+
+
 ###  Win 10 Security.evtx EventID: 4616 parser  ###
 
 - [Win 10 EventID: 4616 parser](https://github.com/kacos2000/Win10-Research/blob/master/EventLogs/TimeEvents.ps1) - PowerShell script to read a live or offline **security.evtx** log and list all the [EventID:4616](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4616) entries *(The system time was changed)* in a window. Selected rows are saved in a comma separated file (csv).  
@@ -56,7 +61,10 @@
   __________________
    
      - To Do:
-       - [ ] Parse 4624
-       - [ ] Correlate event id entries in 4616, 4624, 4688 etc
+       - [X] Parse 4624
+       - [ ] Check / Parse 4625
+       - [ ] Check / Parse 4648
+       - [ ] Check / Parse 4675 
+       - [ ] ~~Correlate event id entries in 4616, 4624, 4688 etc~~
        - [ ] Check Event ID 1006 of Microsoft-Windows-Partition%4Diagnostic.evtx [(USB Device Tracking ..)](https://df-stream.com/2018/07/partition-diagnostic-event-log-and-usb-device-tracking-p2/)
       

@@ -34,6 +34,7 @@ $c = 0
 
 Try {   
 	$log = (Get-WinEvent -FilterHashtable @{path = $File; ID=4616} -ErrorAction Stop) 
+    Write-Host "(TimeEvents.ps1):" -f Yellow -nonewline; write-host " Selected Security Event Log: ($File)" -f White
 	}
 	catch [Exception] {
         if ($_.Exception -match "No events were found that match the specified selection criteria") 
@@ -47,15 +48,18 @@ $Events = foreach ($i in $xmllog) {$c++
 			
 			$Previous = [DateTime] ($i.Event.EventData.Data[4].'#text')
 			$New = [DateTime] ($i.Event.EventData.Data[5].'#text')
+            $version = if ($l.Event.System.Version -eq 0){Windows Server 2008, Windows Vista}
+                        elseif($l.Event.System.Version -eq 01){Windows Server 2012, Windows 8}
+                        else {$l.Event.System.Version}
 			
 			#Progress Bar
-			write-progress -activity "Collecting entries with EventID=4616 - $c of $($xmllog.count)"  -PercentComplete (($c / $xmllog.count) * 100)		
+			write-progress -activity "Collecting entries with EventID=4616 - $c of $count)"  -PercentComplete (($c / $count) * 100)		
 			# Format output fields
 			
 			[PSCustomObject]@{ 
 			'Time Created' = Get-Date ($i.Event.System.TimeCreated.SystemTime) -format o
 			'EventID' = $i.Event.System.EventRecordID
-			'PID' = $i.Event.System.Execution.ProcessID
+			'PID' = [Convert]::ToInt64(($i.Event.System.Execution.ProcessID),16) 
 			'ThreadID' = $i.Event.System.Execution.ThreadID
             'LogonID' = $i.Event.EventData.Data[6].'#text'
 			'User Name' = $i.Event.EventData.Data[1].'#text'

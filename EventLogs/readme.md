@@ -17,7 +17,7 @@
   *Mbr log entry (copy/pasted to [HxD](https://mh-nexus.de/en/hxd/))*
   ![MBR](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/EventLogs/mb.JPG)
   
-  *Mbr entry of same drive in [Active Disk Editor](http://www.disk-editor.org/)*
+  *GPT Partition table entry of same drive in [Active Disk Editor](http://www.disk-editor.org/)*
   ![MbrinActiveDiskEditor](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/EventLogs/mb1.JPG)
 
 ###  Win 10 Security.evtx EventID: 4688 parser  ###

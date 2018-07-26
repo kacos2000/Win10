@@ -20,7 +20,7 @@ Function Get-Folder($initialDirectory)
     [System.Reflection.Assembly]::LoadWithPartialName("System.windows.forms")|Out-Null
     $foldername = New-Object System.Windows.Forms.FolderBrowserDialog
     $foldername.SelectedPath = "C:\Windows\System32\WinEvt\logs\"
-	$foldername.Description = "Select the location of Security.evtx log (\System32\WinEvt\logs\)"
+	$foldername.Description = "Select the location of Microsoft-Windows-Partition%4Diagnostic.evtx log (\System32\WinEvt\logs\)"
 	$foldername.ShowNewFolderButton = $false
 	
     if($foldername.ShowDialog() -eq "OK")

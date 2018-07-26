@@ -6,8 +6,10 @@
 # (Get-WinEvent -ListProvider "Microsoft-Windows-Kernel-General").Events|Where-Object {$_.Id -eq 1}
 # (Get-WinEvent -ListProvider "Microsoft-Windows-Security-Auditing").Events|Where-Object {$_.Id -eq 4616}
 #
-# Reference: https://blogs.technet.microsoft.com/ashleymcglone/2013/08/28/powershell-get-winevent-xml-madness-getting-details-from-event-logs/ 
+# References: 
+# https://blogs.technet.microsoft.com/ashleymcglone/2013/08/28/powershell-get-winevent-xml-madness-getting-details-from-event-logs/ 
 # https://dfirblog.wordpress.com/2016/03/13/how-to-parse-windows-eventlog/
+# https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/cc733210(v=ws.10)
 
 # Show an Open File Dialog and return the file selected by the user
 Function Get-Folder($initialDirectory)
@@ -69,7 +71,14 @@ $Events = foreach ($i in $xmllog) {$c++
 			
 			$Previous = [DateTime] ($i.Event.EventData.Data[4].'#text')
 			$New = [DateTime] ($i.Event.EventData.Data[5].'#text')
-			
+                         
+            $Leveli = if ($i.Event.System.Level -eq 0 ){"Undefined"}
+                        elseif($i.Event.System.Level -eq 1){"Critical"}
+                        elseif($i.Event.System.Level -eq 2){"Error"}
+                        elseif($i.Event.System.Level -eq 3){"Warning"}
+                        elseif($i.Event.System.Level -eq 4){"Information"}
+                        elseif($i.Event.System.Level -eq 5){"Verbose"}
+						
 			#Progress Bar
 			write-progress -id 1 -activity "Collecting Security entries with EventID=4616 - $c of $($count)"  -PercentComplete (($c / $count) * 100)		
 			# Format output fields
@@ -79,7 +88,7 @@ $Events = foreach ($i in $xmllog) {$c++
             'Time Created' = Get-Date ($i.Event.System.TimeCreated.SystemTime) -format o
 			'RecordID' = $i.Event.System.EventRecordID
             'Version' = $i.Event.System.Version
-            'Level' = $i.Event.System.Level
+            'Level' = $Leveli
             'Task' = $i.Event.System.Task
             'Opcode' = $i.Event.System.Opcode
 			'PID' = $i.Event.System.Execution.ProcessID
@@ -114,6 +123,16 @@ $Events1 = foreach ($e in $xmllog1) {$d++
                         elseif ($e.Event.EventData.Data[2].'#text' -eq 3){"System time adjusted to the new time zone"}
                         else {$e.Event.EventData.Data[2].'#text'}
 
+            
+                         
+            $Levele = if ($e.Event.System.Level -eq 0 ){"Undefined"}
+                        elseif($e.Event.System.Level -eq 1){"Critical"}
+                        elseif($e.Event.System.Level -eq 2){"Error"}
+                        elseif($e.Event.System.Level -eq 3){"Warning"}
+                        elseif($e.Event.System.Level -eq 4){"Information"}
+                        elseif($e.Event.System.Level -eq 5){"Verbose"}
+			
+
 			#Progress Bar
 			write-progress -id 2 -activity "Collecting System entries with EventID=1 - $d of $count1)"  -PercentComplete (($d / $count1) * 100)		
 			# Format output fields
@@ -123,7 +142,7 @@ $Events1 = foreach ($e in $xmllog1) {$d++
             'Time Created' = Get-Date ($e.Event.System.TimeCreated.SystemTime) -format o
 			'RecordID' = $e.Event.System.EventRecordID
 			'Version' = $e.Event.System.Version
-            'Level' = $e.Event.System.Level
+            'Level' = $Levele
             'Task' = $e.Event.System.Task
             'Opcode' = $e.Event.System.Opcode
             'PID' = [Convert]::ToInt64(($e.Event.System.Execution.ProcessID),16) 
@@ -147,7 +166,7 @@ $Events1
 }
 			
 #Format of the txt filename and path:
-$filenameFormat = $env:userprofile + "\desktop\TimeEvents_" + (Get-Date -Format "dd-MM-yyyy_hh-mm") + ".csv"
+$filenameFormat = $env:userprofile + "\desktop\TimeEventsAll_" + (Get-Date -Format "dd-MM-yyyy_hh-mm") + ".csv"
 Write-host "Selected Rows will be saved as: " -f Yellow -nonewline; Write-Host $filenameFormat -f White
 
 #Output results to screen table (and saves selected rows to txt) 		

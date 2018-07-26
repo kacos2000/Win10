@@ -51,24 +51,33 @@ $Events = foreach ($i in $xmllog) {$c++
             $version = if ($l.Event.System.Version -eq 0){Windows Server 2008, Windows Vista}
                         elseif($l.Event.System.Version -eq 01){Windows Server 2012, Windows 8}
                         else {$l.Event.System.Version}
+
+                         
+            $Level = if ($p.Event.System.Level -eq 0 ){"Undefined"}
+                        elseif($p.Event.System.Level -eq 1){"Critical"}
+                        elseif($p.Event.System.Level -eq 2){"Error"}
+                        elseif($p.Event.System.Level -eq 3){"Warning"}
+                        elseif($p.Event.System.Level -eq 4){"Information"}
+                        elseif($p.Event.System.Level -eq 5){"Verbose"}
 			
 			#Progress Bar
 			write-progress -activity "Collecting entries with EventID=4616 - $c of $count)"  -PercentComplete (($c / $count) * 100)		
 			# Format output fields
 			
 			[PSCustomObject]@{ 
-			'Time Created' = Get-Date ($i.Event.System.TimeCreated.SystemTime) -format o
-			'EventID' = $i.Event.System.EventRecordID
-			'PID' = [Convert]::ToInt64(($i.Event.System.Execution.ProcessID),16) 
-			'ThreadID' = $i.Event.System.Execution.ThreadID
-            'LogonID' = $i.Event.EventData.Data[6].'#text'
-			'User Name' = $i.Event.EventData.Data[1].'#text'
-			'SID' = $i.Event.EventData.Data[0].'#text'
-			'Domain Name' = $i.Event.EventData.Data[2].'#text'
-			'New Time' = Get-Date ($i.Event.EventData.Data[5].'#text') 
+			'Time Created' =  Get-Date ($i.Event.System.TimeCreated.SystemTime) -format o
+			'EventID' =       $i.Event.System.EventRecordID
+			'Level' =         $Level
+            'PID' =           [Convert]::ToInt64(($i.Event.System.Execution.ProcessID),16) 
+			'ThreadID' =      $i.Event.System.Execution.ThreadID
+            'LogonID' =       $i.Event.EventData.Data[6].'#text'
+			'User Name' =     $i.Event.EventData.Data[1].'#text'
+			'SID' =           $i.Event.EventData.Data[0].'#text'
+			'Domain Name' =   $i.Event.EventData.Data[2].'#text'
+			'New Time' =      Get-Date ($i.Event.EventData.Data[5].'#text') 
 			'Previous Time' = Get-Date ($i.Event.EventData.Data[4].'#text') 
-			'Change' = ($New - $Previous) 
-			'Process Name' = $i.Event.EventData.Data[7].'#text'
+			'Change' =        ($New - $Previous) 
+			'Process Name' =  $i.Event.EventData.Data[7].'#text'
 			}
 
 	}

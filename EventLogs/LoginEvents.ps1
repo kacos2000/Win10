@@ -102,6 +102,13 @@ $Events2 = foreach ($l in $xmllog2) {$e++
                         elseif($l.Event.EventData.Data[8].'#text' -eq 10){"RemoteInteractive"}
                         elseif($l.Event.EventData.Data[8].'#text' -eq 11){"CachedInteractive"}
                             else {$l.Event.EventData.Data[8].'#text'}
+             
+            $Level = if ($p.Event.System.Level -eq 0 ){"Undefined"}
+                        elseif($p.Event.System.Level -eq 1){"Critical"}
+                        elseif($p.Event.System.Level -eq 2){"Error"}
+                        elseif($p.Event.System.Level -eq 3){"Warning"}
+                        elseif($p.Event.System.Level -eq 4){"Information"}
+                        elseif($p.Event.System.Level -eq 5){"Verbose"}
 
             $ElevatedToken = if($l.Event.EventData.Data[26].'#text' -eq "%%1842"){"Yes"}
                                 elseif($l.Event.EventData.Data[26].'#text' -eq "%%1843"){"No"}
@@ -118,7 +125,7 @@ $Events2 = foreach ($l in $xmllog2) {$e++
             'Time Created' =      $Date  
 			'RecordID' =          $l.Event.System.EventRecordID
             'Version' =           $version
-            'Level' =             $l.Event.System.Level
+            'Level' =             $Level
             'Task' =              $l.Event.System.Task
             'Opcode' =            $l.Event.System.Opcode
 			'PID' =               ([Convert]::ToInt64(($l.Event.System.Execution.ProcessID),16))
@@ -160,7 +167,7 @@ $Events2 = foreach ($l in $xmllog2) {$e++
 			}
 
 	}
-$Events2
+
 function Result{
 $Events2
 }

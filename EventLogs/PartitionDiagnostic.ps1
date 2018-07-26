@@ -39,9 +39,6 @@ Function Get-Folder($initialDirectory)
 $F = Get-Folder +"\"
 $Folder = $F +"\"
 $DesktopPath = ($Env:WinDir+"\System32\winevt\Logs\")
-$B = [char]0x002F
-$PFile = $Folder + "Microsoft-Windows-Partition"+$B+"Diagnostic.evtx"
-Write-Host "(PartitionDiagnostic.ps1):" -f Yellow -nonewline; write-host " Selected Event Log: ($PFile)" -f White
 $g=0
 
 $sw4 = [Diagnostics.Stopwatch]::StartNew()

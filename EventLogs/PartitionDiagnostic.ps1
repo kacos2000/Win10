@@ -1,15 +1,7 @@
 ﻿#Requires -RunAsAdministrator
 
 #References: 
-# https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4688
-# https://support.microsoft.com/en-us/help/243330/well-known-security-identifiers-in-windows-operating-systems
 #
-#               
-# The authentication information fields provide detailed information about this specific logon request.
-#    - Logon GUID is a unique identifier that can be used to correlate this event with a KDC event.
-#    - Transited services indicate which intermediate services have participated in this logon request.
-#    - Package name indicates which sub-protocol was used among the NTLM protocols.
-#    - Key length indicates the length of the generated session key. This will be 0 if no session key was requested.
 # Critical - Value: 1. Indicates logs for a critical alert.
 # Error	- Value: 2. Indicates logs for an error.
 # Information - Value: 4. Indicates logs for an informational message.

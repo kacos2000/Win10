@@ -50,6 +50,7 @@
     - [EventID 4688](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4688) A new process has been created
     - [Are Windows timezone written in registry reliable?](https://stackoverflow.com/questions/47104967/are-windows-timezone-written-in-registry-reliable)
     - `tzutil  /l` : List timezones
+    - [Finding	Advanced Attacks and Malware With Only 6 Windows EventID’s (pdf)](https://conf.splunk.com/session/2015/conf2015_MGough_MalwareArchaelogy_SecurityCompliance_FindingAdvnacedAttacksAnd.pdf)
   
   __________________
    
@@ -60,10 +61,16 @@
   __________________
    
      - To Do:
-       - [X] Parse 4624
+       - [X] Parse 4616
+       - [X] Parse 4624/528/540
        - [ ] Check / Parse 4625
        - [ ] Check / Parse 4648
-       - [ ] Check / Parse 4675 
+       - [ ] Check / Parse 4663/567
+       - [ ] Check / Parse 4675
+       - [ ] Check / Parse 4688
+       - [ ] Check / Parse 5140/560
+       - [ ] Check / Parse 5156
+       - [ ] Check / Parse 7045/601 
        - [ ] ~~Correlate event id entries in 4616, 4624, 4688 etc~~
        - [ ] Check Event ID 1006 of Microsoft-Windows-Partition%4Diagnostic.evtx [(USB Device Tracking ..)](https://df-stream.com/2018/07/partition-diagnostic-event-log-and-usb-device-tracking-p2/)
       

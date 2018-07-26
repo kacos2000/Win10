@@ -1,6 +1,10 @@
 <!-- saved from url=(0054) https://kacos2000.github.io/Win10-Research/EventLogs/ --> 
 <!-- https://guides.github.com/features/mastering-markdown/ --> 
 
+###  Win 10 Security.evtx EventID: 4688 parser  ###
+
+- [Win 10 EventID: 4688 parser](https://github.com/kacos2000/Win10-Research/blob/master/EventLogs/ProcessCreatedEvents.ps1) - PowerShell script to read a live or offline **security.evtx** log and list all the [EventID:4688](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4688) entries *(A new process has been created)* in a window. 
+
 ###  Win 10 Security.evtx EventID: 4624 parser  ###
 
 - [Win 10 EventID: 4624 parser](https://github.com/kacos2000/Win10-Research/blob/master/EventLogs/LoginEvents.ps1) - PowerShell script to read a live or offline **security.evtx** log and list all the [EventID:4624](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4624) entries *(An account was successfully logged on)* in a window. Selected rows are saved in a comma separated file (csv).  
@@ -67,7 +71,7 @@
        - [ ] Check / Parse 4648
        - [ ] Check / Parse 4663/4567 (Audit File	System	=	Success, (Audit Registry =	Success ) )
        - [ ] Check / Parse 4675
-       - [ ] Check / Parse 4688 (Audit Process Creation =	Success)
+       - [X] Check / Parse 4688 (Audit Process Creation =	Success)
        - [ ] Check / Parse 5140/5560 (Audit File	Share	=	Success )
        - [ ] Check / Parse 5156 (Audit Filtering Platform Connection = Succes)
        - [ ] Check / Parse 7045/7040 

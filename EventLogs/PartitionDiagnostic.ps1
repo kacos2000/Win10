@@ -40,11 +40,11 @@ $F = Get-Folder +"\"
 $Folder = $F +"\"
 $DesktopPath = ($Env:WinDir+"\System32\winevt\Logs\")
 $g=0
-
+$PFile = $Folder+"Microsoft-Windows-Partition%4Diagnostic.evtx"
 $sw4 = [Diagnostics.Stopwatch]::StartNew()
 Try {  
 	$log4 = (Get-WinEvent -FilterHashtable @{path = $Folder + "Microsoft-Windows-Partition%4Diagnostic.evtx"; ProviderName= "Microsoft-Windows-Partition" ; ID=1006} -ErrorAction Stop)
-    Write-Host "(PartitionDiagnostic.ps1):" -f Yellow -nonewline; write-host " Selected Event Log: ($PFile)" -f White
+    Write-Host "(PartitionDiagnostic.ps1):" -f Yellow -nonewline; write-host "Selected Event Log: PFile" -f White
     }
 	catch [Exception] {
         if ($_.Exception -match "No events were found that match the specified selection criteria") 
@@ -53,7 +53,7 @@ Try {
 
 [xml[]]$xmllog4 = $log4.toXml()
 $Procount = $xmllog4.Count
-Write-Host "Microsoft-Windows-Partition/Diagnostic entries found: $Procount" -f White
+Write-Host "Microsoft-Windows-Partition/Diagnostic entries found:" -f Yellow -nonewline; write-host $Procount -f White
 
 $Events4 = foreach ($pd in $xmllog4) {$g++
 			

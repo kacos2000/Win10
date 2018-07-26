@@ -146,7 +146,7 @@ $Events3
 $sw3.stop()
 $t3=$sw3.Elapsed
 Result |Out-GridView -PassThru -Title "$Procount - 'Process Created' Events (ID 4688) - Processing Time $t3"
-write-host "Elapsed Time $t3 minutes" -f yellow
+write-host "Elapsed Time $t3" -f yellow
 
 
 [gc]::Collect()

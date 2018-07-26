@@ -177,7 +177,7 @@ Write-host "Selected Rows will be saved as: " -f Yellow -nonewline; Write-Host $
 
 $sw4.stop()
 $t4=$sw4.Elapsed
-Result |Out-GridView -PassThru -Title "$Procount - 'Microsoft-Windows-Partition/Diagnostic' Events (ID 1006) - Processing Time $t4"|Export-Csv -Path $filenameFormat
+Result |Out-GridView -PassThru -Title "'Microsoft-Windows-Partition/Diagnostic' Events (ID 1006) -> $Procount - Processing Time $t4"|Export-Csv -Path $filenameFormat
 write-host "Elapsed Time $t4" -f yellow
 
 

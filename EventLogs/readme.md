@@ -1,7 +1,7 @@
 <!-- saved from url=(0054) https://kacos2000.github.io/Win10-Research/EventLogs/ --> 
 <!-- https://guides.github.com/features/mastering-markdown/ --> 
 
-###  Win 10 Microsoft-Windows-Partition/Diagnostic.evtx EventID: 1006 parser  ###
+###  Win 10 *(version 1709+) Microsoft-Windows-Partition/Diagnostic.evtx EventID: 1006 parser  ###
 
 - [Win 10 EventID: 1006 parser](https://github.com/kacos2000/Win10-Research/blob/master/EventLogs/ProcessCreatedEvents.ps1) - PowerShell script to read a live or offline **Microsoft-Windows-Partition/Diagnostic.evtx** log and list all the [EventID:1006](https://df-stream.com/2018/05/partition-diagnostic-event-log-and-usb-device-tracking-p1/) entries in a window. Selected rows are saved in a comma separated file (csv). 71 fields with diagnostic information on Storage Devices (including USB). Among them, the MBR or VBR:
 

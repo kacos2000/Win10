@@ -39,15 +39,15 @@ Function Get-Folder($initialDirectory)
 $F = Get-Folder +"\"
 $Folder = $F +"\"
 $DesktopPath = ($Env:WinDir+"\System32\winevt\Logs\")
-
-$File = $Folder + "Microsoft-Windows-Partition/Diagnostic.evtx"
-Write-Host "(PartitionDiagnostic.ps1):" -f Yellow -nonewline; write-host " Selected Event Log: ($File)" -f White
+$B = [char]0x002F
+$PFile = $Folder + "Microsoft-Windows-Partition"+$B+"Diagnostic.evtx"
+Write-Host "(PartitionDiagnostic.ps1):" -f Yellow -nonewline; write-host " Selected Event Log: ($PFile)" -f White
 $g=0
 
 $sw4 = [Diagnostics.Stopwatch]::StartNew()
 Try {  
-	$log4 = (Get-WinEvent -FilterHashtable @{path = $File; ProviderName="Microsoft-Windows-Partition" ; ID=1006} -ErrorAction Stop)
-    Write-Host "(PartitionDiagnostic.ps1):" -f Yellow -nonewline; write-host " Selected Security Event Log: ($File)" -f White
+	$log4 = (Get-WinEvent -FilterHashtable @{path = $Folder + "Microsoft-Windows-Partition%4Diagnostic.evtx"; ProviderName= "Microsoft-Windows-Partition" ; ID=1006} -ErrorAction Stop)
+    Write-Host "(PartitionDiagnostic.ps1):" -f Yellow -nonewline; write-host " Selected Event Log: ($PFile)" -f White
     }
 	catch [Exception] {
         if ($_.Exception -match "No events were found that match the specified selection criteria") 
@@ -64,11 +64,11 @@ $Events4 = foreach ($pd in $xmllog4) {$g++
 			write-progress -id 1 -activity "Collecting Security entries with EventID=1006 - $g of $($xmllog4.Count)"  -PercentComplete (($g / $xmllog4.Count) * 100)		
 			
 			# Format output fields
-            $version = if ($pd.Event.System.Version -eq 0){"Win10"}
+            $Pversion = if ($pd.Event.System.Version -eq 0){"Win10"}
                         else {$pd.Event.System.Version}
             
           
-            $Level = if ($pd.Event.System.Level -eq 0 ){"Undefined"}
+            $PLevel = if ($pd.Event.System.Level -eq 0 ){"Undefined"}
                         elseif($pd.Event.System.Level -eq 1){"Critical"}
                         elseif($pd.Event.System.Level -eq 2){"Error"}
                         elseif($pd.Event.System.Level -eq 3){"Warning"}
@@ -76,17 +76,17 @@ $Events4 = foreach ($pd in $xmllog4) {$g++
                         elseif($pd.Event.System.Level -eq 5){"Verbose"}
 
 
-            $Date = (Get-Date ($pd.Event.System.TimeCreated.SystemTime) -f o)
+            $PDate = (Get-Date ($pd.Event.System.TimeCreated.SystemTime) -f o)
 			
 			 [PSCustomObject]@{
  			 'EventID' =           $pd.Event.System.EventID
-             'Time Created' =      $Date  
+             'Time Created' =      $PDate  
 			 'RecordID' =          $pd.Event.System.EventRecordID
-             'Version' =           $version
-             'Level' =             $Level
+             'Version' =           $Pversion
+             'Level' =             $PLevel
              'Task' =              $pd.Event.System.Task
              'Opcode' =            $pd.Event.System.Opcode
-			 'PID' =               [Convert]::ToInt64(($pd.Event.System.Execution.ProcessID),16)
+			 'PID' =               ([Convert]::ToInt64(($pd.Event.System.Execution.ProcessID),16))
 			 'ThreadID' =          $pd.Event.System.Execution.ThreadID
              'Computer' =          $pd.Event.System.Computer 
              'SID' =               $pd.Event.System.Security.UserID 

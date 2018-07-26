@@ -48,17 +48,17 @@ $Events = foreach ($i in $xmllog) {$c++
 			
 			$Previous = [DateTime] ($i.Event.EventData.Data[4].'#text')
 			$New = [DateTime] ($i.Event.EventData.Data[5].'#text')
-            $version = if ($l.Event.System.Version -eq 0){Windows Server 2008, Windows Vista}
-                        elseif($l.Event.System.Version -eq 01){Windows Server 2012, Windows 8}
-                        else {$l.Event.System.Version}
+            $version = if ($i.Event.System.Version -eq 0){Windows Server 2008, Windows Vista}
+                        elseif($i.Event.System.Version -eq 01){Windows Server 2012, Windows 8}
+                        else {$i.Event.System.Version}
 
                          
-            $Level = if ($p.Event.System.Level -eq 0 ){"Undefined"}
-                        elseif($p.Event.System.Level -eq 1){"Critical"}
-                        elseif($p.Event.System.Level -eq 2){"Error"}
-                        elseif($p.Event.System.Level -eq 3){"Warning"}
-                        elseif($p.Event.System.Level -eq 4){"Information"}
-                        elseif($p.Event.System.Level -eq 5){"Verbose"}
+            $Level = if ($i.Event.System.Level -eq 0 ){"Undefined"}
+                        elseif($i.Event.System.Level -eq 1){"Critical"}
+                        elseif($i.Event.System.Level -eq 2){"Error"}
+                        elseif($i.Event.System.Level -eq 3){"Warning"}
+                        elseif($i.Event.System.Level -eq 4){"Information"}
+                        elseif($i.Event.System.Level -eq 5){"Verbose"}
 			
 			#Progress Bar
 			write-progress -activity "Collecting entries with EventID=4616 - $c of $count)"  -PercentComplete (($c / $count) * 100)		

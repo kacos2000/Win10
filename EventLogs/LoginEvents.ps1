@@ -103,12 +103,12 @@ $Events2 = foreach ($l in $xmllog2) {$e++
                         elseif($l.Event.EventData.Data[8].'#text' -eq 11){"CachedInteractive"}
                             else {$l.Event.EventData.Data[8].'#text'}
              
-            $Level = if ($p.Event.System.Level -eq 0 ){"Undefined"}
-                        elseif($p.Event.System.Level -eq 1){"Critical"}
-                        elseif($p.Event.System.Level -eq 2){"Error"}
-                        elseif($p.Event.System.Level -eq 3){"Warning"}
-                        elseif($p.Event.System.Level -eq 4){"Information"}
-                        elseif($p.Event.System.Level -eq 5){"Verbose"}
+            $Level = if ($l.Event.System.Level -eq 0 ){"Undefined"}
+                        elseif($l.Event.System.Level -eq 1){"Critical"}
+                        elseif($l.Event.System.Level -eq 2){"Error"}
+                        elseif($l.Event.System.Level -eq 3){"Warning"}
+                        elseif($l.Event.System.Level -eq 4){"Information"}
+                        elseif($l.Event.System.Level -eq 5){"Verbose"}
 
             $ElevatedToken = if($l.Event.EventData.Data[26].'#text' -eq "%%1842"){"Yes"}
                                 elseif($l.Event.EventData.Data[26].'#text' -eq "%%1843"){"No"}

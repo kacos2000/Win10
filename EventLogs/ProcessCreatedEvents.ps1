@@ -57,7 +57,7 @@ Function Get-Folder($initialDirectory)
 		 }
 	        else  
         {
-            Write-Host "(4688ProcessEvents.ps1):" -f Yellow -nonewline; Write-Host " User Cancelled" -f White
+            Write-Host "(ProcessCreatedEvents.ps1):" -f Yellow -nonewline; Write-Host " User Cancelled" -f White
 			exit
         }
     return $Folder
@@ -95,16 +95,6 @@ $Events3 = foreach ($p in $xmllog3) {$f++
             $version = if ($p.Event.System.Version -eq 0){"Windows Server 2008, Windows Vista"}
                         elseif($p.Event.System.Version -eq 01){"Windows Server 2012R2, Windows 8.1"}
                         elseif($p.Event.System.Version -eq 02){"Windows 10"}
-            $LogonType = if ($p.Event.EventData.Data[8].'#text' -eq 2 ){"Interactive"}
-                        elseif($p.Event.EventData.Data[8].'#text' -eq 3){"Network"}
-                        elseif($p.Event.EventData.Data[8].'#text' -eq 4){"Batch"}
-                        elseif($p.Event.EventData.Data[8].'#text' -eq 5){"Service"}
-                        elseif($p.Event.EventData.Data[8].'#text' -eq 7){"Unlock"}
-                        elseif($p.Event.EventData.Data[8].'#text' -eq 8){"NetworkCleartext"}
-                        elseif($p.Event.EventData.Data[8].'#text' -eq 9){"NewCredentials"}
-                        elseif($p.Event.EventData.Data[8].'#text' -eq 10){"RemoteInteractive"}
-                        elseif($p.Event.EventData.Data[8].'#text' -eq 11){"CachedInteractive"}
-                            else {$p.Event.EventData.Data[8].'#text'}
             
             $MandatoryLabel = if ($p.Event.EventData.Data[14].'#text' -eq 'S-1-16-0' ){"Untrusted"}
                         elseif($p.Event.EventData.Data[14].'#text' -eq 'S-1-16-4096'){"Low integrity"}

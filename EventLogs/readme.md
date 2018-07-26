@@ -62,15 +62,15 @@
    
      - To Do:
        - [X] Parse 4616
-       - [X] Parse 4624/528/540
+       - [X] Parse 4624/4528/4540 (Audit Logon = Success & Failure)
        - [ ] Check / Parse 4625
        - [ ] Check / Parse 4648
-       - [ ] Check / Parse 4663/567
+       - [ ] Check / Parse 4663/4567 (Audit File	System	=	Success, (Audit Registry =	Success ) )
        - [ ] Check / Parse 4675
-       - [ ] Check / Parse 4688
-       - [ ] Check / Parse 5140/560
-       - [ ] Check / Parse 5156
-       - [ ] Check / Parse 7045/601 
+       - [ ] Check / Parse 4688 (Audit Process Creation =	Success)
+       - [ ] Check / Parse 5140/5560 (Audit File	Share	=	Success )
+       - [ ] Check / Parse 5156 (Audit Filtering Platform Connection = Succes)
+       - [ ] Check / Parse 7045/7040 
        - [ ] ~~Correlate event id entries in 4616, 4624, 4688 etc~~
        - [ ] Check Event ID 1006 of Microsoft-Windows-Partition%4Diagnostic.evtx [(USB Device Tracking ..)](https://df-stream.com/2018/07/partition-diagnostic-event-log-and-usb-device-tracking-p2/)
       

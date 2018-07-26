@@ -12,8 +12,13 @@
   ![VBR](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/EventLogs/pd0.JPG)
 
   *VBR above saved & opened with [Active Disk Editor](http://www.disk-editor.org/)*
-  ![inActiveDiskEditor](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/EventLogs/pd1.JPG)
-
+  ![VbrinActiveDiskEditor](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/EventLogs/pd1.JPG)
+  
+  *Mbr log entry (copy/pasted to HxD)*
+  ![MBR](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/EventLogs/mb.JPG)
+  
+  *Mbr entry of same drive in [Active Disk Editor](http://www.disk-editor.org/)*
+  ![MbrinActiveDiskEditor](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/EventLogs/mb1.JPG)
 
 ###  Win 10 Security.evtx EventID: 4688 parser  ###
 

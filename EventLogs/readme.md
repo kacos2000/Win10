@@ -14,7 +14,7 @@
   *VBR above saved & opened with [Active Disk Editor](http://www.disk-editor.org/)*
   ![VbrinActiveDiskEditor](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/EventLogs/pd1.JPG)
   
-  *Mbr log entry (copy/pasted to HxD)*
+  *Mbr log entry (copy/pasted to [HxD](https://mh-nexus.de/en/hxd/))*
   ![MBR](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/EventLogs/mb.JPG)
   
   *Mbr entry of same drive in [Active Disk Editor](http://www.disk-editor.org/)*

@@ -1,6 +1,20 @@
 <!-- saved from url=(0054) https://kacos2000.github.io/Win10-Research/EventLogs/ --> 
 <!-- https://guides.github.com/features/mastering-markdown/ --> 
 
+###  Win 10 Microsoft-Windows-Partition/Diagnostic.evtx EventID: 1006 parser  ###
+
+- [Win 10 EventID: 1006 parser](https://github.com/kacos2000/Win10-Research/blob/master/EventLogs/ProcessCreatedEvents.ps1) - PowerShell script to read a live or offline **Microsoft-Windows-Partition/Diagnostic.evtx** log and list all the [EventID:1006](https://df-stream.com/2018/05/partition-diagnostic-event-log-and-usb-device-tracking-p1/) entries in a window. Selected rows are saved in a comma separated file (csv). 71 fields with diagnostic information on Storage Devices (including USB). Among them, the MBR or VBR:
+
+  *Part of the results window:*
+  ![PartoftheResults](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/EventLogs/pd00.JPG)
+
+  *VBR0 entry (size & bytes) of a USB stick:*
+  ![VBR](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/EventLogs/pd0.JPG)
+
+  *VBR above saved & opened with [Active Disk Editor](http://www.disk-editor.org/)*
+  ![inActiveDiskEditor](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/EventLogs/pd1.JPG)
+
+
 ###  Win 10 Security.evtx EventID: 4688 parser  ###
 
 - [Win 10 EventID: 4688 parser](https://github.com/kacos2000/Win10-Research/blob/master/EventLogs/ProcessCreatedEvents.ps1) - PowerShell script to read a live or offline **security.evtx** log and list all the [EventID:4688](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4688) entries *(A new process has been created)* in a window. 

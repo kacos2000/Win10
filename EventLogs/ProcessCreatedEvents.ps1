@@ -20,19 +20,6 @@
 # https://msdn.microsoft.com/en-us/library/microsoft.windowsazure.diagnostics.loglevel.aspx 
 # https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.loglevel?view=aspnetcore-2.1
 #
-# %%1832 Identification
-# %%1833 Impersonation
-# %%1840 Delegation
-# %%1841 Denied by Process Trust Label ACE
-# %%1842 Yes
-# %%1843 No
-# %%1844 System
-# %%1845 Not Available
-# %%1846 Default
-# %%1847 DisallowMmConfig
-# %%1848 Off
-# %%1849 Auto
-# (https://tinyurl.com/y7gx8578)
 
 #https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventID=4688
 
@@ -69,13 +56,13 @@ $Folder = $F +"\"
 $DesktopPath = ($Env:WinDir+"\System32\winevt\Logs\")
 
 $File = $Folder + "Security.evtx"
-Write-Host "(LoginEvents.ps1):" -f Yellow -nonewline; write-host " Selected Event Log: ($File)" -f White
+Write-Host "(ProcessCreatedEvents.ps1):" -f Yellow -nonewline; write-host " Selected Event Log: ($File)" -f White
 $f=0
 
 $sw3 = [Diagnostics.Stopwatch]::StartNew()
 Try {  
 	$log3 = (Get-WinEvent -FilterHashtable @{path = $File; ProviderName="Microsoft-Windows-Security-Auditing" ; ID=4688} -ErrorAction Stop)
-    Write-Host "(LoginEvents.ps1):" -f Yellow -nonewline; write-host " Selected Security Event Log: ($File)" -f White
+    Write-Host "(ProcessCreatedEvents.ps1):" -f Yellow -nonewline; write-host " Selected Security Event Log: ($File)" -f White
     }
 	catch [Exception] {
         if ($_.Exception -match "No events were found that match the specified selection criteria") 

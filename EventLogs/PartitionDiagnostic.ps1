@@ -182,9 +182,13 @@ function Result{
 $Events4
 }
 
+#Format of the txt filename and path:
+$filenameFormat = $env:userprofile + "\desktop\PartDiag" + (Get-Date -Format "dd-MM-yyyy_hh-mm") + ".csv"
+Write-host "Selected Rows will be saved as: " -f Yellow -nonewline; Write-Host $filenameFormat -f White
+
 $sw4.stop()
 $t4=$sw4.Elapsed
-Result |Out-GridView -PassThru -Title "$Procount - 'Microsoft-Windows-Partition/Diagnostic' Events (ID 1006) - Processing Time $t4"
+Result |Out-GridView -PassThru -Title "$Procount - 'Microsoft-Windows-Partition/Diagnostic' Events (ID 1006) - Processing Time $t4"|Export-Csv -Path $filenameFormat
 write-host "Elapsed Time $t4" -f yellow
 
 

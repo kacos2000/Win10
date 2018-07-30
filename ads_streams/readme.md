@@ -1,9 +1,9 @@
 <!-- saved from url=(0056) https://kacos2000.github.io/Win10-Research/ads_streams/ --> 
 <!-- https://guides.github.com/features/mastering-markdown/ --> 
 
-# [ADS Streams view](https://github.com/kacos2000/Win10-Research/blob/master/ads_streams/streams.ps1) #
+## [ADS Streams view](https://github.com/kacos2000/Win10-Research/blob/master/ads_streams/streams.ps1) ##
 
-PowerShell script to list [Alternate Data Stream](https://blogs.technet.microsoft.com/askcore/2013/03/24/alternate-data-streams-in-ntfs/) *(NTFS)* and view the Zone.Identifier contents of files in a folder.  
+PowerShell [script](https://github.com/kacos2000/Win10-Research/blob/master/ads_streams/streams.ps1) to list [Alternate Data Stream](https://blogs.technet.microsoft.com/askcore/2013/03/24/alternate-data-streams-in-ntfs/) *(NTFS)* and view the Zone.Identifier contents of files in a folder.  
 
    The [script](https://github.com/kacos2000/Win10-Research/blob/master/ads_streams/streams.ps1) *(preferably executed in an Administrator console)* will parse recursively any selected folder and provide:
 
@@ -61,3 +61,8 @@ PowerShell script to list [Alternate Data Stream](https://blogs.technet.microsof
       - [Zone Identifier == kMDItemWhereFroms?](https://thinkdfir.com/2018/06/17/zone-identifier-kmditemwherefroms/)<br>
       - [Hacking Exposed](http://www.hecfblog.com/2018/06/daily-blog-402-solution-saturday-62318.html)<br>
       - [The Tale of SettingContent-ms Files](https://posts.specterops.io/the-tale-of-settingcontent-ms-files-f1ea253e4d39?gi=57a1d1779f80)
+
+
+## [FindLinks](https://github.com/kacos2000/Win10-Research/blob/master/ads_streams/FindLinks.ps1) ##
+
+  PowerShell [script](https://github.com/kacos2000/Win10-Research/blob/master/ads_streams/FindLinks.ps1) to list Files/Folders that are HardLinks or Junction Points.  

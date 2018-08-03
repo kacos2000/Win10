@@ -1,4 +1,7 @@
-﻿#Check if SQLite exists
+﻿#change Encoding to Unicode
+$PSDefaultParameterValues = @{ '*:Encoding' = 'Unicode' }
+
+#Check if SQLite exists
 try{write-host "sqlite3.exe version => "-f Yellow -nonewline; sqlite3.exe -version }
 catch {
     write-host "It seems that you do not have sqlite3.exe in the system path"
@@ -54,11 +57,12 @@ $sql =
         case when Notification.ExpiryTime = 0 then 'Expired' else datetime((Notification.ExpiryTime - 116444736000000000)/10000000, 'unixepoch') end as 'ExpiryTime',
         NotificationHandler.CreatedTime as 'H_Created',
         NotificationHandler.ModifiedTime as 'H_Modified',
-        replace(replace(replace(Notification.Payload, char(13,10,32,32,32,32,32,32,32,32),''),char(32,32),''),char(32,32,32,32),'') as 'Payload'
+		replace(replace(replace(Notification.Payload,char(13)||char(10),''),'  ',''),char(9),'') as 'Payload'
     from Notification
     Join NotificationHandler on NotificationHandler.RecordId = Notification.HandlerId
     order by Id desc
 "
+
 1..1000 | %{write-progress -id 1 -activity "Running SQLite query" -status "$([string]::Format("Time Elapsed: {0:d2}:{1:d2}:{2:d2}", $elapsedTime.Elapsed.hours, $elapsedTime.Elapsed.minutes, $elapsedTime.Elapsed.seconds))" -percentcomplete ($_/100);}
 
 $dbnresults = @(sqlite3.exe -readonly -separator '**' $dbn $sql |ConvertFrom-String -Delimiter '\u002A\u002A' -PropertyNames Id, H_Id, Application, HandlerType, Type, PayloadType, Tag, ArrivalTime, ExpiryTime, H_Created, H_Modified,Payload)
@@ -69,15 +73,13 @@ $elapsedTime.stop()
 $rn=0
 
 
-
 #Create Output
 $output = foreach ($item in $dbnresults ){$rn++
                     Write-Progress -id 2 -Activity "Creating Output" -Status "$rn of $($dbnresults.count))" -PercentComplete (([double]$rn / $dbnresults.count)*100) 
                     
                     
-                     try {$xmlitem = [xml]($item.payload)}
-                     catch {}   
-                               
+                     try {$xmlitem = [xml]($item.payload)} catch {}   
+                     
                     
                     if ($item.Type -eq 'tile' -and $xmlitem.tile.visual -ne $null){
 
@@ -86,7 +88,7 @@ $output = foreach ($item in $dbnresults ){$rn++
                         if($xmlitem.tile.visual.binding[0].displayName -ne $null) {$displayName = $xmlitem.tile.visual.binding[0].displayName} else {$displayName = ""}
 
                         
-                            if($xmlitem.tile.visual.binding[0].text.'#text' -ne $null) {$text1 = $xmlitem.tile.visual.binding[0].text.'#text'} 
+                            if($xmlitem.tile.visual.binding[0].text.'#text' -ne $null) {$text1 = $xmlitem.tile.visual.binding[0].text.'#text' } 
                         elseif($xmlitem.tile.visual.binding[1].text.'#text' -ne $null) {$text1 = $xmlitem.tile.visual.binding[1].text.'#text'} else {$text1 = ""}
 
                             if($xmlitem.tile.visual.binding[2].text -ne $null -and $xmlitem.tile.visual.binding[2].text[0].'#text' -ne $null) {$text1 = $xmlitem.tile.visual.binding[2].text[0].'#text'} 

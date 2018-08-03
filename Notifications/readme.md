@@ -27,6 +27,12 @@
    Powershell script to parse NTUSER.dat 
   (Software\Microsoft\Windows\CurrentVersion\PushNotifications\Backup) entries:
    ![PushNotifications Backup](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/B1.JPG)
+   
+   - [**PushBackup.sql**](https://github.com/kacos2000/Win10-Research/blob/master/Notifications/PushBackup.ps1)<br> 
+     SQLite query to parse the *(Windows 10 Notifications Wpndatabase)* WNSPushChannel table.
+   
+     Comparison of the results of [PushBackup.sql](https://github.com/kacos2000/Win10-Research/blob/master/Notifications/PushBackup.ps1) and [PushBackup.ps1](https://github.com/kacos2000/Win10-Research/blob/master/Notifications/PushBackup.ps1):
+     ![PushNotifications Backup](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/B2.JPG)
   
 ______________________________________________________________________________________________________  
   **Other Information:**

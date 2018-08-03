@@ -1,5 +1,5 @@
-﻿#change Encoding to Unicode
-$PSDefaultParameterValues = @{ '*:Encoding' = 'Unicode' }
+﻿#change Encoding to UTF-8
+$PSDefaultParameterValues = @{ '*:Encoding' = 'UTF-8' }
 
 #Check if SQLite exists
 try{write-host "sqlite3.exe version => "-f Yellow -nonewline; sqlite3.exe -version }
@@ -102,9 +102,9 @@ $output = foreach ($item in $dbnresults ){$rn++
 
                         if($xmlitem.tile.visual.binding[2].image.src -ne $null) {$image2 = $xmlitem.tile.visual.binding[2].image.src} else {$image2 = ""}
 
-                            if($xmlitem.tile.visual.binding[0].image.alt -ne $null) {$alt = $xmlitem.tile.visual.binding[0].image.src}
-                        elseif($xmlitem.tile.visual.binding[2].image.alt -ne $null) {$alt = $xmlitem.tile.visual.binding[2].image.src} else {$alt = ""}
-
+                            if($xmlitem.tile.visual.binding[0].image.alt -ne $null) {$alt1 = $xmlitem.tile.visual.binding[0].image.alt} 
+                        elseif($xmlitem.tile.visual.binding[1].image.alt -ne $null) {$alt1 = $xmlitem.tile.visual.binding[1].image.alt} else {$alt1 = ""}
+                            if($xmlitem.tile.visual.binding[2].image.alt -ne $null) {$alt2 = $xmlitem.tile.visual.binding[2].image.alt} else {$alt2 = ""}
                         }
                                                                  
                     elseif ($item.Type -eq 'badge' -and $xmlitem.badge -ne $null){
@@ -123,8 +123,9 @@ $output = foreach ($item in $dbnresults ){$rn++
                                 Text1 = $text1
                                 Text2 = $text2
                                 Text3 = $text3
-                                AltText = $alt
+                                AltText1 = $alt1
                                 Image_Medium = $image1 
+                                AltText2 = $alt2
                                 Image_Large = $image2 
                                 DisplayName = $displayName
                                 PayloadType = $item.PayloadType
@@ -142,6 +143,10 @@ $output = foreach ($item in $dbnresults ){$rn++
 $swn.stop()           
 $Tn = $swn.Elapsed  
 
-# Display results           
-$output|Out-GridView -PassThru -Title "There are ($dbncount) Notifications in : '$File' - QueryTime $Tn"
+#Format of the txt filename and path:
+$filenameFormat = $env:userprofile + "\desktop\Notifications_" + (Get-Date -Format "dd-MM-yyyy_hh-mm") + ".csv"
+Write-host "Selected Rows will be saved as: " -f Yellow -nonewline; Write-Host $filenameFormat -f White
+
+#Output results to screen table (and save selected rows to csv)          
+$output|Out-GridView -PassThru -Title "There are ($dbncount) Notifications in : '$File' - QueryTime $Tn"|Export-Csv -Path $filenameFormat
 [gc]::Collect() 

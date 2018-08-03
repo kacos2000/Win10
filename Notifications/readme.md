@@ -5,7 +5,7 @@
 
   [Notifications_WPNdatabase.sql](https://github.com/kacos2000/Win10-Research/blob/master/Notifications/Notifications_WPNdatabase.sql)<br> SQLite query to parse the Windows 10 Notifications Wpndatabase.
   
-  ![Preview](https://github.com/kacos2000/Win10-Research/blob/master/Notifications/Not.JPG)
+  ![Preview](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/Notifications/Not.JPG)
   
   #### Other Information: ####
   

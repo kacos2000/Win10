@@ -8,21 +8,17 @@
   ![Preview](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/Not.JPG)
   
  - [Notifications.ps1](https://github.com/kacos2000/Win10-Research/blob/master/Notifications/Notifications.ps1)<br> Powershell script to parse the Windows 10 Notifications Wpndatabase as well as information from the XML blobs.
-  
-  ![Preview1](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/ps1.JPG)
-  
-  ![Preview2](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/ps2.JPG)
-  
-  ![Preview3](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/ps3.JPG)
-  
-  ![Preview4](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/ps4.JPG)
+   1. ![Preview1](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/ps1.JPG)
+   2. ![Preview2](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/ps2.JPG)
+   3. ![Preview3](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/ps3.JPG)
+   4. ![Preview4](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/ps4.JPG)
   
  - [wpn.ps1](https://github.com/kacos2000/Win10-Research/blob/master/Notifications/wpn.ps1)<br> Powershell script to parse NTUSeer.dat 
   (\Software\Microsoft\Windows\CurrentVersion\PushNotifications\wpnidm) entries.
   
-  ![wpn](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/ps0a.JPG)
+   ![wpn](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/ps0a.JPG)
   
-  How the output of [Notifications.ps1](https://github.com/kacos2000/Win10-Research/blob/master/Notifications/Notifications.ps1) & [wpn.ps1](https://github.com/kacos2000/Win10-Research/blob/master/Notifications/wpn.ps1) are linked together:
+   How the output of [Notifications.ps1](https://github.com/kacos2000/Win10-Research/blob/master/Notifications/Notifications.ps1) & [wpn.ps1](https://github.com/kacos2000/Win10-Research/blob/master/Notifications/wpn.ps1) are linked together:
   ![wpn/notifications Link](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/ps0.JPG)
   
   

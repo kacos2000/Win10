@@ -7,6 +7,20 @@
   
   ![Preview](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/Not.JPG)
   
+  [Notifications.ps1](https://github.com/kacos2000/Win10-Research/blob/master/Notifications/Notifications.ps1)<br> Powershell script to parse the Windows 10 Notifications Wpndatabase as well as information from the XML blobs.
+  
+  ![Preview1](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/ps1.JPG)
+  
+  ![Preview2](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/ps2.JPG)
+  
+  ![Preview3](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/ps3.JPG)
+  
+  ![Preview4](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/ps4.JPG)
+  
+  
+  
+  
+  
   **Other Information:**
   
   - Database location: C:\Users\%username%\AppData\Local\Microsoft\Windows\Notifications\wpndatabase.db  

@@ -8,7 +8,7 @@ catch {
         Go to SQLite download page, and download precompiled binaries from Windows section.
         Instructions: http://www.sqlitetutorial.net/download-install-sqlite/
         Create a folder C:\sqlite and unzip above two zipped files in this folder which will give you sqlite3.def, sqlite3.dll and sqlite3.exe files.
-        Add C:\sqlite to your PATH environment" -f White
+        Add C:\sqlite to the system PATH (https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/)" -f White
 
     exit}
 

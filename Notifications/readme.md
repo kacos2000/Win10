@@ -3,12 +3,12 @@
 
 # Windows 10 - Notifications #
 
-
   [Notifications_WPNdatabase.sql](https://github.com/kacos2000/Win10-Research/blob/master/Notifications/Notifications_WPNdatabase.sql)<br> SQLite query to parse the Windows 10 Notifications Wpndatabase.
   
   ![Preview](https://github.com/kacos2000/Win10-Research/blob/master/Notifications/Not.JPG)
   
-  #### Other Information: 
+  #### Other Information: ####
+  
   - Database location: C:\Users\%username%\AppData\Local\Microsoft\Windows\Notifications\wpndatabase.db  
   - Backup (settings): NTUSER.DAT: Software\Microsoft\Windows\CurrentVersion\PushNotifications\Backup  
   - Image store location: C:\Users\%username%\AppData\Local\Microsoft\Windows\Notifications\wpnidm:

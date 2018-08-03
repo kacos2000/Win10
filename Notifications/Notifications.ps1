@@ -35,7 +35,7 @@ $File = Get-FileName -initialDirectory $dBPath
 # can also be copy/pasted and run on 'DB Browser for SQLite' 
 
 Try{(Get-Item $File).FullName}
-Catch{Write-Host "(WindowsTimeline.ps1):" -f Yellow -nonewline; Write-Host " User Cancelled" -f White; exit}
+Catch{Write-Host "(Notifications.ps1):" -f Yellow -nonewline; Write-Host " User Cancelled" -f White; exit}
 $elapsedTime = [system.diagnostics.stopwatch]::StartNew()    
 $swn = [Diagnostics.Stopwatch]::StartNew()
 

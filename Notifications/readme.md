@@ -7,7 +7,7 @@
   
   ![Preview](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/Not.JPG)
   
-  #### Other Information: ####
+  ### Other Information: ###
   
   - Database location: C:\Users\%username%\AppData\Local\Microsoft\Windows\Notifications\wpndatabase.db  
   - Backup (settings): NTUSER.DAT: Software\Microsoft\Windows\CurrentVersion\PushNotifications\Backup  

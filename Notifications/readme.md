@@ -19,5 +19,5 @@
      ![Notifications1](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/wpnidm1.JPG)
      - image folder view
      ![Notifications1](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/wpnidm2.JPG)
-     - Expiration Date (Filetime):
+     - Expiration Date (Filetime):<br>
      ![Notifications1](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/wpnidm3.JPG)

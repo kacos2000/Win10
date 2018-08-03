@@ -88,14 +88,14 @@ $output = foreach ($item in $dbnresults ){$rn++
                         if($xmlitem.tile.visual.binding[0].displayName -ne $null) {$displayName = $xmlitem.tile.visual.binding[0].displayName} else {$displayName = ""}
 
                         
-                            if($xmlitem.tile.visual.binding[0].text.'#text' -ne $null) {$text1 = $xmlitem.tile.visual.binding[0].text.'#text' } 
-                        elseif($xmlitem.tile.visual.binding[1].text.'#text' -ne $null) {$text1 = $xmlitem.tile.visual.binding[1].text.'#text'} else {$text1 = ""}
+                        if($xmlitem.tile.visual.binding[0].text.'#text' -ne $null) {$text1 = $xmlitem.tile.visual.binding[0].text.'#text' } else {$text1 = ""}
+                        if($xmlitem.tile.visual.binding[1].text.'#text' -ne $null) {$text1 = $xmlitem.tile.visual.binding[1].text.'#text'} else {$text2 = ""}
 
-                            if($xmlitem.tile.visual.binding[2].text -ne $null -and $xmlitem.tile.visual.binding[2].text[0].'#text' -ne $null) {$text1 = $xmlitem.tile.visual.binding[2].text[0].'#text'} 
-                        elseif($xmlitem.tile.visual.binding[2].text -ne $null -and $xmlitem.tile.visual.binding[2].text[1].'#text' -ne $null) {$text1 = $xmlitem.tile.visual.binding[2].text[1].'#text'} 
-                        elseif($xmlitem.tile.visual.binding[2].text -ne $null -and $xmlitem.tile.visual.binding[2].text[2].'#text' -ne $null) {$text1 = $xmlitem.tile.visual.binding[2].text[2].'#text'} 
-                        elseif($xmlitem.tile.visual.binding[2].text -ne $null -and $xmlitem.tile.visual.binding[2].text[3].'#text' -ne $null) {$text1 = $xmlitem.tile.visual.binding[2].text[3].'#text'} 
-                        elseif($xmlitem.tile.visual.binding[2].text -ne $null -and $xmlitem.tile.visual.binding[2].text[4].'#text' -ne $null) {$text1 = $xmlitem.tile.visual.binding[2].text[4].'#text'} else {$text2 = ""}
+                            if($xmlitem.tile.visual.binding[2].text -ne $null -and $xmlitem.tile.visual.binding[2].text[0].'#text' -ne $null) {$text2 = $xmlitem.tile.visual.binding[2].text[0].'#text'} 
+                        elseif($xmlitem.tile.visual.binding[2].text -ne $null -and $xmlitem.tile.visual.binding[2].text[1].'#text' -ne $null) {$text2 = $xmlitem.tile.visual.binding[2].text[1].'#text'} 
+                        elseif($xmlitem.tile.visual.binding[2].text -ne $null -and $xmlitem.tile.visual.binding[2].text[2].'#text' -ne $null) {$text2 = $xmlitem.tile.visual.binding[2].text[2].'#text'} 
+                        elseif($xmlitem.tile.visual.binding[2].text -ne $null -and $xmlitem.tile.visual.binding[2].text[3].'#text' -ne $null) {$text2 = $xmlitem.tile.visual.binding[2].text[3].'#text'} 
+                        elseif($xmlitem.tile.visual.binding[2].text -ne $null -and $xmlitem.tile.visual.binding[2].text[4].'#text' -ne $null) {$text2 = $xmlitem.tile.visual.binding[2].text[4].'#text'} else {$text3 = ""}
 
                             if($xmlitem.tile.visual.binding[0].image.src -ne $null) {$image1 = $xmlitem.tile.visual.binding[0].image.src} 
                         elseif($xmlitem.tile.visual.binding[1].image.src -ne $null) {$image1 = $xmlitem.tile.visual.binding[1].image.src} else {$image1 = ""}
@@ -122,9 +122,10 @@ $output = foreach ($item in $dbnresults ){$rn++
                                 Type = $item.Type
                                 Text1 = $text1
                                 Text2 = $text2
+                                Text3 = $text3
                                 AltText = $alt
-                                ImageSmall = $image1 
-                                ImageLarge = $image2 
+                                Image_Medium = $image1 
+                                Image_Large = $image2 
                                 DisplayName = $displayName
                                 PayloadType = $item.PayloadType
                                 Tag = $item.Tag 

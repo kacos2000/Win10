@@ -53,21 +53,21 @@ $count = $ipath.count
 $result =  ForEach ($item in $ipath){$i++
 	        Write-Progress -Activity "Collecting $File entries" -Status "Entry $i of $($count))" -PercentComplete (($i / $count)*100)
 	        
-            $Expiration = $item|get-itemproperty|Select-object -ExpandProperty Expiration
+            $Expiration = (get-itemproperty $item -ea 0).Expiration
             $Int64Value = [System.BitConverter]::ToInt64($Expiration, 0)
             $date = [DateTime]::FromFileTime($Int64Value) 
-            $Notifications = $item|get-itemproperty|Select-object -ExpandProperty Notifications
+            $Notifications = (get-itemproperty $item -ea 0).Notifications
             $NotInt64 = [System.BitConverter]::ToInt64($Notifications, 0)
-                        
+                       
             [PSCustomObject]@{
-            Filename = ($item|get-itemproperty).pschildname
-            Extension = $item|get-itemproperty|Select-object -ExpandProperty FileExtension
-            FileSize = $item|get-itemproperty|Select-object -ExpandProperty FileSize
-            Flag = $item|get-itemproperty|Select-object -ExpandProperty Flag
-            'Full Path and Filename' = $item|get-itemproperty|Select-object -ExpandProperty LocalPath
-            Application = $item|get-itemproperty|Select-object -ExpandProperty Aumid
+            Filename = (get-itemproperty $item -ea 0).pschildname
+            Extension = (get-itemproperty $item -ea 0).FileExtension
+            FileSize = (get-itemproperty $item -ea 0).FileSize
+            Flag = (get-itemproperty $item -ea 0).Flag
+            'Full Path and Filename' = (get-itemproperty $item -ea 0).LocalPath
+            Application = (get-itemproperty $item -ea 0).Aumid
             Expiration = Get-Date $date -f o
-            Count = $item|get-itemproperty|Select-object -ExpandProperty NotificationsCount
+            Count = (get-itemproperty $item -ea 0).NotificationsCount
             NotificationID = $NotInt64
 
 						}

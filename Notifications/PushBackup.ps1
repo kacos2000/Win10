@@ -51,18 +51,23 @@ $count = $ipath.count
 $result =  ForEach ($item in $ipath){$i++
 	        Write-Progress -Activity "Collecting $File entries" -Status "Entry $i of $($count))" -PercentComplete (($i / $count)*100)
 	        
-            $Creation = $item|get-itemproperty|Select-object -ExpandProperty ChannelCreation -ea 0
-            $Expiry = $item|get-itemproperty|Select-object -ExpandProperty ChannelExpiry -ea 0
-
-                        
+            $Creation = (get-itemproperty $item -ea 0).ChannelCreation 
+            $Expiry = (get-itemproperty $item -ea 0).ChannelExpiry 
+            $CID = if(((get-itemproperty $item -ea 0).ChannelId) -ne $null) {[Text.Encoding]::Unicode.GetBytes((get-itemproperty $item -ea 0).ChannelId)} else {$null}
+            $ChannelID =if($CID -ne $null){(([System.BitConverter]::ToString($CID, 0).Replace("-", " ")) -split ' '|ForEach-Object {[char][byte]"0x$_"}) -join ''}else{$null}
+            $Uri = if(((get-itemproperty $item -ea 0).ChannelUri) -ne $null) {[Text.Encoding]::Unicode.GetBytes((get-itemproperty $item -ea 0).ChannelUri)} else {$null}
+            $channelUri = if($Uri -ne $null){(([System.BitConverter]::ToString($Uri, 0).Replace("-", " ")) -split ' '|ForEach-Object {[char][byte]"0x$_"}) -join ''}else{$null}
+                 
             [PSCustomObject]@{
-            Application = ($item|get-itemproperty).pschildname
-            AppType = $item|get-itemproperty|Select-object -ExpandProperty AppType 
-            WnsID = $item|get-itemproperty|Select-object -ExpandProperty WnsID -ea 0
-            WNSEventName = $item|get-itemproperty|Select-object -ExpandProperty WNSEventName -ea 0
+            Application = (get-itemproperty $item -ea 0).pschildname
+            AppType = (get-itemproperty $item -ea 0).AppType 
+            WnsID = (get-itemproperty $item -ea 0).WnsID 
+            WNSEventName = (get-itemproperty $item -ea 0).WNSEventName 
+            ChannelId = $ChannelID
+            channelUri = $channelUri
             ChannelExpiry = if ($Expiry -ne $null){Get-Date ([DateTime]::FromFileTime($Expiry)) -Format o} else{$null}
             ChannelCreation = if ($Creation -ne $null){Get-Date ([DateTime]::FromFileTime($Creation)) -Format o} else{$null}
-            Setting = $item|get-itemproperty|Select-object -ExpandProperty Setting -ea 0
+            Setting = (get-itemproperty $item -ea 0).Setting 
 						}
 			}		 	
 

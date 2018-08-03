@@ -6,7 +6,7 @@ Function Get-FileName($initialDirectory)
 {  
 [System.Reflection.Assembly]::LoadWithPartialName("System.windows.forms") |Out-Null
 $OpenFileDialog = New-Object System.Windows.Forms.OpenFileDialog
-$OpenFileDialog.Title = 'Select SYSTEM hive file to open (the file will be accessed Read Only)'
+$OpenFileDialog.Title = 'Select AmCache.hve  file to open'
 $OpenFileDialog.initialDirectory = $initialDirectory
 $OpenFileDialog.Filter = "AmCache.hve (*.hve)|AmCache.hve"
 $OpenFileDialog.ShowDialog()| Out-Null   
@@ -56,12 +56,13 @@ $result =  ForEach ($item in $ipath){$i++
 	$d = $item|get-itemproperty|Select-object -ExpandProperty LinkDate
     $p = 'MM/dd/yyyy HH:mm:ss'
     try {$dt = [datetime]::ParseExact($d,$p,$null)|Get-date -f s} catch {$dt = " "} 
-    $B = $item|get-itemproperty|Select-object -ExpandProperty LongPathHash|Out-String|ConvertFrom-String -PropertyNames Name, Hash -Delimiter '\u007C'       
+    $B = $item|get-itemproperty|Select-object -ExpandProperty LongPathHash|out-string|ConvertFrom-String -PropertyNames Name, Hash -Delimiter '\u007C'       
+    $Hash = $B.Hash.remove(16).trimend()
     
-            
+                        
             [PSCustomObject]@{
             App = $B.Name
-            Hash =($B.Hash).substring(0,16)
+            Hash = $Hash
             BinaryType = $item|get-itemproperty|Select-object -ExpandProperty BinaryType
             BinFileVersion = $item|get-itemproperty|Select-object -ExpandProperty BinFileVersion
             BinProductVersion = $item|get-itemproperty|Select-object -ExpandProperty BinProductVersion
@@ -81,6 +82,8 @@ $result =  ForEach ($item in $ipath){$i++
 			TZ_ActiveBias = $Bias
 						}
 			}		 	
+
+
 
 # output to Window
 $result |Out-GridView -PassThru -Title "$count AmCache.hve InventoryApplicationFile entries of ($file)"

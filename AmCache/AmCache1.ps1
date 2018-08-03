@@ -6,7 +6,7 @@ Function Get-FileName($initialDirectory)
 {  
 [System.Reflection.Assembly]::LoadWithPartialName("System.windows.forms") |Out-Null
 $OpenFileDialog = New-Object System.Windows.Forms.OpenFileDialog
-$OpenFileDialog.Title = 'Select SYSTEM hive file to open (the file will be accessed Read Only)'
+$OpenFileDialog.Title = 'Select AmCache.hve  file to open'
 $OpenFileDialog.initialDirectory = $initialDirectory
 $OpenFileDialog.Filter = "AmCache.hve (*.hve)|AmCache.hve"
 $OpenFileDialog.ShowDialog()| Out-Null   
@@ -56,7 +56,7 @@ $InventoryApplicationFile =  ForEach ($item in $ipath){$i++
 	$d = $item|get-itemproperty|Select-object -ExpandProperty LinkDate
     $p = 'MM/dd/yyyy HH:mm:ss'
     try {$dt = [datetime]::ParseExact($d,$p,$null)|Get-date -f s} catch {$dt = " "} 
-    $B = $item|get-itemproperty|Select-object -ExpandProperty LongPathHash|Out-String|ConvertFrom-String -PropertyNames Name, Hash -Delimiter '\u007C'       
+    $B = $item |get-itemproperty |Select-object -ExpandProperty LongPathHash|Out-String|ConvertFrom-String -PropertyNames Name, Hash -Delimiter '\u007C'       
     
             
             [PSCustomObject]@{

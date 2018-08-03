@@ -13,27 +13,28 @@
    3. ![Preview3](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/ps3.JPG)
    4. ![Preview4](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/ps4.JPG)
   
+  
  - [**wpn.ps1**](https://github.com/kacos2000/Win10-Research/blob/master/Notifications/wpn.ps1)<br> Powershell script to parse NTUSER.dat 
   (\Software\Microsoft\Windows\CurrentVersion\PushNotifications\wpnidm) entries:
   
    ![wpn](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/ps0a.JPG)
   
    How the output of [Notifications.ps1](https://github.com/kacos2000/Win10-Research/blob/master/Notifications/Notifications.ps1) & [wpn.ps1](https://github.com/kacos2000/Win10-Research/blob/master/Notifications/wpn.ps1) are linked together:
-  ![wpn/notifications Link](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/ps0.JPG)
+   ![wpn/notifications Link](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/ps0.JPG)
   
   
+  - [**PushBackup.ps1**](https://github.com/kacos2000/Win10-Research/blob/master/Notifications/PushBackup.ps1)<br> 
+   Powershell script to parse NTUSER.dat 
+  (Software\Microsoft\Windows\CurrentVersion\PushNotifications\Backup) entries:
+   ![PushNotifications Backup](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/B1.JPG)
+  
+______________________________________________________________________________________________________  
   **Other Information:**
   
   - Database location: C:\Users\%username%\AppData\Local\Microsoft\Windows\Notifications\wpndatabase.db  
   - Backup (settings): 
      * **NTUSER.DAT: Software\Microsoft\Windows\CurrentVersion\PushNotifications\Backup** 
      ![](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/wfn1.JPG)
-       channelExpiry & channelCreation -> Filetime<br>
-      
-     * ChannelURI (dB Table: WNSPushChannel.URI):
-       ![](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/wfn2.JPG)
-     * ChannelId (dB Table: WNSPushChannel.ChannelId):
-       ![](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/wfn3.JPG)
   
   - Image store location: C:\Users\%username%\AppData\Local\Microsoft\Windows\Notifications\wpnidm:
   
@@ -53,4 +54,4 @@
      |            |            
      | ![b](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/x1.JPG) | ![t](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/x2.JPG)
   
-  
+  ______________________________________________________________________________________________________  

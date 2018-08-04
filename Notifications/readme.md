@@ -33,7 +33,7 @@
    - [**PushBackup.sql**](https://github.com/kacos2000/Win10-Research/blob/master/Notifications/PushBackup.sql)<br> 
      SQLite query to parse the *(Windows 10 Notifications Wpndatabase)* WNSPushChannel table.
    
-     Comparison of the results of [PushBackup.sql](https://github.com/kacos2000/Win10-Research/blob/master/Notifications/PushBackup.ps1) and [PushBackup.ps1](https://github.com/kacos2000/Win10-Research/blob/master/Notifications/PushBackup.ps1):
+     Comparison of the results of [PushBackup.sql](https://github.com/kacos2000/Win10-Research/blob/master/Notifications/PushBackup.sql) and [PushBackup.ps1](https://github.com/kacos2000/Win10-Research/blob/master/Notifications/PushBackup.ps1):
      ![PushNotifications Backup](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/B2.JPG)
 ______________________________________________________________________________________________________   
    * **[Notifications Visualizer:](https://www.microsoft.com/en-us/p/notifications-visualizer/9nblggh5xsl1?rtc=1)**

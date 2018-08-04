@@ -61,3 +61,13 @@ ________________________________________________________________________________
      | ![b](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/x1.JPG) | ![t](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/x2.JPG) | ![t](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/x3.JPG)
   
   ______________________________________________________________________________________________________  
+  
+   * **References:**
+      - [Notifications Visualizer](https://www.microsoft.com/en-us/p/notifications-visualizer/9nblggh5xsl1?rtc=1)
+      - [Toast content](https://docs.microsoft.com/en-us/windows/uwp/design/shell/tiles-and-notifications/adaptive-interactive-toasts)
+      - [Toast content schema](https://docs.microsoft.com/en-us/windows/uwp/design/shell/tiles-and-notifications/toast-schema)
+      - [Tiles for UWP apps](https://docs.microsoft.com/en-us/windows/uwp/design/shell/tiles-and-notifications/creating-tiles)
+      - [Badge notifications for UWP apps](https://docs.microsoft.com/en-us/windows/uwp/design/shell/tiles-and-notifications/badges)
+      - [Notification delivery method](https://docs.microsoft.com/en-us/windows/uwp/design/shell/tiles-and-notifications/choosing-a-notification-delivery-method)
+      - [Create adaptive tiles](https://docs.microsoft.com/en-us/windows/uwp/design/shell/tiles-and-notifications/create-adaptive-tiles)
+      - [**By default, tile and badge notifications expire three days after being downloaded**. When a notification expires, the content is removed from the tile or queue and is no longer shown to the user. ](https://docs.microsoft.com/en-us/windows/uwp/design/shell/tiles-and-notifications/windows-push-notification-services--wns--overview)

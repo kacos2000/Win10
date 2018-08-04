@@ -36,7 +36,7 @@
      Comparison of the results of [PushBackup.sql](https://github.com/kacos2000/Win10-Research/blob/master/Notifications/PushBackup.sql) and [PushBackup.ps1](https://github.com/kacos2000/Win10-Research/blob/master/Notifications/PushBackup.ps1):
      ![PushNotifications Backup](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/B2.JPG)
 ______________________________________________________________________________________________________   
-   * **[Notifications Visualizer:](https://www.microsoft.com/en-us/p/notifications-visualizer/9nblggh5xsl1?rtc=1)**
+   * **[Microsoft Notifications Visualizer:](https://www.microsoft.com/en-us/p/notifications-visualizer/9nblggh5xsl1?rtc=1)**
      
      * A very usefull app *(MS Store)* - Simply create a new document, and copy/paste the XML Blob from the database:
    
@@ -75,7 +75,7 @@ ________________________________________________________________________________
   ______________________________________________________________________________________________________  
   
    * **References:**
-      - [Notifications Visualizer](https://www.microsoft.com/en-us/p/notifications-visualizer/9nblggh5xsl1?rtc=1)
+      - [Microsoft Notifications Visualizer](https://www.microsoft.com/en-us/p/notifications-visualizer/9nblggh5xsl1?rtc=1)
       - [Toast content](https://docs.microsoft.com/en-us/windows/uwp/design/shell/tiles-and-notifications/adaptive-interactive-toasts)
       - [Toast content schema](https://docs.microsoft.com/en-us/windows/uwp/design/shell/tiles-and-notifications/toast-schema)
       - [Tiles for UWP apps](https://docs.microsoft.com/en-us/windows/uwp/design/shell/tiles-and-notifications/creating-tiles)

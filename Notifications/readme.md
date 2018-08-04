@@ -55,9 +55,9 @@ ________________________________________________________________________________
      
    - **Typical XML blob structure:**
   
-     | Badge      | Tile       
-     | :---:      | :---:    
-     |            |            
-     | ![b](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/x1.JPG) | ![t](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/x2.JPG)
+     | Badge      | Tile    | Toast     
+     | :---:      | :---:   | :---:    
+     |            |         |            
+     | ![b](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/x1.JPG) | ![t](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/x2.JPG) | ![t](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/x3.JPG)
   
   ______________________________________________________________________________________________________  

@@ -1,10 +1,9 @@
-﻿#Check if SQLite exists
+#Check if SQLite exists
 try{write-host "sqlite3.exe version => "-f Yellow -nonewline; sqlite3.exe -version }
 catch {
     write-host "It seems that you do not have sqlite3.exe in the system path"
     write-host "Please read below`n" -f Yellow
     write-host "Install SQLite On Windows:`n
-
         Go to SQLite download page, and download precompiled binaries from Windows section.
         Instructions: http://www.sqlitetutorial.net/download-install-sqlite/
         Create a folder C:\sqlite and unzip above two zipped files in this folder which will give you sqlite3.def, sqlite3.dll and sqlite3.exe files.
@@ -62,7 +61,7 @@ select
     datetime((WNSPushChannel.CreatedTime - 116444736000000000)/10000000, 'unixepoch') as 'WNS_CreatedTime',
     datetime((WNSPushChannel.ExpiryTime - 116444736000000000)/10000000, 'unixepoch') as 'WNS_ExpiryTime',
     hex(Notification.ActivityId) as 'ActivityId',
-    replace(replace(replace(Notification.Payload,char(13)||char(10),''),'  ',''),char(9),'') as 'Payload'
+    replace(replace(replace(replace(Notification.Payload, x'0A',''),x'09',''),x'20'||x'20',''),x'0D','') as 'payload'
     from Notification
 Join NotificationHandler on NotificationHandler.RecordId = Notification.HandlerId
 Left Join WNSPushChannel on WNSPushChannel.HandlerId = NotificationHandler.RecordId
@@ -89,23 +88,21 @@ $output = foreach ($item in $dbnresults ){$rn++
                     try {$xmlitem = [xml]($item.payload)} catch {}   
                      
                     
-                    if ($item.Type -eq 'tile' -and $xmlitem.tile.visual -ne $null){
+                    if ($item.Type -eq 'tile' -and $xmlitem.tile -ne $null){
 
                         if($xmlitem.tile.visual.version -in (1..10)){$version =  $xmlitem.tile.visual.version} else {$version = ""}
 
-                        if($xmlitem.tile.visual.binding[0].displayName -ne $null) {$displayName = $xmlitem.tile.visual.binding[0].displayName} else {$displayName = ""}
+                        if($xmlitem.tile.visual.binding.displayName -ne $null) {$displayName = $xmlitem.tile.visual.binding.displayName} else {$displayName = ""}
 
-                        
-                        if($xmlitem.tile.visual.binding[0].text.'#text' -ne $null) {$text1 = $xmlitem.tile.visual.binding[0].text.'#text' } 
-                        elseif($xmlitem.tile.visual.binding[0].text.'#cdata-section' -ne $null) {$text1 = $xmlitem.tile.visual.binding[0].text.'#cdata-section'}else {$text1 = ""}  
-                        
-                        if($xmlitem.tile.visual.binding[1].text.'#text' -ne $null) {$text1 = $xmlitem.tile.visual.binding[1].text.'#text'} 
-                        elseif($xmlitem.tile.visual.binding[1].text.'#cdata-section' -ne $null) {$text2 = $xmlitem.tile.visual.binding[1].text.'#cdata-section'}else {$text2 = ""}
+                         
+                        if($xmlitem.tile.visual.binding[0].text.'#text' -ne $null)  {$text1 = $xmlitem.tile.visual.binding[0].text.'#text' } 
+                            elseif($xmlitem.tile.visual.binding[0].text.'#cdata-section' -ne $null) {$text1 = $xmlitem.tile.visual.binding[0].text.'#cdata-section'}else {$text1 = ""}  
+                        if($xmlitem.tile.visual.binding[1].text.'#text' -ne $null)  {$text2 = $xmlitem.tile.visual.binding[1].text.'#text'}
+                            elseif($xmlitem.tile.visual.binding[1].text.'#cdata-section' -ne $null) {$text2 = $xmlitem.tile.visual.binding[1].text.'#cdata-section'}else {$text2 = ""}
+                        if($xmlitem.tile.visual.binding[2].text.'#text' -ne $null)  {$text3 = $xmlitem.tile.visual.binding[2].text.'#text'} 
+                            elseif($xmlitem.tile.visual.binding[2].text.'#cdata-section' -ne $null) {$text3 = $xmlitem.tile.visual.binding[2].text.'#cdata-section'}else {$text3 = ""}
 
-                        if($xmlitem.tile.visual.binding[2].text -ne $null -and $xmlitem.tile.visual.binding[2].text.'#text' -ne $null) {$text3 = $xmlitem.tile.visual.binding[2].text.'#text'} 
-                        elseif($xmlitem.tile.visual.binding[2].text.'#cdata-section' -ne $null) {$text3 = $xmlitem.tile.visual.binding[2].text.'#cdata-section'}else {$text3 = ""}
-
-                        if($xmlitem.tile.visual.binding[3].text -ne $null -and $xmlitem.tile.visual.binding[3].text.'#text' -ne $null) {$text4 = $xmlitem.tile.visual.binding[2].text.'#text'}  
+                        if($xmlitem.tile.visual.binding[3].tex.'#text' -ne $null)   {$text4 = $xmlitem.tile.visual.binding[3].text.'#text'}  
                         elseif($xmlitem.tile.visual.binding[3].text.'#cdata-section' -ne $null) {$text4 = $xmlitem.tile.visual.binding[3].text.'#cdata-section'}else {$text4 = ""}
 
                         
@@ -121,13 +118,25 @@ $output = foreach ($item in $dbnresults ){$rn++
                             if($xmlitem.tile.visual.binding[0].image.alt -ne $null) {$alt1 = $xmlitem.tile.visual.binding[0].image.alt} 
                         elseif($xmlitem.tile.visual.binding[1].image.alt -ne $null) {$alt1 = $xmlitem.tile.visual.binding[1].image.alt} else {$alt1 = ""}
                             if($xmlitem.tile.visual.binding[2].image.alt -ne $null) {$alt2 = $xmlitem.tile.visual.binding[2].image.alt} else {$alt2 = ""}
-                        }
+                        } else {} 
                                                                  
-                    elseif ($item.Type -eq 'badge' -and $xmlitem.badge -ne $null){
+                    if ($item.Type -eq 'badge' -and $xmlitem.badge -ne $null){
                         if($xmlitem.badge.value -ne $null) {$text1 = "Value = " + $xmlitem.badge.value} else {$text1 = $null}
                         if($xmlitem.badge.version -ne $null) {$version = $xmlitem.badge.version} else {$version = $null}
                         } 
-                    else {}                                                                             
+                    else {} 
+                    if ($item.Type -eq 'toast' -and $xmlitem.toast -ne $null){
+                        if($xmlitem.toast.visual.binding.text -ne $null) {$text1 = $xmlitem.toast.visual.binding.text}else {$text1 = $null}  
+                        if($xmlitem.toast.visual.binding.image.src -ne $null) {$image1 = $xmlitem.toast.visual.binding.image.src} else {$image1 = $null}
+                        $text2 = $null
+                        $text3 = $null
+                        $text4 = $null
+                        $image2 = $null
+                        $hint1 = $null
+                        $hint2 = $null
+                        $hint3 = $null
+                    }else {$null}
+                                                                                           
                     
                     [PSCustomObject]@{
                                 ID = $item.ID 
@@ -163,7 +172,7 @@ $output = foreach ($item in $dbnresults ){$rn++
                                 ActivityId = $item.ActivityId
                                 Payload = $item.payload
                                  }
-                        }                              
+                           }                          
 
 
 #Stop Timer2

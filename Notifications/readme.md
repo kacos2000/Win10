@@ -7,7 +7,9 @@
   
   ![Preview](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/Not.JPG)
   
- - [**Notifications.ps1**](https://github.com/kacos2000/Win10-Research/blob/master/Notifications/Notifications.ps1)<br> Powershell script to parse the Windows 10 Notifications Wpndatabase as well as information from the XML blobs:
+ - [**Notifications.ps1**](https://github.com/kacos2000/Win10-Research/blob/master/Notifications/Notifications.ps1)
+    <br> Powershell script to parse the Windows 10 Notifications Wpndatabase as well as information from the XML blobs: 
+      **UPDATED** - Toasts, Tiles & Badges now work ok *(till proven otherwise)* :)
    1. ![Preview1](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/ps1.JPG)
    2. ![Preview2](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/ps2.JPG)
    3. ![Preview3](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/ps3.JPG)
@@ -34,12 +36,12 @@
      Comparison of the results of [PushBackup.sql](https://github.com/kacos2000/Win10-Research/blob/master/Notifications/PushBackup.ps1) and [PushBackup.ps1](https://github.com/kacos2000/Win10-Research/blob/master/Notifications/PushBackup.ps1):
      ![PushNotifications Backup](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/B2.JPG)
 ______________________________________________________________________________________________________   
-   **[Notifications Visualizer:](https://www.microsoft.com/en-us/p/notifications-visualizer/9nblggh5xsl1?rtc=1)**
+   * **[Notifications Visualizer:](https://www.microsoft.com/en-us/p/notifications-visualizer/9nblggh5xsl1?rtc=1)**
      
-   * A very usefull app *(MS Store)* - Simply create a new document, and copy/paste the XML Blob from the database:
+     * A very usefull app *(MS Store)* - Simply create a new document, and copy/paste the XML Blob from the database:
    
-      *DB Browser for SQLite:*<br>
-     ![DB Browser for SQLite](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/v1.JPG)
+       *DB Browser for SQLite:*<br>
+       ![DB Browser for SQLite](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/v1.JPG)
      
       *Visualizer Window:*<br>
      ![Visualizer Window](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/v2.JPG)

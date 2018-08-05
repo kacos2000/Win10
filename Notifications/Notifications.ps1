@@ -69,7 +69,7 @@ select
     from Notification
 Join NotificationHandler on NotificationHandler.RecordId = Notification.HandlerId
 Left Join WNSPushChannel on WNSPushChannel.HandlerId = NotificationHandler.RecordId
-order by id desc
+order by ID desc
 "
 
 1..1000 | %{write-progress -id 1 -activity "Running SQLite query" -status "$([string]::Format("Time Elapsed: {0:d2}:{1:d2}:{2:d2}", $elapsedTime.Elapsed.hours, $elapsedTime.Elapsed.minutes, $elapsedTime.Elapsed.seconds))" -percentcomplete ($_/100);}
@@ -89,7 +89,7 @@ $rn=0
 $output = foreach ($item in $dbnresults ){$rn++
                     Write-Progress -id 2 -Activity "Creating Output" -Status "$rn of $($dbnresults.count))" -PercentComplete (([double]$rn / $dbnresults.count)*100) 
                     
-                    $ID=$HandlerId=$HandlerType=$Type=$Application=$BadgeValue=$Version=$Text1=$Text2=$Text3=$Text4=$Text5=$Text6=$ToastLaunch=$ToastActivationType=$ToastScenario=$SubText1=$SubText2=$SubText3=$TImeStamp=$AudioSrc=$Hint1=$Hint2=$Hint3=$Arg=$Content=$AltText1=$ImgHint1=$Image1=$AltText2=$ImgHint2=$Image2=$DisplayName=$Tag=$ArrivalTime=$ExpiryTime=$HandlerCreated=$HandlerModified=$WNSId=$WNFEventName =$ChannelID =$Uri =$WNSCreatedTime =$WNSExpiryTime=$ActivityId=$PayloadType=$Payload = $null                   
+                    $ID=$HandlerId=$HandlerType=$Type=$Application=$BadgeValue=$Version=$Text1=$Text2=$Text3=$Text4=$Text5=$Text6=$ToastLaunch=$ToastActivationType=$ToastScenario=$SubText1=$SubText2=$SubText3=$TImeStamp=$Audio=$Hint1=$Hint2=$Hint3=$Arg=$Content=$AltText1=$ImgHint1=$Image1=$AltText2=$ImgHint2=$Image2=$DisplayName=$Tag=$ArrivalTime=$ExpiryTime=$HandlerCreated=$HandlerModified=$WNSId=$WNFEventName =$ChannelID =$Uri =$WNSCreatedTime =$WNSExpiryTime=$ActivityId=$PayloadType=$Payload = $null                   
                     
                     #Remove-variable xmlitem
                     try {$xmlitem = [xml]($item.payload)} catch {}   
@@ -144,11 +144,18 @@ $output = foreach ($item in $dbnresults ){$rn++
                             else {$Version = $null| Out-Null}
                         if($xmlitem.tile.visual.binding.displayName.count -ge 1 -and $xmlitem.tile.visual.binding.displayName[0] -ne $false) {$displayName = $xmlitem.tile.visual.binding.displayName[0]} 
                             else {$displayName = $null| Out-Null}
-                        if($xmlitem.tile.visual.binding.text.'#text'.count -ge 1 -and $xmlitem.tile.visual.binding[0].text.'#text' -ne $false)  {$text1 = $xmlitem.tile.visual.binding[0].text.'#text' } 
+                        
+                        if($xmlitem.tile.visual.binding.text.'#text'.count -ge 1 -and $xmlitem.tile.visual.binding[0].text.'#text' -ne $false) { 
+                                if ($xmlitem.tile.visual.binding[0].text.'#text'.count -eq 2){$text1 = $xmlitem.tile.visual.binding[0].text[0].'#text'+" - "+$xmlitem.tile.visual.binding[0].text[1].'#text'}
+                                   else {$text1 = $xmlitem.tile.visual.binding[0].text.'#text'}
+                         }
                             elseif
                           ($xmlitem.tile.visual.binding.text.'#cdata-section'.count -ge 1 -and $xmlitem.tile.visual.binding[0].text.'#cdata-section' -ne $null){$text1 = $xmlitem.tile.visual.binding[0].text.'#cdata-section' }
                             else {$text1 = $null| Out-Null}
-                        if($xmlitem.tile.visual.binding.text.'#text'.count -ge 2 -and $xmlitem.tile.visual.binding[1].text.'#text' -ne $false)  {$text2 = $xmlitem.tile.visual.binding[1].text.'#text' } 
+                        if($xmlitem.tile.visual.binding.text.'#text'.count -ge 2 -and $xmlitem.tile.visual.binding[1].text.'#text' -ne $false)  { 
+                                if ($xmlitem.tile.visual.binding[1].text.'#text'.count -eq 2){$text2 = $xmlitem.tile.visual.binding[1].text[0].'#text'+" - "+$xmlitem.tile.visual.binding[1].text[1].'#text'}
+                                   else {$text2 = $xmlitem.tile.visual.binding[1].text.'#text'}
+                         }
                             elseif
                           ($xmlitem.tile.visual.binding.text.'#cdata-section'.count -ge 2 -and $xmlitem.tile.visual.binding[1].text.'#cdata-section' -ne $null){$text2 = $xmlitem.tile.visual.binding[1].text.'#cdata-section' }
                             else {$text2 = $null| Out-Null}                         
@@ -272,5 +279,5 @@ $filenameFormat = $env:userprofile + "\desktop\Notifications_" + (Get-Date -Form
 Write-host "Selected Rows will be saved as: " -f Yellow -nonewline; Write-Host $filenameFormat -f White
 
 #Output results to screen table (and save selected rows to csv)          
-$output|Out-GridView -PassThru -Title "There are ($dbncount) Notifications in : '$File' - QueryTime $Tn"#Export-Csv -Path $filenameFormat
+$output|Out-GridView -PassThru -Title "There are ($dbncount) Notifications in : '$File' - QueryTime $Tn"|Export-Csv -Path $filenameFormat -Encoding Unicode
 [gc]::Collect() 

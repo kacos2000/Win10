@@ -3,6 +3,12 @@
 
 # Windows 10 - Notifications #
 
+   - *Note:*
+       * *A [tile](https://docs.microsoft.com/en-us/windows/uwp/design/shell/tiles-and-notifications/tile-schema) is an app's representation on the Start menu. Every UWP app has a tile - sizes: small, medium, wide, and large.*
+       * *A [badge](https://docs.microsoft.com/en-us/windows/uwp/design/shell/tiles-and-notifications/badges) provides status or summary info in the form of a system-provided glyph or a number from 1-99.*
+       * *A [toast](https://docs.microsoft.com/en-us/windows/uwp/design/shell/tiles-and-notifications/toast-schema) notification is a notification a UWP app sends to the user via a pop-up UI element (toast or banner).*
+______________________________________________________________________________________________________   
+
  - [**Notifications_WPNdatabase.sql**](https://github.com/kacos2000/Win10-Research/blob/master/Notifications/Notifications_WPNdatabase.sql)<br> SQLite query to parse the Windows 10 Notifications Wpndatabase.
   
   ![Preview](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/Not.JPG)
@@ -10,10 +16,10 @@
  - [**Notifications.ps1**](https://github.com/kacos2000/Win10-Research/blob/master/Notifications/Notifications.ps1)
     <br> Powershell script to parse the Windows 10 Notifications Wpndatabase as well as information from the XML blobs: 
       **UPDATED** - Toasts, Tiles & Badges now work ok *(till proven otherwise)* :)
-   1. ![Preview1](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/ps1.JPG)
-   2. ![Preview2](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/ps2.JPG)
-   3. ![Preview3](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/ps3.JPG)
-   4. ![Preview4](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/ps4.JPG)
+   - ![Preview1](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/ps1.JPG)
+   - ![Preview2](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/ps2.JPG)
+   - ![Preview3](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/ps3.JPG)
+   - ![Preview4](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/ps4.JPG)
   
   
  - [**wpn.ps1**](https://github.com/kacos2000/Win10-Research/blob/master/Notifications/wpn.ps1)<br> Powershell script to parse NTUSER.dat 

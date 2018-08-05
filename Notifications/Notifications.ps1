@@ -1,4 +1,7 @@
-﻿#Check if SQLite exists
+﻿#Set encoding to UTF-8 
+$OutputEncoding = [console]::InputEncoding = [console]::OutputEncoding = New-Object System.Text.UTF8Encoding
+
+#Check if SQLite exists
 try{write-host "sqlite3.exe version => "-f Yellow -nonewline; sqlite3.exe -version }
 catch {
     write-host "It seems that you do not have sqlite3.exe in the system path"
@@ -81,11 +84,12 @@ $elapsedTime.stop()
 $rn=0
 
 
+
 #Create Output adding XML Blob information
 $output = foreach ($item in $dbnresults ){$rn++
                     Write-Progress -id 2 -Activity "Creating Output" -Status "$rn of $($dbnresults.count))" -PercentComplete (([double]$rn / $dbnresults.count)*100) 
                     
-                    $ID=$HandlerId=$HandlerType=$Type=$Application=$BadgeValue=$BadgeVersion=$TileVersion=$Text1=$Text2=$Text3=$Text4=$Text5=$Text6=$ToastLaunch=$ToastActivationType=$ToastScenario=$toasttext1=$toasttext2=$ToastText3=$ToastText4=$ToastText5=$ToastText6=$ToastImage=$SubText1=$SubText2=$SubText3=$TImeStamp=$AudioSrc=$Hint1=$Hint2=$Hint3=$Arg=$Content=$AltText1=$ImgHint1=$Image1=$AltText2=$ImgHint2=$Image2=$DisplayName=$Tag=$ArrivalTime=$ExpiryTime=$HandlerCreated=$HandlerModified=$WNSId=$WNFEventName =$ChannelID =$Uri =$WNSCreatedTime =$WNSExpiryTime=$ActivityId=$PayloadType=$Payload = $null                   
+                    $ID=$HandlerId=$HandlerType=$Type=$Application=$BadgeValue=$Version=$Text1=$Text2=$Text3=$Text4=$Text5=$Text6=$ToastLaunch=$ToastActivationType=$ToastScenario=$SubText1=$SubText2=$SubText3=$TImeStamp=$AudioSrc=$Hint1=$Hint2=$Hint3=$Arg=$Content=$AltText1=$ImgHint1=$Image1=$AltText2=$ImgHint2=$Image2=$DisplayName=$Tag=$ArrivalTime=$ExpiryTime=$HandlerCreated=$HandlerModified=$WNSId=$WNFEventName =$ChannelID =$Uri =$WNSCreatedTime =$WNSExpiryTime=$ActivityId=$PayloadType=$Payload = $null                   
                     
                     #Remove-variable xmlitem
                     try {$xmlitem = [xml]($item.payload)} catch {}   
@@ -100,20 +104,20 @@ $output = foreach ($item in $dbnresults ){$rn++
                             else {$ToastActivationType = $null| Out-Null}
                         if($xmlitem.toast.scenario.count -eq 1 -and $xmlitem.toast.scenario -ne $false) {$ToastScenario = $xmlitem.toast.scenario} 
                             else {$ToastScenario = $null| Out-Null}
-                        if($xmlitem.toast.visual.binding.text.'#text'.count -ge 1 -and $xmlitem.toast.visual.binding.text[0].'#text'-ne $false) {$toasttext1 = $xmlitem.toast.visual.binding.text[0].'#text'}
-                            else {$toasttext1 = $null| Out-Null}
-                        if($xmlitem.toast.visual.binding.text.'#text'.count -ge 1 -and $xmlitem.toast.visual.binding.text[1].'#text'-ne $false) {$toasttext2 = $xmlitem.toast.visual.binding.text[1].'#text'} 
-                            else {$toasttext2 = $null| Out-Null}
-                        if($xmlitem.toast.visual.binding.text.'#text'.count -ge 1 -and $xmlitem.toast.visual.binding.text[2].'#text'-ne $false) {$toasttext3 = $xmlitem.toast.visual.binding.text[2].'#text'} 
-                            else {$toasttext3 = $null| Out-Null}
-                        if($xmlitem.toast.visual.binding.text.'#text'.count -ge 1 -and $xmlitem.toast.visual.binding.text[3].'#text'-ne $false) {$toasttext4 = $xmlitem.toast.visual.binding.text[3].'#text'} 
-                            else {$toasttext4 = $null| Out-Null}
-                        if($xmlitem.toast.visual.binding.text.'#text'.count -ge 1 -and $xmlitem.toast.visual.binding.text[4].'#text'-ne $false) {$toasttext5 = $xmlitem.toast.visual.binding.text[4].'#text'} 
-                            else {$toasttext5 = $null| Out-Null}
-                        if($xmlitem.toast.visual.binding.text.'#text'.count -ge 1 -and $xmlitem.toast.visual.binding.text[5].'#text'-ne $false) {$toasttext6 = $xmlitem.toast.visual.binding.text[5].'#text'} 
-                            else {$toasttext6 = $null| Out-Null}
-                        if($xmlitem.toast.visual.binding.image.src.count -ge 1 -and $xmlitem.toast.visual.binding.image.src -ne $false) {$ToastImage = $xmlitem.toast.visual.binding.image.src} 
-                            else {$ToastImage = $null| Out-Null}
+                        if($xmlitem.toast.visual.binding.text.'#text'.count -ge 1 -and $xmlitem.toast.visual.binding.text[0].'#text'-ne $false) {$text1 = $xmlitem.toast.visual.binding.text[0].'#text'}
+                            else {$text1 = $null| Out-Null}
+                        if($xmlitem.toast.visual.binding.text.'#text'.count -ge 1 -and $xmlitem.toast.visual.binding.text[1].'#text'-ne $false) {$text2 = $xmlitem.toast.visual.binding.text[1].'#text'} 
+                            else {$text2 = $null| Out-Null}
+                        if($xmlitem.toast.visual.binding.text.'#text'.count -ge 1 -and $xmlitem.toast.visual.binding.text[2].'#text'-ne $false) {$text3 = $xmlitem.toast.visual.binding.text[2].'#text'} 
+                            else {$text3 = $null| Out-Null}
+                        if($xmlitem.toast.visual.binding.text.'#text'.count -ge 1 -and $xmlitem.toast.visual.binding.text[3].'#text'-ne $false) {$text4 = $xmlitem.toast.visual.binding.text[3].'#text'} 
+                            else {$text4 = $null| Out-Null}
+                        if($xmlitem.toast.visual.binding.text.'#text'.count -ge 1 -and $xmlitem.toast.visual.binding.text[4].'#text'-ne $false) {$text5 = $xmlitem.toast.visual.binding.text[4].'#text'} 
+                            else {$text5 = $null| Out-Null}
+                        if($xmlitem.toast.visual.binding.text.'#text'.count -ge 1 -and $xmlitem.toast.visual.binding.text[5].'#text'-ne $false) {$text6 = $xmlitem.toast.visual.binding.text[5].'#text'} 
+                            else {$text6 = $null| Out-Null}
+                        if($xmlitem.toast.visual.binding.image.src.count -ge 1 -and $xmlitem.toast.visual.binding.image.src -ne $false) {$Image1 = $xmlitem.toast.visual.binding.image.src} 
+                            else {$Image1 = $null| Out-Null}
                         if($xmlitem.toast.action.activationtype.count -ge 1 -and $xmlitem.toast.action.activationtype -ne $false) {$Act_type = $xmlitem.toast.action.activationtype} 
                             else {$Act_type = $null| Out-Null}
                         if($xmlitem.toast.action.arguments.count -ge 1 -and $xmlitem.toast.action.arguments -ne $false) {$arg = $xmlitem.toast.action.arguments} 
@@ -130,14 +134,14 @@ $output = foreach ($item in $dbnresults ){$rn++
                        
                         if($xmlitem.badge.value.count -ge 1) {$BadgeValue = $xmlitem.badge.value} 
                             else {$BadgeValue = $null| Out-Null}
-                        if($xmlitem.badge.version.count -ge 1) {$BadgeVersion = $xmlitem.badge.version} 
-                            else {$BadgeVersion = $null| Out-Null}
+                        if($xmlitem.badge.version.count -ge 1) {$Version = $xmlitem.badge.version} 
+                            else {$Version = $null| Out-Null}
                         }
                     
                     elseif($item.Type -eq 'tile' -and $xmlitem.tile -ne $false){
 
-                        if($xmlitem.tile.visual.version.count -eq 1 -and $xmlitem.tile.visual.version -ne $false ){$TileVersion = $xmlitem.tile.visual.version} 
-                            else {$TileVersion = $null| Out-Null}
+                        if($xmlitem.tile.visual.version.count -eq 1 -and $xmlitem.tile.visual.version -ne $false ){$Version = $xmlitem.tile.visual.version} 
+                            else {$Version = $null| Out-Null}
                         if($xmlitem.tile.visual.binding.displayName.count -ge 1 -and $xmlitem.tile.visual.binding.displayName[0] -ne $false) {$displayName = $xmlitem.tile.visual.binding.displayName[0]} 
                             else {$displayName = $null| Out-Null}
                         if($xmlitem.tile.visual.binding.text.'#text'.count -ge 1 -and $xmlitem.tile.visual.binding[0].text.'#text' -ne $false)  {$text1 = $xmlitem.tile.visual.binding[0].text.'#text' } 
@@ -212,33 +216,28 @@ $output = foreach ($item in $dbnresults ){$rn++
                                 HandlerType = $item.HandlerType
                                 Type = $item.Type
                                 Application = $item.Application
+                                Tag = $item.Tag 
+                                ArrivalTime = $item.ArrivalTime
+                                ExpiryTime = $item.ExpiryTime
                                 BadgeValue = $BadgeValue
-                                BadgeVersion = $BadgeVersion
-                                TileVersion = $TileVersion
+                                Version = $Version
                                 Text1 = $text1
                                 Text2 = $text2
                                 Text3 = $text3
                                 Text4 = $text4
                                 Text5 = $text5
                                 Text6 = $text6
-                                ToastLaunch = $ToastLaunch
-                                ToastActivationType = $ToastActivationType
-                                ToastScenario = $ToastScenario
-                                ToastText1 = $toasttext1
-                                ToastText2 = $toasttext2
-                                ToastText3 = $toasttext3
-                                ToastText4 = $toasttext4
-                                ToastText5 = $toasttext5
-                                ToastText6 = $toasttext6
-                                ToastImage = $ToastImage
                                 SubText1 = $SubText1
                                 SubText2 = $SubText2
                                 SubText3 = $SubText3
-                                TImeStamp = $Timestampt
-                                AudioSrc = $Audio
                                 Hint1 = $hintlockDetailedStatus1
                                 Hint2 = $hintlockDetailedStatus2
                                 Hint3 = $hintlockDetailedStatus3
+                                ToastLaunch = $ToastLaunch
+                                ToastActivationType = $ToastActivationType
+                                ToastScenario = $ToastScenario
+                                TImeStamp = $Timestampt
+                                AudioSrc = $Audio
                                 Arg = $Arg
                                 Content = $Content
                                 AltText1 = $AltText1
@@ -248,9 +247,6 @@ $output = foreach ($item in $dbnresults ){$rn++
                                 ImgHint2 = $TileHint2
                                 ImageLarge = $image2 
                                 DisplayName = $displayName
-                                Tag = $item.Tag 
-                                ArrivalTime = $item.ArrivalTime
-                                ExpiryTime = $item.ExpiryTime
                                 HandlerCreated = $item.HandlerCreated
                                 HandlerModified = $item.HandlerModified
                                 WNSId = $item.WNSId
@@ -276,5 +272,5 @@ $filenameFormat = $env:userprofile + "\desktop\Notifications_" + (Get-Date -Form
 Write-host "Selected Rows will be saved as: " -f Yellow -nonewline; Write-Host $filenameFormat -f White
 
 #Output results to screen table (and save selected rows to csv)          
-$output|Out-GridView -PassThru -Title "There are ($dbncount) Notifications in : '$File' - QueryTime $Tn"|Export-Csv -Path $filenameFormat
+$output|Out-GridView -PassThru -Title "There are ($dbncount) Notifications in : '$File' - QueryTime $Tn"#Export-Csv -Path $filenameFormat
 [gc]::Collect() 

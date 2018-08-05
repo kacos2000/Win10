@@ -7,7 +7,7 @@
       *'HKCU -> Software\Microsoft\Windows\CurrentVersion\Search\JumplistData'*<br> from a precollected (*not live*) **NTUser.dat** file. 
 
        * **Note:** *must be run in a PowerShell console with Administrator privileges.*
-       * **Note:** *Updated to include option to load JumplistData from the Currect User's registry HKCU key*
+       * **Note:** *Updated to include option to load JumplistData from the Currect User's registry HKCU key. 'Enter' loads the default (L) which is the current user's reg key data*
        
          ![option](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/JumpList/0.JPG)
 

@@ -1,5 +1,5 @@
 ﻿#Set encoding to UTF-8 
-$OutputEncoding = [console]::InputEncoding = [console]::OutputEncoding = New-Object System.Text.UTF8Encoding
+$OutputEncoding = [console]::InputEncoding = [console]::OutputEncoding = (New-Object System.Text.UTF8Encoding)
 
 #Check if SQLite exists
 try{write-host "sqlite3.exe version => "-f Yellow -nonewline; sqlite3.exe -version }
@@ -89,7 +89,7 @@ $rn=0
 $output = foreach ($item in $dbnresults ){$rn++
                     Write-Progress -id 2 -Activity "Creating Output" -Status "$rn of $($dbnresults.count))" -PercentComplete (([double]$rn / $dbnresults.count)*100) 
                     
-                    $ID=$HandlerId=$HandlerType=$Type=$Application=$BadgeValue=$Version=$Text1=$Text2=$Text3=$Text4=$Text5=$Text6=$ToastLaunch=$ToastActivationType=$ToastScenario=$SubText1=$SubText2=$SubText3=$TImeStamp=$Audio=$Hint1=$Hint2=$Hint3=$Arg=$Content=$AltText1=$ImgHint1=$Image1=$AltText2=$ImgHint2=$Image2=$DisplayName=$Tag=$ArrivalTime=$ExpiryTime=$HandlerCreated=$HandlerModified=$WNSId=$WNFEventName =$ChannelID =$Uri =$WNSCreatedTime =$WNSExpiryTime=$ActivityId=$PayloadType=$Payload = $null                   
+                    $ID=$HandlerId=$HandlerType=$Type=$Application=$BadgeValue=$Version=$Text1=$Text2=$Text3=$Text4=$ToastLaunch=$ToastActivationType=$ToastScenario=$SubText1=$SubText2=$SubText3=$SubText4=$TImeStamp=$Audio=$Hint1=$Hint2=$Hint3=$Arg=$Content=$AltText1=$ImgHint1=$Image1=$AltText2=$ImgHint2=$Image2=$DisplayName=$Tag=$ArrivalTime=$ExpiryTime=$HandlerCreated=$HandlerModified=$WNSId=$WNFEventName =$ChannelID =$Uri =$WNSCreatedTime =$WNSExpiryTime=$ActivityId=$PayloadType=$Payload = $null                   
                     
                     #Remove-variable xmlitem
                     try {$xmlitem = [xml]($item.payload)} catch {}   
@@ -97,25 +97,23 @@ $output = foreach ($item in $dbnresults ){$rn++
                     
                    
                    if ($item.Type -eq 'toast' -and $xmlitem.toast -ne $false) { 
+
                      
-                        if($xmlitem.toast.launch.count -eq 1 -and $xmlitem.toast.launch -ne $false) {$ToastLaunch = $xmlitem.toast.launch} 
+                        if($xmlitem.toast.launch.count -ge 1 -and $xmlitem.toast.launch -ne $false) {$ToastLaunch = $xmlitem.toast.launch} 
                             else {$ToastLaunch = $null| Out-Null}
-                        if($xmlitem.toast.activationType.count -eq 1 -and $xmlitem.toast.activationType -ne $false) {$ToastActivationType = $xmlitem.toast.activationType} 
+                        if($xmlitem.toast.activationType.count -ge 1 -and $xmlitem.toast.activationType -ne $false) {$ToastActivationType = $xmlitem.toast.activationType} 
                             else {$ToastActivationType = $null| Out-Null}
-                        if($xmlitem.toast.scenario.count -eq 1 -and $xmlitem.toast.scenario -ne $false) {$ToastScenario = $xmlitem.toast.scenario} 
+                        if($xmlitem.toast.scenario.count -ge 1 -and $xmlitem.toast.scenario -ne $false) {$ToastScenario = $xmlitem.toast.scenario} 
                             else {$ToastScenario = $null| Out-Null}
-                        if($xmlitem.toast.visual.binding.text.'#text'.count -ge 1 -and $xmlitem.toast.visual.binding.text[0].'#text'-ne $false) {$text1 = $xmlitem.toast.visual.binding.text[0].'#text'}
-                            else {$text1 = $null| Out-Null}
-                        if($xmlitem.toast.visual.binding.text.'#text'.count -ge 1 -and $xmlitem.toast.visual.binding.text[1].'#text'-ne $false) {$text2 = $xmlitem.toast.visual.binding.text[1].'#text'} 
-                            else {$text2 = $null| Out-Null}
-                        if($xmlitem.toast.visual.binding.text.'#text'.count -ge 1 -and $xmlitem.toast.visual.binding.text[2].'#text'-ne $false) {$text3 = $xmlitem.toast.visual.binding.text[2].'#text'} 
-                            else {$text3 = $null| Out-Null}
-                        if($xmlitem.toast.visual.binding.text.'#text'.count -ge 1 -and $xmlitem.toast.visual.binding.text[3].'#text'-ne $false) {$text4 = $xmlitem.toast.visual.binding.text[3].'#text'} 
-                            else {$text4 = $null| Out-Null}
-                        if($xmlitem.toast.visual.binding.text.'#text'.count -ge 1 -and $xmlitem.toast.visual.binding.text[4].'#text'-ne $false) {$text5 = $xmlitem.toast.visual.binding.text[4].'#text'} 
-                            else {$text5 = $null| Out-Null}
-                        if($xmlitem.toast.visual.binding.text.'#text'.count -ge 1 -and $xmlitem.toast.visual.binding.text[5].'#text'-ne $false) {$text6 = $xmlitem.toast.visual.binding.text[5].'#text'} 
-                            else {$text6 = $null| Out-Null}
+                        if ($xmlitem.toast.visual.binding.text.'#text'.count -eq 1 -and $xmlitem.toast.visual.binding.text.'#text'-ne $null){$text1 =$xmlitem.toast.visual.binding.text.'#text'}
+                            elseif ($xmlitem.toast.visual.binding.text.'#text'.count -ge 1 -and $xmlitem.toast.visual.binding.text[0].'#text' -ne $null){$text1 = $xmlitem.toast.visual.binding.text[0].'#text'}
+                            elseif ($xmlitem.toast.visual.binding.text.count -ge 1 -and $xmlitem.toast.visual.binding.text[0] -ne $null){$text1 = $xmlitem.toast.visual.binding.text[0]}else{}
+                        if ($xmlitem.toast.visual.binding.text.'#text'.count -ge 1 -and $xmlitem.toast.visual.binding.text[1].'#text' -ne $null){$text2 =$xmlitem.toast.visual.binding.text[1].'#text'}
+                             elseif ($xmlitem.toast.visual.binding.text.count -ge 1 -and $xmlitem.toast.visual.binding.text[1] -ne $null){$text2 = $xmlitem.toast.visual.binding.text[1]}else{}
+                        if ($xmlitem.toast.visual.binding.text.'#text'.count -ge 1 -and $xmlitem.toast.visual.binding.text[2].'#text' -ne $null){$text3 =$xmlitem.toast.visual.binding.text[2].'#text'}
+                             elseif ($xmlitem.toast.visual.binding.text.count -ge 1 -and $xmlitem.toast.visual.binding.text[2] -ne $null){$text3 = $xmlitem.toast.visual.binding.text[2]}else{}
+                        if ($xmlitem.toast.visual.binding.text.'#text'.count -ge 1 -and $xmlitem.toast.visual.binding.text[3].'#text' -ne $null){$text4 =$xmlitem.toast.visual.binding.text[3].'#text'}
+                             elseif ($xmlitem.toast.visual.binding.text.count -ge 1 -and $xmlitem.toast.visual.binding.text[3] -ne $null){$text4 = $xmlitem.toast.visual.binding.text[3]}else{}
                         if($xmlitem.toast.visual.binding.image.src.count -ge 1 -and $xmlitem.toast.visual.binding.image.src -ne $false) {$Image1 = $xmlitem.toast.visual.binding.image.src} 
                             else {$Image1 = $null| Out-Null}
                         if($xmlitem.toast.action.activationtype.count -ge 1 -and $xmlitem.toast.action.activationtype -ne $false) {$Act_type = $xmlitem.toast.action.activationtype} 
@@ -144,75 +142,74 @@ $output = foreach ($item in $dbnresults ){$rn++
                             else {$Version = $null| Out-Null}
                         if($xmlitem.tile.visual.binding.displayName.count -ge 1 -and $xmlitem.tile.visual.binding.displayName[0] -ne $false) {$displayName = $xmlitem.tile.visual.binding.displayName[0]} 
                             else {$displayName = $null| Out-Null}
-                        
-                        if($xmlitem.tile.visual.binding.text.'#text'.count -ge 1 -and $xmlitem.tile.visual.binding[0].text.'#text' -ne $false) { 
-                                if ($xmlitem.tile.visual.binding[0].text.'#text'.count -eq 2){$text1 = $xmlitem.tile.visual.binding[0].text[0].'#text'+" - "+$xmlitem.tile.visual.binding[0].text[1].'#text'}
-                                   else {$text1 = $xmlitem.tile.visual.binding[0].text.'#text'}
-                         }
-                            elseif
-                          ($xmlitem.tile.visual.binding.text.'#cdata-section'.count -ge 1 -and $xmlitem.tile.visual.binding[0].text.'#cdata-section' -ne $null){$text1 = $xmlitem.tile.visual.binding[0].text.'#cdata-section' }
-                            else {$text1 = $null| Out-Null}
-                        if($xmlitem.tile.visual.binding.text.'#text'.count -ge 2 -and $xmlitem.tile.visual.binding[1].text.'#text' -ne $false)  { 
-                                if ($xmlitem.tile.visual.binding[1].text.'#text'.count -eq 2){$text2 = $xmlitem.tile.visual.binding[1].text[0].'#text'+" - "+$xmlitem.tile.visual.binding[1].text[1].'#text'}
-                                   else {$text2 = $xmlitem.tile.visual.binding[1].text.'#text'}
-                         }
-                            elseif
-                          ($xmlitem.tile.visual.binding.text.'#cdata-section'.count -ge 2 -and $xmlitem.tile.visual.binding[1].text.'#cdata-section' -ne $null){$text2 = $xmlitem.tile.visual.binding[1].text.'#cdata-section' }
-                            else {$text2 = $null| Out-Null}                         
-                        if($xmlitem.tile.visual.binding.text.'#text'.count -ge 3 -and $xmlitem.tile.visual.binding[2].text.'#text' -ne $false)  {$text3 = $xmlitem.tile.visual.binding[2].text.'#text' } 
-                            elseif
-                          ($xmlitem.tile.visual.binding.text.'#cdata-section'.count -ge 3 -and $xmlitem.tile.visual.binding[2].text.'#cdata-section' -ne $null){$text3 = $xmlitem.tile.visual.binding[2].text.'#cdata-section' }
-                            else {$text3 = $null| Out-Null}  
-                        if($xmlitem.tile.visual.binding.text.'#text'.count -ge 4 -and $xmlitem.tile.visual.binding[3].text.'#text' -ne $false)  {$text4 = $xmlitem.tile.visual.binding[3].text.'#text' } 
-                            elseif
-                          ($xmlitem.tile.visual.binding.text.'#cdata-section'.count -ge 4 -and $xmlitem.tile.visual.binding[3].text.'#cdata-section' -ne $null){$text4 = $xmlitem.tile.visual.binding[3].text.'#cdata-section' }
-                            else {$text4 = $null| Out-Null}  
-                        if($xmlitem.tile.visual.binding.text.'#text'.count -ge 5 -and $xmlitem.tile.visual.binding[4].text.'#text' -ne $false)  {$text5 = $xmlitem.tile.visual.binding[4].text.'#text' } 
-                            elseif
-                          ($xmlitem.tile.visual.binding.text.'#cdata-section'.count -ge 5 -and $xmlitem.tile.visual.binding[4].text.'#cdata-section' -ne $null){$text5 = $xmlitem.tile.visual.binding[4].text.'#cdata-section' }
-                            else {$text5 = $null| Out-Null} 
-                        if($xmlitem.tile.visual.binding.text.'#text'.count -ge 6 -and $xmlitem.tile.visual.binding[5].text.'#text' -ne $false)  {$text6 = $xmlitem.tile.visual.binding[5].text.'#text' } 
-                            elseif
-                          ($xmlitem.tile.visual.binding.text.'#cdata-section'.count -ge 6 -and $xmlitem.tile.visual.binding[5].text.'#cdata-section' -ne $false){$text6 = $xmlitem.tile.visual.binding[5].text.'#cdata-section' }
-                            else {$text6 = $null| Out-Null} 
-                        if($xmlitem.tile.visual.'hint-lockDetailedStatus1'.count -ge 1) {$hintlockDetailedStatus1 = $xmlitem.tile.visual.'hint-lockDetailedStatus1'} 
-                            else {$hintlockDetailedStatus1 = $null| Out-Null}
-                        if($xmlitem.tile.visual.'hint-lockDetailedStatus2'.count -ge 2) {$hintlockDetailedStatus2 = $xmlitem.tile.visual.'hint-lockDetailedStatus2'} 
-                            else {$hintlockDetailedStatus2 = $null| Out-Null}
-                        if($xmlitem.tile.visual.'hint-lockDetailedStatus3'.count -ge 3) {$hintlockDetailedStatus3 = $xmlitem.tile.visual.'hint-lockDetailedStatus3'} 
-                            else {$hintlockDetailedStatus3 = $null| Out-Null}
-                        if($xmlitem.tile.visual.binding.image.src.count -ge 1 -and $xmlitem.tile.visual.binding[0].image.src -ne $false) {$image1 = $xmlitem.tile.visual.binding[0].image.src} 
-                            elseif($xmlitem.tile.visual.binding.image.src.count -ge 1 -and $xmlitem.tile.visual.binding[1].image.src -ne $false) {$image1 = $xmlitem.tile.visual.binding[1].image.src} 
-                            else {$image1 = $null| Out-Null}
-                        if($xmlitem.tile.visual.binding.image.count -ge 3 -and $xmlitem.tile.visual.binding[2].image.src -ne $false) {$image2 = $xmlitem.tile.visual.binding[2].image.src} 
-                            else {$image2 = $null| Out-Null}
-                        if($xmlitem.tile.visual.binding[0].image.alt.count -ge 1 -and $xmlitem.tile.visual.binding[0].image.alt -ne $false) {$Alttext1 = $xmlitem.tile.visual.binding[0].image.alt} 
-                            elseif($xmlitem.tile.visual.binding[1].image.alt.count -ge 2 -and $xmlitem.tile.visual.binding[1].image.alt -ne $null) {$alt1 = $xmlitem.tile.visual.binding[1].image.alt} 
-                            else {$Alttext1 = $null| Out-Null}
-                        if($xmlitem.tile.visual.binding[2].image.alt.count -ge 3 -and $xmlitem.tile.visual.binding[2].image.alt -ne $false) {$Alttext2 = $xmlitem.tile.visual.binding[2].image.alt} 
-                            else {$Alttext2 = $null| Out-Null}
-                        if($xmlitem.tile.visual.binding.'hint-presentation'.count -ge 1 -and $xmlitem.tile.visual.binding.'hint-presentation'[0] -ne $false){$TileHint1=$xmlitem.tile.visual.binding.'hint-presentation'[0]}
-                            else {$TileHint1 = $null| Out-Null}    
-                        if($xmlitem.tile.visual.binding.'hint-presentation'.count -ge 3 -and $xmlitem.tile.visual.binding.'hint-presentation'[2] -ne $false){$TileHint2=$xmlitem.tile.visual.binding.'hint-presentation'[2]}
-                            else {$TileHint2 = $null| Out-Null}
+                    if ($xmlitem.tile.visual.binding[0].text.'#text'.count -ge 1 -and $xmlitem.tile.visual.binding[0].text.'#text' -ne $null){
+                        foreach($x in $xmlitem.tile.visual.binding[0].text.'#text'){$Text1 += $x + " "}}
+                    elseif($xmlitem.tile.visual.binding[0].text.'#cdata-section'.count -ge 1 -and $xmlitem.tile.visual.binding[0].text.'#cdata-section' -ne $null){ 
+                        foreach($x in $xmlitem.tile.visual.binding[0].text.'#cdata-section'){$Text1 += $x + " "}}
+                    else{}  
+                    if ($xmlitem.tile.visual.binding[1].text.'#text'.count -ge 1 -and $xmlitem.tile.visual.binding[1].text.'#text' -ne $null){
+                        foreach($x in $xmlitem.tile.visual.binding[1].text.'#text'){$Text21 += $x + " "}}
+                    elseif($xmlitem.tile.visual.binding[1].text.'#cdata-section'.count -ge 1 -and $xmlitem.tile.visual.binding[1].text.'#cdata-section' -ne $null){ 
+                        foreach($x in $xmlitem.tile.visual.binding[1].text.'#cdata-section'){$Text2 += $x + " "}}
+                    else{}  
+                    if ($xmlitem.tile.visual.binding[2].text.'#text'.count -ge 1 -and $xmlitem.tile.visual.binding[2].text.'#text' -ne $null){
+                        foreach($x in $xmlitem.tile.visual.binding[2].text.'#text'){$Text3 += $x + " "}}
+                    elseif($xmlitem.tile.visual.binding[2].text.'#cdata-section'.count -ge 1 -and $xmlitem.tile.visual.binding[2].text.'#cdata-section' -ne $null){ 
+                        foreach($x in $xmlitem.tile.visual.binding[2].text.'#cdata-section'){$Text3 += $x + " ,"}}
+                    else{}  
+                    if ($xmlitem.tile.visual.binding[3].text.'#text'.count -ge 1 -and $xmlitem.tile.visual.binding[3].text.'#text' -ne $null){
+                        foreach($x in $xmlitem.tile.visual.binding[3].text.'#text'){$Text4 += $x + " "}}
+                    elseif($xmlitem.tile.visual.binding[3].text.'#cdata-section'.count -ge 1 -and $xmlitem.tile.visual.binding[3].text.'#cdata-section' -ne $null){ 
+                        foreach($x in $xmlitem.tile.visual.binding[3].text.'#cdata-section'){$Text4 += $x + " "}}
+                    else{}  
+                    if($xmlitem.tile.visual.'hint-lockDetailedStatus1'.count -ge 1) {$hintlockDetailedStatus1 = $xmlitem.tile.visual.'hint-lockDetailedStatus1'} 
+                        else {$hintlockDetailedStatus1 = $null| Out-Null}
+                    if($xmlitem.tile.visual.'hint-lockDetailedStatus2'.count -ge 2) {$hintlockDetailedStatus2 = $xmlitem.tile.visual.'hint-lockDetailedStatus2'} 
+                        else {$hintlockDetailedStatus2 = $null| Out-Null}
+                    if($xmlitem.tile.visual.'hint-lockDetailedStatus3'.count -ge 3) {$hintlockDetailedStatus3 = $xmlitem.tile.visual.'hint-lockDetailedStatus3'} 
+                        else {$hintlockDetailedStatus3 = $null| Out-Null}
+                    if($xmlitem.tile.visual.binding.image.src.count -ge 1 -and $xmlitem.tile.visual.binding[0].image.src -ne $false) {$image1 = $xmlitem.tile.visual.binding[0].image.src} 
+                        elseif($xmlitem.tile.visual.binding.image.src.count -ge 1 -and $xmlitem.tile.visual.binding[1].image.src -ne $false) {$image1 = $xmlitem.tile.visual.binding[1].image.src} 
+                        else {$image1 = $null| Out-Null}
+                    if($xmlitem.tile.visual.binding.image.count -ge 3 -and $xmlitem.tile.visual.binding[2].image.src -ne $false) {$image2 = $xmlitem.tile.visual.binding[2].image.src} 
+                        else {$image2 = $null| Out-Null}
 
-                        if($xmlitem.tile.visual.binding.group.subgroup.count -ge 1){
-                            if($xmlitem.tile.visual.binding.group.subgroup.text.'#cdata-section'.count -ge 1 -and $xmlitem.tile.visual.binding.group.subgroup.text[0].'#cdata-section' -ne $false) 
-                                    {$SubText1 = $xmlitem.tile.visual.binding.group.subgroup.text[0].'#cdata-section'} 
-                                elseif($xmlitem.tile.visual.binding.group.subgroup.text.'#text' -ge 1 -and $xmlitem.tile.visual.binding.group.subgroup.text[0].'#text' -ne $false) 
-                                    {$SubText1 = $xmlitem.tile.visual.binding.group.subgroup.text[0].'#text'}     
-                                else {$SubText1 = $null| Out-Null} 
-                             if($xmlitem.tile.visual.binding.group.subgroup.text.'#cdata-section'.count -ge 2 -and $xmlitem.tile.visual.binding.group.subgroup.text[1].'#cdata-section' -ne $false) 
-                                    {$SubText2 = $xmlitem.tile.visual.binding.group.subgroup.text[1].'#cdata-section'} 
-                                elseif($xmlitem.tile.visual.binding.group.subgroup.text.'#text' -ge 1 -and $xmlitem.tile.visual.binding.group.subgroup.text[1].'#text' -ne $false) 
-                                    {$SubText2 = $xmlitem.tile.visual.binding.group.subgroup.text[1].'#text'}     
-                                else {$SubText2 = $null| Out-Null}
-                             if($xmlitem.tile.visual.binding.group.subgroup.text.'#cdata-section'.count -ge 3 -and $xmlitem.tile.visual.binding.group.subgroup.text[2].'#cdata-section' -ne $false) 
-                                    {$SubText3 = $xmlitem.tile.visual.binding.group.subgroup.text[2].'#cdata-section'} 
-                                elseif($xmlitem.tile.visual.binding.group.subgroup.text.'#text' -ge 2 -and $xmlitem.tile.visual.binding.group.subgroup.text[2].'#text' -ne $false) 
-                                    {$SubText3= $xmlitem.tile.visual.binding.group.subgroup.text[2].'#text'}     
-                                else {$SubText3= $null| Out-Null}
-                            }else {$null} 
+                    if ($xmlitem.tile.visual.binding[0].image.alt.count -ge 1 -and $xmlitem.tile.visual.binding[0].image.alt -ne $false){
+                        foreach($a in $xmlitem.tile.visual.binding[0].image.alt){$Alttext1 += $a + " "}}
+                    elseif ($xmlitem.tile.visual.binding[1].image.alt.count -ge 2 -and $xmlitem.tile.visual.binding[1].image.alt -ne $false){
+                        foreach($a in $xmlitem.tile.visual.binding[1].image.alt){$Alttext1 += $a + " "}}
+                    else{$Alttext1 = $null| Out-Null} 
+                    if($xmlitem.tile.visual.binding[2].image.alt.count -ge 3 -and $xmlitem.tile.visual.binding[2].image.alt -ne $false) {$Alttext2 = $xmlitem.tile.visual.binding[2].image.alt} 
+                        else {$Alttext2 = $null| Out-Null}
+                    if($xmlitem.tile.visual.binding.'hint-presentation'.count -ge 1 -and $xmlitem.tile.visual.binding.'hint-presentation'[0] -ne $false){$TileHint1=$xmlitem.tile.visual.binding.'hint-presentation'[0]}
+                        else {$TileHint1 = $null| Out-Null}    
+                    if($xmlitem.tile.visual.binding.'hint-presentation'.count -ge 3 -and $xmlitem.tile.visual.binding.'hint-presentation'[2] -ne $false){$TileHint2=$xmlitem.tile.visual.binding.'hint-presentation'[2]}
+                        else {$TileHint2 = $null| Out-Null}
+
+                    if ($xmlitem.tile.visual.binding.group.subgroup.text.'#cdata-section'.count -ge 1 -and $xmlitem.tile.visual.binding[0].group.subgroup.text.'#cdata-section' -ne $null){
+                        foreach($t in $xmlitem.tile.visual.binding[0].group.subgroup.text.'#cdata-section'){$Subtext1 += $t + " "}}
+                    elseif($xmlitem.tile.visual.binding.group.subgroup.text.'#text'.count -ge 1 -and $xmlitem.tile.visual.binding[0].group.subgroup.text.'#text' -ne $null){ 
+                        foreach($t in $xmlitem.tile.visual.binding[0].group.subgroup.text.'#text'){$Subtext1 += $t + " "}}
+                    else{}                    
+                    if ($xmlitem.tile.visual.binding.group.subgroup.text.'#cdata-section'.count -ge 1 -and $xmlitem.tile.visual.binding[1].group.subgroup.text.'#cdata-section' -ne $null){
+                        foreach($t in $xmlitem.tile.visual.binding[1].group.subgroup.text.'#cdata-section'){$Subtext2 += $t + " "}}
+                    elseif($xmlitem.tile.visual.binding.group.subgroup.text.'#text'.count -ge 1 -and $xmlitem.tile.visual.binding[1].group.subgroup.text.'#text' -ne $null){ 
+                        foreach($t in $xmlitem.tile.visual.binding[1].group.subgroup.text.'#text'){$Subtext23 += $t + " "}}
+                    else{}
+                    if ($xmlitem.tile.visual.binding.group.subgroup.text.'#cdata-section'.count -ge 1 -and $xmlitem.tile.visual.binding[2].group.subgroup.text.'#cdata-section' -ne $null){
+                        foreach($t in $xmlitem.tile.visual.binding[2].group.subgroup.text.'#cdata-section'){$Subtext3 += $t + " "}}
+                    elseif($xmlitem.tile.visual.binding.group.subgroup.text.'#text'.count -ge 1 -and $xmlitem.tile.visual.binding[2].group.subgroup.text.'#text' -ne $null){ 
+                        foreach($t in $xmlitem.tile.visual.binding[2].group.subgroup.text.'#text'){$Subtext3 += $t + " "}}
+                    if ($xmlitem.tile.visual.binding.group.subgroup.text.'#cdata-section'.count -ge 1 -and $xmlitem.tile.visual.binding[3].group.subgroup.text.'#cdata-section' -ne $null){
+                        foreach($t in $xmlitem.tile.visual.binding[3].group.subgroup.text.'#cdata-section'){$Subtext4 += $t + " "}}
+                    elseif($xmlitem.tile.visual.binding.group.subgroup.text.'#text'.count -ge 1 -and $xmlitem.tile.visual.binding[3].group.subgroup.text.'#text' -ne $null){ 
+                        foreach($t in $xmlitem.tile.visual.binding[3].group.subgroup.text.'#text'){$Subtext4 += $t + " "}}
+                    if ($xmlitem.tile.visual.binding.group.subgroup.text.'#cdata-section'.count -ge 1 -and $xmlitem.tile.visual.binding[4].group.subgroup.text.'#cdata-section' -ne $null){
+                        foreach($t in $xmlitem.tile.visual.binding[4].group.subgroup.text.'#cdata-section'){$Subtext5 += $t + " "}}
+                    elseif($xmlitem.tile.visual.binding.group.subgroup.text.'#text'.count -ge 1 -and $xmlitem.tile.visual.binding[4].group.subgroup.text.'#text' -ne $null){ 
+                        foreach($t in $xmlitem.tile.visual.binding[4].group.subgroup.text.'#text'){$Subtext5 += $t + " "}}
+                    else{}
+
                     }else{$null}
 
                                                                                                
@@ -232,11 +229,10 @@ $output = foreach ($item in $dbnresults ){$rn++
                                 Text2 = $text2
                                 Text3 = $text3
                                 Text4 = $text4
-                                Text5 = $text5
-                                Text6 = $text6
                                 SubText1 = $SubText1
                                 SubText2 = $SubText2
                                 SubText3 = $SubText3
+                                SubText4 = $SubText4
                                 Hint1 = $hintlockDetailedStatus1
                                 Hint2 = $hintlockDetailedStatus2
                                 Hint3 = $hintlockDetailedStatus3

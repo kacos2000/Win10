@@ -3,7 +3,7 @@
 
 # Windows 10 - Notifications #
 
-   - *Note:*
+   - *Definitions:*
        * *A [tile](https://docs.microsoft.com/en-us/windows/uwp/design/shell/tiles-and-notifications/tile-schema) is an app's representation on the Start menu. Every UWP app has a tile - sizes: small, medium, wide, and large.*
        * *A [badge](https://docs.microsoft.com/en-us/windows/uwp/design/shell/tiles-and-notifications/badges) provides status or summary info in the form of a system-provided glyph or a number from 1-99.*
        * *A [toast](https://docs.microsoft.com/en-us/windows/uwp/design/shell/tiles-and-notifications/toast-schema) notification is a notification a UWP app sends to the user via a pop-up UI element (toast or banner).*

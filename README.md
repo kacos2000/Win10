@@ -5,6 +5,7 @@
 | :---:                         |     :---:    
 |[Background Activity Moderator](https://github.com/kacos2000/Win10-Research/blob/master/Bam/readme.md) |![Bam preview](bam.jpg) <br>Background Activity Service and registry entries
 |[PowerShell history](ConsoleHost_history.pdf) |History of PowerShell commands
+|[SQLite queries](https://github.com/kacos2000/queries/blob/master/README.md) |Various sqlite queries 
 |[Cortana](Cortana.pdf) |![Cortana preview](cortana.jpg) <br>Some notes on Cortana
 |[Desktop Icon Layouts](Desktop_IconLayouts.pdf) |![Desktop preview](desktop.jpg) <br>List of user desktop icon/shortcuts/files (registry)
 |[MS Edge Container permissions](Edge_AccessEnum_AC.xlsx) |MS Edge Access permissions
@@ -17,3 +18,4 @@
 |[Windows 10 event log parsers](https://github.com/kacos2000/Win10-Research/blob/master/EventLogs/readme.md)| PowerShell scripts to read  live or offline Windows 10 event log(s).
 |[Windows 10 AmCache.hve parser](https://github.com/kacos2000/Win10-Research/blob/master/AmCache/readme.md)| PowerShell scripts 
 |[Windows 10 Notifications](https://github.com/kacos2000/Win10-Research/blob/master/Notifications/readme.md)| SQLite query of the (Push) Notifications dB, Powershell scripts & other info 
+|[Windows 10 Search JumpList](https://github.com/kacos2000/Win10-Research/blob/master/JumpList/readme.md)| PowerShell script to parse the Search JumpList entries

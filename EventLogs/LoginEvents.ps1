@@ -86,7 +86,7 @@ Write-Host "Events found: $Lcount" -f White
 $Events2 = foreach ($l in $xmllog2) {$e++
 			
 			#Progress Bar
-			write-progress -id 1 -activity "Collecting Security entries with EventID=4624 - $e of $($xmllog2.Count)"  -PercentComplete (($e / $xmllog2.Count) * 100)		
+			write-progress -id 1 -activity "Collecting Security entries with EventID=4624 - $e of $($Lcount)"  -PercentComplete (($e / $LCount) * 100)		
 			
 			# Format output fields
             $version = if ($l.Event.System.Version -eq 0){"Windows Server 2008, Windows Vista"}

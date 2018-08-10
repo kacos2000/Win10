@@ -70,6 +70,7 @@ Write-Host "(LoginEvents.ps1):" -f Yellow -nonewline; write-host " Selected Even
 $e=0
 
 $sw = [Diagnostics.Stopwatch]::StartNew()
+Write-Host "(LoginEvents.ps1):" -f Yellow -nonewline; write-host " Enumerating events - please wait" -f White
 Try {  
 	$log2 = (Get-WinEvent -FilterHashtable @{path = $File; ProviderName="Microsoft-Windows-Security-Auditing" ; ID=4624} -ErrorAction Stop)
     Write-Host "(LoginEvents.ps1):" -f Yellow -nonewline; write-host " Selected Security Event Log: ($File)" -f White
@@ -81,7 +82,8 @@ Try {
 
 [xml[]]$xmllog2 = $log2.toXml()
 $Lcount = $xmllog2.Count
-Write-Host "Events found: $Lcount" -f White
+Write-Host "(LoginEvents.ps1):" -f Yellow -nonewline; write-host " Found: $Lcount in Event Log: ($File)" -f White
+
 
 $Events2 = foreach ($l in $xmllog2) {$e++
 			

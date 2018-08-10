@@ -66,14 +66,12 @@ $Folder = $F +"\"
 $DesktopPath = ($Env:WinDir+"\System32\winevt\Logs\")
 
 $File = $Folder + "Security.evtx"
-Write-Host "(LoginEvents.ps1):" -f Yellow -nonewline; write-host " Selected Event Log: ($File)" -f White
 $e=0
-
 $sw = [Diagnostics.Stopwatch]::StartNew()
-Write-Host "(LoginEvents.ps1):" -f Yellow -nonewline; write-host " Enumerating events - please wait" -f White
-Try {  
+
+Try { 
+    Write-Host "(LoginEvents.ps1):" -f Yellow -nonewline; write-host " Selected Security Event Log: ($File)" -f White 
 	$log2 = (Get-WinEvent -FilterHashtable @{path = $File; ProviderName="Microsoft-Windows-Security-Auditing" ; ID=4624} -ErrorAction Stop)
-    Write-Host "(LoginEvents.ps1):" -f Yellow -nonewline; write-host " Selected Security Event Log: ($File)" -f White
     }
 	catch [Exception] {
         if ($_.Exception -match "No events were found that match the specified selection criteria") 
@@ -177,7 +175,7 @@ $Events2
 $sw.stop()
 $t=$sw.Elapsed
 Result |Out-GridView -PassThru -Title "Processed $Lcount Login Events (ID 4624) - in Time $t"
-write-host "Elapsed Time $t minutes" -f yellow
+write-host "Processed $Lcount Login Events (ID 4624) - in Time $t" -f yellow
 
 
 [gc]::Collect()

@@ -86,7 +86,7 @@ Write-Host "Events found: $Lcount" -f White
 $Events2 = foreach ($l in $xmllog2) {$e++
 			
 			#Progress Bar
-			write-progress -id 1 -activity "Collecting Security entries with EventID=4624 - $e of $($Lcount)"  -PercentComplete (($e / $LCount) * 100)		
+			write-progress -id 1 -activity "Collecting Security entries with EventID=4624 - $e of $($Lcount)"  -PercentComplete (($e / $Lcount) * 100)		
 			
 			# Format output fields
             $version = if ($l.Event.System.Version -eq 0){"Windows Server 2008, Windows Vista"}
@@ -157,7 +157,7 @@ $Events2 = foreach ($l in $xmllog2) {$e++
             'TargetOutboundUserName' =   $l.Event.EventData.Data[22].'#text'
             'TargetOutboundDomainName' = $l.Event.EventData.Data[23].'#text'
             'VirtualAccount' =     $VirtualAccount   
-            'TargetLinkedLogonId' = ([Convert]::ToInt64(($l.Event.EventData.Data[25].'#text'),16)) 
+            'TargetLinkedLogonId' = $l.Event.EventData.Data[25].'#text'
             'ElevatedToken' =      $ElevatedToken  
             'ProcessId' =          ([Convert]::ToInt64(($l.Event.EventData.Data[16].'#text'),16)) 
             'Process Name' =       $l.Event.EventData.Data[17].'#text'

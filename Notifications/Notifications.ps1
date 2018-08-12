@@ -91,8 +91,7 @@ $output = foreach ($item in $dbnresults ){$rn++
                     
                     $ID=$HandlerId=$HandlerType=$Type=$Application=$BadgeValue=$Version=$Text1=$Text2=$Text3=$Text4=$ToastLaunch=$ToastActivationType=$ToastScenario=$SubText1=$SubText2=$SubText3=$SubText4=$TImeStamp=$Audio=$Hint1=$Hint2=$Hint3=$Arg=$Content=$AltText1=$ImgHint1=$Image1=$AltText2=$ImgHint2=$Image2=$DisplayName=$Tag=$ArrivalTime=$ExpiryTime=$HandlerCreated=$HandlerModified=$WNSId=$WNFEventName =$ChannelID =$Uri =$WNSCreatedTime =$WNSExpiryTime=$ActivityId=$PayloadType=$Payload = $null                   
                     
-                    #Remove-variable xmlitem
-                    try {$xmlitem = [xml]($item.payload)} catch {}   
+                   try {$xmlitem = [xml]($item.payload)} catch {}   
                      
                     
                    

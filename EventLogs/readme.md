@@ -28,6 +28,10 @@
 
 - [Win 10 EventID: 4624 parser](https://github.com/kacos2000/Win10-Research/blob/master/EventLogs/LoginEvents.ps1) - PowerShell script to read a live or offline **security.evtx** log and list all the [EventID:4624](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4624) entries *(An account was successfully logged on)* in a window. Selected rows are saved in a comma separated file (csv).  
 
+###  Win 10 Security.evtx EventID: 4648 parser  ###
+
+- [Win 10 EventID: 4648 parser](https://github.com/kacos2000/Win10-Research/blob/master/EventLogs/LogonAttempted.ps1) - PowerShell script to read a live or offline **security.evtx** log and list all the [EventID:4648](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4648) entries *(A logon was attempted using explicit credentials)* in a window. 
+
 ###  Win 10 Security.evtx EventID: 4616 & System.evtx EventID: 1 parser ###
 
 - [Win 10 Security EventID: 4616 & System EventID: 1 parser](https://github.com/kacos2000/Win10-Research/blob/master/EventLogs/TimeEventsAll.ps1) - PowerShell script to read both **security.evtx** and **system.evtx** logs from a live or offline Win 10 PC, and list all the [EventID:1](http://www.eventid.net/display-eventid-1-source-Microsoft-Windows-Kernel-General-eventno-10866-phase-1.htm) and [EventID:4616](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4616) entries *(The system time was changed)* in a window. Selected rows are saved in a comma separated file (csv).  
@@ -70,6 +74,7 @@
   
     - [EventID 4616](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4616) The system time was changed
     - [EventID 4624](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4624) An account was successfully logged on
+    - [EventID 4648](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4648) A logon was attempted using explicit credentials
     - [EventID 4688](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4688) A new process has been created
     - [Are Windows timezone written in registry reliable?](https://stackoverflow.com/questions/47104967/are-windows-timezone-written-in-registry-reliable)
     - `tzutil  /l` : List timezones
@@ -87,12 +92,12 @@
        - [X] Parse 4616
        - [X] Parse 4624/4528/4540 (Audit Logon = Success & Failure)
        - [X] Check / Parse 4625
-       - [ ] Check / Parse 4648
+       - [X] Check / Parse 4648
        - [ ] Check / Parse 4663/4567 (Audit File	System	=	Success, (Audit Registry =	Success ) )
        - [ ] Check / Parse 4675
        - [X] Check / Parse 4688 (Audit Process Creation =	Success)
        - [ ] Check / Parse 5140/5560 (Audit File	Share	=	Success )
-       - [ ] Check / Parse 5156 (Audit Filtering Platform Connection = Succes)
+       - [ ] Check / Parse 5156 (Audit Filtering Platform Connection = Success)
        - [ ] Check / Parse 7045/7040 
        - [ ] ~~Correlate event id entries in 4616, 4624, 4688 etc~~
        - [X] Check Event ID 1006 of Microsoft-Windows-Partition%4Diagnostic.evtx [(USB Device Tracking ..)](https://df-stream.com/2018/07/partition-diagnostic-event-log-and-usb-device-tracking-p2/)

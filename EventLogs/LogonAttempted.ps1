@@ -9,22 +9,6 @@
 # This event is generated when a process attempts an account logon by explicitly specifying that account’s credentials.
 # This most commonly occurs in batch-type configurations such as scheduled tasks, or when using the “RUNAS” command.
 # It is also a routine event which periodically occurs during normal operating system activity.
-#               
-#
-# %%1832 Identification
-# %%1833 Impersonation
-# %%1840 Delegation
-# %%1841 Denied by Process Trust Label ACE
-# %%1842 Yes
-# %%1843 No
-# %%1844 System
-# %%1845 Not Available
-# %%1846 Default
-# %%1847 DisallowMmConfig
-# %%1848 Off
-# %%1849 Auto
-# (https://tinyurl.com/y7gx8578)
-
 
 # Show an Open File Dialog and return the file selected by the user
 Function Get-Folder($initialDirectory)
@@ -46,7 +30,6 @@ Function Get-Folder($initialDirectory)
 			exit
         }
     return $Folder
-
 	}
 
 $F = Get-Folder +"\"
@@ -68,13 +51,12 @@ Try {
 
 [xml[]]$xmllog7 = $log7.toXml()
 $LAcount = $xmllog7.Count
-Write-Host "(LogonAttempted.ps1):" -f Yellow -nonewline; write-host " Found: $LAcount in Event Log: ($File)" -f White
-
+Write-Host "(LogonAttempted.ps1):" -f Yellow -nonewline; write-host " Found: $LAcount entries in Event Log: ($File)" -f White
 
 $Events7 = foreach ($la in $xmllog7) {$h++
 			
-			#Progress Bar
-			write-progress -id 1 -activity "Collecting Security entries with EventID=4648 - $h of $($LAcount)"  -PercentComplete (($h / $LAcount) * 100)		
+	   #Progress Bar
+	   write-progress -id 1 -activity "Collecting Security entries with EventID=4648 - $h of $($LAcount)"  -PercentComplete (($h / $LAcount) * 100)		
 			
 			# Format output fields
             $version = if ($la.Event.System.Version -eq 0){"Windows Server 2008, Windows Vista"}
@@ -90,16 +72,16 @@ $Events7 = foreach ($la in $xmllog7) {$h++
 
             $Date = (Get-Date ($la.Event.System.TimeCreated.SystemTime) -f o)
 			
-			[PSCustomObject]@{
- 			'EventID' =           $la.Event.System.EventID
+	[PSCustomObject]@{
+ 	    'EventID' =           $la.Event.System.EventID
             'Time Created' =      $Date  
-			'RecordID' =          $la.Event.System.EventRecordID
+	    'RecordID' =          $la.Event.System.EventRecordID
             'Version' =           $version
             'Level' =             $Level
             'Task' =              $la.Event.System.Task
             'Opcode' =            $la.Event.System.Opcode
-			'PID' =               ([Convert]::ToInt64(($la.Event.System.Execution.ProcessID),16)) 
-			'ThreadID' =          $la.Event.System.Execution.ThreadID
+	    'PID' =               ([Convert]::ToInt64(($la.Event.System.Execution.ProcessID),16)) 
+	    'ThreadID' =          $la.Event.System.Execution.ThreadID
             'User Name' =         $la.Event.EventData.Data[1].'#text'
             'ExecutionPID'   =    $la.Event.System.Execution.ProcessID
             'Computer' =          $la.Event.System.Computer

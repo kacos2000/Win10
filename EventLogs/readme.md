@@ -91,6 +91,7 @@
      - To Do:
        - [X] Parse 4616
        - [X] Parse 4624/4528/4540 (Audit Logon = Success & Failure)
+       - [ ] Parse 4634/4647 (An account was logged off/User initiated logoff)
        - [X] Check / Parse 4625
        - [X] Check / Parse 4648
        - [ ] Check / Parse 4663/4567 (Audit File	System	=	Success, (Audit Registry =	Success ) )
@@ -100,5 +101,6 @@
        - [ ] Check / Parse 5156 (Audit Filtering Platform Connection = Success)
        - [ ] Check / Parse 7045/7040 
        - [ ] ~~Correlate event id entries in 4616, 4624, 4688 etc~~
+       - [X] Parse Microsoft-Windows-PushNotification-Platform%4Operational.evtx
        - [X] Check Event ID 1006 of Microsoft-Windows-Partition%4Diagnostic.evtx [(USB Device Tracking ..)](https://df-stream.com/2018/07/partition-diagnostic-event-log-and-usb-device-tracking-p2/)
       

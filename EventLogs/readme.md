@@ -89,6 +89,7 @@
   __________________
    
      - To Do:
+       - [X] [List all event log *'keywords'*](keywords.md)
        - [X] Parse 4616
        - [X] Parse 4624/4528/4540 (Audit Logon = Success & Failure)
        - [ ] Parse 4634/4647 (An account was logged off/User initiated logoff)

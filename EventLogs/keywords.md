@@ -91,7 +91,7 @@
     | | 0x8000000000000000 | -9223372036854775808 |      
 
      
-  - Known keywords ( [source](https://www.geoffchappell.com/notes/windows/shell/events/core.htm))
+  - Known keywords ( [source1](https://www.geoffchappell.com/notes/windows/shell/events/core.htm))
    
     | **Name** | **Hex Value** | **Decimal Value** | **Display Name**
     |  -----: | :-----: | -----: | :-----    
@@ -109,4 +109,38 @@
     |  | 0x0000000008000000 | |  StructuredQuery 
     |  | 0x0008000000000000 | |  win:SQM 
     |  | 0x8000000000000000 | |  Microsoft-Windows-Shell-Core/Diagnostic 
+    
+  - Known keywords ( [source2](https://github.com/libyal/libevtx/blob/master/documentation/Windows%20XML%20Event%20Log%20(EVTX).asciidoc)) 
+  
+    | **Name** | **Hex Value** | **Decimal Value** | **Display Name**
+    |  -----: | :-----: | -----: | :-----      
+    | win:AnyKeyword | 0x0000000000000000  | | 
+    |  | 0x0000000000010000  | | Shell
+    |  | 0x0000000000020000  | | Properties
+    |  | 0x0000000000040000  | | FileClassStoreAndIconCache
+    |  | 0x0000000000080000  | | Controls
+    |  | 0x0000000000100000  | | APICalls
+    |  | 0x0000000000200000  | | InternetExplorer
+    |  | 0x0000000000400000  | | ShutdownUX
+    |  | 0x0000000000800000  | | CopyEngine
+    |  | 0x0000000001000000  | | Tasks
+    |  | 0x0000000002000000  | | WDI
+    |  | 0x0000000004000000  | | StartupPerf
+    |  | 0x0000000008000000  | | StructuredQuery
+    | win:Reserved | 0x0001000000000000  | | 
+    | win:WDIContext | 0x0002000000000000  | | 
+    | win:WDIDiag | 0x0004000000000000  | | 
+    | win:SQM |0x0008000000000000  | | 
+    | win:AuditFailure | 0x0010000000000000  | | 
+    | win:AuditSuccess | 0x0020000000000000  | | 
+    | win:CorrelationHint | 0x0040000000000000  | | 
+    | win:EventlogClassic | 0x0080000000000000  | | Classic
+    | win:ReservedKeyword56 | 0x0100000000000000  | | 
+    | win:ReservedKeyword57 | 0x0200000000000000  | | 
+    | win:ReservedKeyword58 | 0x0400000000000000  | | 
+    | win:ReservedKeyword59 | 0x0800000000000000  | | 
+    | win:ReservedKeyword60 | 0x1000000000000000  | | 
+    | win:ReservedKeyword61 | 0x2000000000000000  | | 
+    | win:ReservedKeyword62 | 0x4000000000000000  | | 
+    | win:ReservedKeyword63 | 0x8000000000000000  | | Microsoft-Windows-Shell-Core/Diagnostic
 

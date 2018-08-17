@@ -6,7 +6,7 @@ Apparently, each event log uses a new 'keywords' created from a combination of t
 
  - Example: 
 
-    The keyword 0x40000000A1878800 is created from the combination of:
+    The keyword 0x80000000a1878800 is created from the combination of:
 
     | keywords (in Decimal): | Name:
     |  :----  |  :----
@@ -24,11 +24,14 @@ Apparently, each event log uses a new 'keywords' created from a combination of t
         
       *\* Name taken from the previous page*
       
-      
+     Adding all these Decimal values, and converting the total to HEX:<br> 
+     `PS C:\"0x"+'{0:x16}'-f (-9223372036854775808 + 2147483648 + 536870912 + 16777216 + 8388608 + 262144 + 131072 + 65536 + 32768 + 2048)`<br>
+     gives:<br>
+     `PS C:\0x80000000a1878800`<br>
 
 
 
-  * Powershell Script to list all keywords for each event by a List provider, and get the unique keywords 
+  * Powershell Script to list all keywords for each event ID from an eventlog List provider, and get the unique keywords 
 
         # List all event Log providers:
         # (Get-WinEvent -ListLog * ).ProviderNames|sort|get-unique

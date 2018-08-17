@@ -47,9 +47,9 @@ Apparently, each event log uses new 'keywords' created from a combination of the
             #Get all possible keyword values (decimal) and add them together        
             $kvv=0;(0..20)|foreach{$kvv += $i.keywords.value[$_]}
 
-            foreach($n in $i.keywords.name.count)        {if($n -ge 1-and $n -ge 1)  {$kn  += "$($i.keywords.name[0..$n]) "}} 
-            foreach($v in $i.keywords.value.count)       {if($v -ge 1 -and $v -ge 1) {$vd  += "$($i.keywords.value[0..$v]) "}}
-            foreach($d in $i.keywords.displayname.count) {if($d -ge 1 -and $d -ge 1) {$vdn += "$($i.keywords.displayname[0..$d]) "}}
+            foreach($n in $i.keywords.name.count)        {if($n -ge 1)  {$kn  += "$($i.keywords.name[0..$n]) "}} 
+            foreach($v in $i.keywords.value.count)       {if($v -ge 1) {$vd  += "$($i.keywords.value[0..$v]) "}}
+            foreach($d in $i.keywords.displayname.count) {if($d -ge 1) {$vdn += "$($i.keywords.displayname[0..$d]) "}}
 
             [PSCustomObject]@{
                 id = $i.id

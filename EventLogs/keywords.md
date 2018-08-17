@@ -2,7 +2,11 @@
  *Continues to [keywords2.md](keywords2.md)*<br>
  
  > **keywords**:	 	[(SystemPropertiesType)](https://docs.microsoft.com/en-us/windows/desktop/WES/eventschema-keywords-systempropertiestype-element)  Element - A bitmask of the keywords defined in the event<br>
- Defines a list of keywords that categorize events.(type="HexInt64Type")
+ Defines a list of keywords that categorize events (type="HexInt64Type").<br>
+ >**[Patterns](https://docs.microsoft.com/en-us/windows/desktop/WES/eventschema-hexint64type-simpletype)**: The HexInt64Type simple type is a string that is restricted by the following pattern:
+    `0[xX][0-9A-Fa-f]{1,16}`<br>
+    The value can contain from one to sixteen hexadecimal characters (for example, 0xa or 0xac7bd361004fe190).
+
     
  - **PowerShell script** to list all unique event log *'keywords'* 
 

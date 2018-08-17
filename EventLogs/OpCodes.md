@@ -30,26 +30,29 @@ when it raised the event .
         }
         #output results to table
         $opcodes|sort -property Provider, EventID, Value  |format-table -autosize
-  
-       * [Output in comma separated text *(csv)*](https://raw.githubusercontent.com/kacos2000/Win10/master/EventLogs/OpCodes.csv)
-       
-       * Sample Output 
+           
 
-        Provider | EventID | Count | Value | Name  | Display Name 
-        :---- | :--: | :---: | :---: | :---:  | :---:
-        LsaSrv | 6225 | 1 | 1 | win:Start | Start    
-        LsaSrv | 6226 | 1 | 2 | win:Stop | Stop   
-        LsaSrv | 6227 | 1 | 1 | win:Start | Start   
-        LsaSrv | 6228 | 1 | 2 | win:Stop | Stop
-        LsaSrv | 6229 | 1 | 1 | win:Start | Start 
-        LsaSrv | 6230 | 1 | 2 | win:Stop | Stop
-        LsaSrv | 6231 | 1 | 1 | win:Start  | Start
-        LsaSrv | 6232 | 1 | 2 | win:Stop | Stop    
+      * Sample Output<br> 
+           * [Full output in comma separated text *(csv)*](https://raw.githubusercontent.com/kacos2000/Win10/master/EventLogs/OpCodes.csv)<br><br>
+           
+
+         Provider | EventID | Count | Value | Name  | Display Name 
+         :---- | :--: | :---: | :---: | :---:  | :---:
+         LsaSrv | 6225 | 1 | 1 | win:Start | Start    
+         LsaSrv | 6226 | 1 | 2 | win:Stop | Stop   
+         LsaSrv | 6227 | 1 | 1 | win:Start | Start   
+         LsaSrv | 6228 | 1 | 2 | win:Stop | Stop
+         LsaSrv | 6229 | 1 | 1 | win:Start | Start 
+         LsaSrv | 6230 | 1 | 2 | win:Stop | Stop
+         LsaSrv | 6231 | 1 | 1 | win:Start  | Start
+         LsaSrv | 6232 | 1 | 2 | win:Stop | Stop    
 
 
-        * Sample Output - from 791 eventlog providers  *(Win10 Pro (version 1803) )*, when sorted by unique Name<br>
-
-        `$kw|sort -property Value, Name, Displayname -unique  |format-table -autosize`
+       * Sample Output when sorted by unique Name. *(From 791 eventlog providers - Win10 Pro (version 1803) )*<br>
+         `$kw|sort -property Value, Name, Displayname -unique  |format-table -autosize`<br>
+            * [Full output in comma separated text *(csv)*](https://raw.githubusercontent.com/kacos2000/Win10/master/EventLogs/OpCodes2.csv)<br><br>
+            
+            
 
          | Provider| EventID | Value | Name | DisplayName 
          | :----- | :----: | :----:| :----- |  :-----
@@ -68,6 +71,6 @@ when it raised the event .
          | Microsoft-Windows-GPIO-ClassExtension| 1000 | 10| AcpiEventMethodStart |  
          | Microsoft-Windows-Winsock-AFD| 4016 | 10| AFD_OPCODE_OPEN | Open 
 
-         * [Output in comma separated text *(csv)*](https://raw.githubusercontent.com/kacos2000/Win10/master/EventLogs/OpCodes2.csv)
-      
+       
+
 

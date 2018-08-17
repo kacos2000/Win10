@@ -1,4 +1,7 @@
- - **PowerShell script** to list all event log *'keywords'* 
+ ### Event log 'Keywords' *p1*
+ *Continues to [keywords2.md](keywords2.md)*<br>
+ 
+ - **PowerShell script** to list all unique event log *'keywords'* 
 
         try{$v = @((Get-WinEvent -Listprovider *  -ErrorAction SilentlyContinue ).events.keywords) }
         catch{$v=$null}
@@ -144,3 +147,6 @@
     | win:ReservedKeyword62 | 0x4000000000000000  | | 
     | win:ReservedKeyword63 | 0x8000000000000000  | | Microsoft-Windows-Shell-Core/Diagnostic
 
+
+
+ *Continues to [keywords2.md](keywords2.md)*<br>

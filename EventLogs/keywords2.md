@@ -6,9 +6,8 @@ Apparently, each event log uses new 'keywords' created from a combination of the
 
  - Example: 
     
-    - The keyword 0x80000000a1878800 
-      ![0x80000000a1878800](https://raw.githubusercontent.com/kacos2000/Win10/master/EventLogs/80000000a1878800.JPG)
-
+    - The keyword **0x80000000a1878800**:<br> 
+      ![0x80000000a1878800](https://raw.githubusercontent.com/kacos2000/Win10/master/EventLogs/80000000a1878800.JPG)<br>
       is created from the combination of:
 
       | keywords (in Decimal): | Name: |Display Name: 

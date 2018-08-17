@@ -1,8 +1,8 @@
  ### Event log 'Keywords' *p1*
  *Continues to [keywords2.md](keywords2.md)*<br>
  
- >> **keywords**:	 	[(SystemPropertiesType)](https://docs.microsoft.com/en-us/windows/desktop/WES/eventschema-keywords-systempropertiestype-element)  Element - A bitmask of the keywords defined in the event<br>
- Defines a list of keywords that categorize events.
+ > **keywords**:	 	[(SystemPropertiesType)](https://docs.microsoft.com/en-us/windows/desktop/WES/eventschema-keywords-systempropertiestype-element)  Element - A bitmask of the keywords defined in the event<br>
+ Defines a list of keywords that categorize events.(type="HexInt64Type")
     
  - **PowerShell script** to list all unique event log *'keywords'* 
 

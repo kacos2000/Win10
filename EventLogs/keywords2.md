@@ -5,24 +5,27 @@
 Apparently, each event log uses new 'keywords' created from a combination of the main 'keywords' found in the [previous page](keywords.md). 
 
  - Example: 
+    
+    - The keyword 0x80000000a1878800 
+      ![0x80000000a1878800](https://raw.githubusercontent.com/kacos2000/Win10/master/EventLogs/80000000a1878800.JPG)
 
-    The keyword 0x80000000a1878800 is created from the combination of:
+      is created from the combination of:
 
-    | keywords (in Decimal): | Name:
-    |  :----  |  :----
-    | -9223372036854775808 | Microsoft-Windows-Shell-Core/Diagnostic*
-    | 4611686018427387904 | wpndev_NotificationE2E
-    | 2147483648 | wpndebug_localtile_isolate
-    | 536870912 | wpndebug_cloudtile_isolate
-    | 16777216 | wpntroubleshoot
-    | 8388608 | wpnperf_NewCloudNotificationArrivalWithCloudImage
-    | 262144 | wpnperf_NewCloudNotificationArrival
-    | 31072 | wpnperf_FirstCloudNotificationWithCloudImage
-    | 65536 | wpnperf_FirstCloudNotification
-    | 32768 | wpnui
-    | 2048 | StationId*
-        
-      *\* Name taken from the previous page*
+      | keywords (in Decimal): | Name: |Display Name: 
+      |  :----  |  :---- |  :----
+      | -9223372036854775808 | - | Microsoft-Windows-Shell-Core/Diagnostic*
+      | 4611686018427387904 | wpndev_NotificationE2E | Developer Support: End-to-End trace for new notification Developer 
+      | 2147483648 | wpndebug_localtile_isolate | Debug: Isolate Failures in Local Tile Notification Delivery Developer 
+      | 536870912 | wpndebug_cloudtile_isolate | Debug: Isolate Failures in Cloud Tile Notification Delivery 
+      | 16777216 | wpntroubleshoot | WNP Transport Layer Performance
+      | 8388608 | wpnperf_NewCloudNotificationArrivalWithCloudImage | Scenario: New cloud notification refering cloud images arrives Performance
+      | 262144 | wpnperf_NewCloudNotificationArrival | Scenario: New cloud notification arrives Performance
+      | 31072 | wpnperf_FirstCloudNotificationWithCloudImage | Scenario: First cloud notification with cloud image download Performance
+      | 65536 | wpnperf_FirstCloudNotification | Scenario: First cloud notification Presentation Layer API  
+      | 32768 | wpnui | Routing Services*
+      | 2048 | - | StationId*
+
+        *(\* Name taken from the previous page)*
       
      Adding all these Decimal values, and converting the total to HEX:<br> 
      `PS C:\"0x"+'{0:x16}'-f (-9223372036854775808 + 2147483648 + 536870912 + 16777216 + 8388608 + 262144 + 131072 + 65536 + 32768 + 2048)`<br>

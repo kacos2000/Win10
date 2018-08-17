@@ -36,7 +36,7 @@
 
   - **Output:**
   
-    | **Name** | **Hex Value** | **Decimal Value** | **Display Name**
+    | **Name** | **Keyword (HEX)** | **Keyword (DEC)** | **Display Name**
     | -----: | :-----: | -----: | :----- 
     |Base | 0x0000000000000001 | 1 |  
     |Performance | 0x0000000000000002 | 2 | Performance 
@@ -105,7 +105,7 @@
      
   - Known keywords ( [source1](https://www.geoffchappell.com/notes/windows/shell/events/core.htm))
    
-    | **Name** | **Hex Value** | **Decimal Value** | **Display Name**
+    | **Name** | **Keyword (HEX)** | **Keyword (DEC)** | **Display Name**
     |  -----: | :-----: | -----: | :-----    
     |  | 0x0000000000010000 | | Shell 
     |  | 0x0000000000020000 | |  Properties 
@@ -124,7 +124,7 @@
     
   - Known keywords ( [source2](https://github.com/libyal/libevtx/blob/master/documentation/Windows%20XML%20Event%20Log%20(EVTX).asciidoc)) 
   
-    | **Name** | **Hex Value** | **Decimal Value** | **Display Name**
+    | **Name** | **Keyword (HEX)** | **Keyword (DEC)** | **Display Name**
     |  -----: | :-----: | -----: | :-----      
     | win:AnyKeyword | 0x0000000000000000  | | 
     |  | 0x0000000000010000  | | Shell

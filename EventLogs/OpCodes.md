@@ -31,43 +31,43 @@ when it raised the event .
         #output results to table
         $opcodes|sort -property Provider, EventID, Value  |format-table -autosize
   
-  * [Output in comma separated text *(csv)*](https://raw.githubusercontent.com/kacos2000/Win10/master/EventLogs/OpCodes.csv)
+       * [Output in comma separated text *(csv)*](https://raw.githubusercontent.com/kacos2000/Win10/master/EventLogs/OpCodes.csv)
        
-  * Sample Output 
+       * Sample Output 
 
-      Provider | EventID | Count | Value | Name  | Display Name 
-      :---- | :--: | :---: | :---: | :---:  | :---:
-      LsaSrv | 6225 | 1 | 1 | win:Start | Start    
-      LsaSrv | 6226 | 1 | 2 | win:Stop | Stop   
-      LsaSrv | 6227 | 1 | 1 | win:Start | Start   
-      LsaSrv | 6228 | 1 | 2 | win:Stop | Stop
-      LsaSrv | 6229 | 1 | 1 | win:Start | Start 
-      LsaSrv | 6230 | 1 | 2 | win:Stop | Stop
-      LsaSrv | 6231 | 1 | 1 | win:Start  | Start
-      LsaSrv | 6232 | 1 | 2 | win:Stop | Stop    
+        Provider | EventID | Count | Value | Name  | Display Name 
+        :---- | :--: | :---: | :---: | :---:  | :---:
+        LsaSrv | 6225 | 1 | 1 | win:Start | Start    
+        LsaSrv | 6226 | 1 | 2 | win:Stop | Stop   
+        LsaSrv | 6227 | 1 | 1 | win:Start | Start   
+        LsaSrv | 6228 | 1 | 2 | win:Stop | Stop
+        LsaSrv | 6229 | 1 | 1 | win:Start | Start 
+        LsaSrv | 6230 | 1 | 2 | win:Stop | Stop
+        LsaSrv | 6231 | 1 | 1 | win:Start  | Start
+        LsaSrv | 6232 | 1 | 2 | win:Stop | Stop    
 
 
-    * Sample Output - from 791 eventlog providers  *(Win10 Pro (version 1803) )*, when sorted by unique Name<br>
-      
-      `$kw|sort -property Value, Name, Displayname -unique  |format-table -autosize`
-      
-        | Provider| EventID | Value | Name | DisplayName 
-        | :----- | :----: | :----:| :----- |  :-----
-        | AESMService| 0 | 0|  |  
-        | Microsoft-Windows-PriResources-Deployment| 1000 | 0| win:Info |  
-        | Microsoft-Windows-SenseIR| 11 | 0| win:Info | Info 
-        | Microsoft-Windows-PriResources-Deployment| 1 | 1| win:Start |  
-        | Microsoft-Windows-Shell-Core| 18952 | 1| win:Start | Start 
-        | Microsoft-Windows-PriResources-Deployment| 2 | 2| win:Stop |  
-        | Microsoft-Windows-VolumeSnapshot-Driver| 119 | 2| win:Stop | Stop 
-        | Microsoft-WindowsPhone-ConfigManager2| 88 | 4| win:DC_Stop | DCStop 
-        | Microsoft-Windows-Bits-Client| 1 | 7| win:Resume | Resume 
-        | Microsoft-Windows-Kernel-PnP| 271 | 8| win:Suspend | Suspend 
-        | Microsoft-Windows-Spell-Checking| 1 | 9| win:Send | Send 
-        | Microsoft-Windows-Bits-Client| 19 | 10| AcceptPacket | replying to an incoming request 
-        | Microsoft-Windows-GPIO-ClassExtension| 1000 | 10| AcpiEventMethodStart |  
-        | Microsoft-Windows-Winsock-AFD| 4016 | 10| AFD_OPCODE_OPEN | Open 
-       
-        * [Output in comma separated text *(csv)*](https://raw.githubusercontent.com/kacos2000/Win10/master/EventLogs/OpCodes2.csv)
+        * Sample Output - from 791 eventlog providers  *(Win10 Pro (version 1803) )*, when sorted by unique Name<br>
+
+        `$kw|sort -property Value, Name, Displayname -unique  |format-table -autosize`
+
+         | Provider| EventID | Value | Name | DisplayName 
+         | :----- | :----: | :----:| :----- |  :-----
+         | AESMService| 0 | 0|  |  
+         | Microsoft-Windows-PriResources-Deployment| 1000 | 0| win:Info |  
+         | Microsoft-Windows-SenseIR| 11 | 0| win:Info | Info 
+         | Microsoft-Windows-PriResources-Deployment| 1 | 1| win:Start |  
+         | Microsoft-Windows-Shell-Core| 18952 | 1| win:Start | Start 
+         | Microsoft-Windows-PriResources-Deployment| 2 | 2| win:Stop |  
+         | Microsoft-Windows-VolumeSnapshot-Driver| 119 | 2| win:Stop | Stop 
+         | Microsoft-WindowsPhone-ConfigManager2| 88 | 4| win:DC_Stop | DCStop 
+         | Microsoft-Windows-Bits-Client| 1 | 7| win:Resume | Resume 
+         | Microsoft-Windows-Kernel-PnP| 271 | 8| win:Suspend | Suspend 
+         | Microsoft-Windows-Spell-Checking| 1 | 9| win:Send | Send 
+         | Microsoft-Windows-Bits-Client| 19 | 10| AcceptPacket | replying to an incoming request 
+         | Microsoft-Windows-GPIO-ClassExtension| 1000 | 10| AcpiEventMethodStart |  
+         | Microsoft-Windows-Winsock-AFD| 4016 | 10| AFD_OPCODE_OPEN | Open 
+
+         * [Output in comma separated text *(csv)*](https://raw.githubusercontent.com/kacos2000/Win10/master/EventLogs/OpCodes2.csv)
       
 

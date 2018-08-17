@@ -30,8 +30,7 @@ Apparently, each event log uses new 'keywords' created from a combination of the
       
      Adding all these Decimal values, and converting the total to HEX: *(powershell terminal command)*<br> 
      `"0x"+'{0:x16}'-f (-9223372036854775808 + 2147483648 + 536870912 + 16777216 + 8388608 + 262144 + 131072 + 65536 + 32768 + 2048)`<br>
-     gives *(powershell terminal output)*:<br>
-     **0x80000000a1878800**<br>
+     gives *(powershell terminal output)*:  **0x80000000a1878800**<br>
 
 
 

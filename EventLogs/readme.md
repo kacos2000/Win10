@@ -1,10 +1,11 @@
 <!-- saved from url=(0054) https://kacos2000.github.io/Win10-Research/EventLogs/ --> 
 <!-- https://guides.github.com/features/mastering-markdown/ --> 
-####  *Keyword lists*  ####
+####  *lists*  ####
 - [keywords1](https://github.com/kacos2000/Win10-Research/blob/master/EventLogs/keywords.md) - 
   Powershell script to list all eventlog keywords and the resulting list *(from Win10 Pro version 1803)*
 - [keywords2](https://github.com/kacos2000/Win10-Research/blob/master/EventLogs/keywords2.md) - 
   Powershell script to list all event specific generated keywords and sample list *(from the Win10 Pro version 1803 "Microsoft-Windows-PushNotifications-Platform" event provider)*
+ - [OpCodes](https://github.com/kacos2000/Win10-Research/blob/master/EventLogs/OpCodes.md)  - Powershell script to list all OpCodes, their Name & DisplayName for AllEvent providers, and 2 csv lists 
 
 ###  Win 10 *(version 1709+)* Microsoft-Windows-Partition/Diagnostic.evtx EventID: 1006 parser  ###
 
@@ -96,18 +97,19 @@
      - To Do:
        - [X] [List all event log *'keywords'*](keywords.md)
        - [X] [List all eventlog-generated *'keywords'*](keywords2.md)
-       - [X] Parse 4616
-       - [X] Parse 4624/4528/4540 (Audit Logon = Success & Failure)
-       - [ ] Parse 4634/4647 (An account was logged off/User initiated logoff)
-       - [X] Check / Parse 4625
-       - [X] Check / Parse 4648
-       - [ ] Check / Parse 4663/4567 (Audit File	System	=	Success, (Audit Registry =	Success ) )
-       - [ ] Check / Parse 4675
-       - [X] Check / Parse 4688 (Audit Process Creation =	Success)
-       - [ ] Check / Parse 5140/5560 (Audit File	Share	=	Success )
-       - [ ] Check / Parse 5156 (Audit Filtering Platform Connection = Success)
-       - [ ] Check / Parse 7045/7040 
-       - [ ] ~~Correlate event id entries in 4616, 4624, 4688 etc~~
-       - [X] Parse Microsoft-Windows-PushNotification-Platform%4Operational.evtx
-       - [X] Check Event ID 1006 of Microsoft-Windows-Partition%4Diagnostic.evtx [(USB Device Tracking ..)](https://df-stream.com/2018/07/partition-diagnostic-event-log-and-usb-device-tracking-p2/)
+       - [X] List all [OpCodes](OpCodes.md) 
+       - [X] Parse EventID 4616
+       - [X] Parse EventIDs 4624/4528/4540 (Audit Logon = Success & Failure)
+       - [ ] Parse EventIDs 4634/4647 (An account was logged off/User initiated logoff)
+       - [X] Check / Parse EventID 4625
+       - [X] Check / Parse EventID 4648
+       - [ ] Check / Parse EventIDs 4663/4567 (Audit File	System	=	Success, (Audit Registry =	Success ) )
+       - [ ] Check / Parse EventID 4675
+       - [X] Check / Parse EventID 4688 (Audit Process Creation =	Success)
+       - [ ] Check / Parse EventIDs 5140/5560 (Audit File	Share	=	Success )
+       - [ ] Check / Parse EventID 5156 (Audit Filtering Platform Connection = Success)
+       - [ ] Check / Parse EventIDs 7045/7040 
+       - [ ] ~~Correlate entries in EventIDs 4616, 4624, 4688 etc~~
+       - [X] Parse EventLog Microsoft-Windows-PushNotification-Platform%4Operational.evtx
+       - [X] Check /Parse EventID 1006 of Microsoft-Windows-Partition%4Diagnostic.evtx [(USB Device Tracking ..)](https://df-stream.com/2018/07/partition-diagnostic-event-log-and-usb-device-tracking-p2/)
       

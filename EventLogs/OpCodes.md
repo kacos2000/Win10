@@ -46,7 +46,8 @@ when it raised the event .
 
 
     * Output - from 791 eventlog providers  *(Win10 Pro (version 1803) )*, when sorted by unique Name<br>
-      `$kw|sort -property name -unique  |format-table -autosize`
+      
+      `$kw|sort -property Value, Name, Displayname -unique  |format-table -autosize`
       
         | Provider| EventID | Value | Name | DisplayName 
         | :----- | :----: | :----:| :----- |  :-----

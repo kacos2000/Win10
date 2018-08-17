@@ -2,7 +2,7 @@
 ### Event log 'Keywords' *p2*
 
 
-Apparently, each event log uses a new 'keywords' created from a combination of the main 'keywords' found in the [previous page](keywords.md). 
+Apparently, each event log uses new 'keywords' created from a combination of the main 'keywords' found in the [previous page](keywords.md). 
 
  - Example: 
 

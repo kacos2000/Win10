@@ -1,5 +1,10 @@
 <!-- saved from url=(0054) https://kacos2000.github.io/Win10-Research/EventLogs/ --> 
 <!-- https://guides.github.com/features/mastering-markdown/ --> 
+####  *Keyword lists*  ####
+- [keywords1](https://github.com/kacos2000/Win10-Research/blob/master/EventLogs/keywords.md) - 
+  Powershell script to list all eventlog keywords and the resulting list *(from Win10 Pro version 1803)*
+- [keywords2](https://github.com/kacos2000/Win10-Research/blob/master/EventLogs/keywords2.md) - 
+  Powershell script to list all event specific generated keywords and sample list *(from the Win10 Pro version 1803 "Microsoft-Windows-PushNotifications-Platform" event provider)*
 
 ###  Win 10 *(version 1709+)* Microsoft-Windows-Partition/Diagnostic.evtx EventID: 1006 parser  ###
 
@@ -90,6 +95,7 @@
    
      - To Do:
        - [X] [List all event log *'keywords'*](keywords.md)
+       - [X] [List all eventlog-generated *'keywords'*](keywords2.md)
        - [X] Parse 4616
        - [X] Parse 4624/4528/4540 (Audit Logon = Success & Failure)
        - [ ] Parse 4634/4647 (An account was logged off/User initiated logoff)

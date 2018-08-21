@@ -69,7 +69,7 @@ Apparently, each event log uses new 'keywords' created from a combination of the
 
   * Result:
 
-    | New Keyword | Keywords Count |Keywords (value in HEX) | Name(s)
+    | New HEX Keyword | Keywords Count |Keywords (values in DEC) | Name(s)
     | :----------------: | :--: | :----------------- | :-------------------------------- 
     | 0x8000000000000000 | 1 |   |  
     | 0x2000000000400000 | 2 | 2305843009213693952 4194304  |  wnptrans  

@@ -1,4 +1,6 @@
 *Continued from [keywords.md](keywords.md)*<br>
+*Sctipt to get the full list of keywords in [keywords3.md](keywords3.md) -- [CSV output file](https://github.com/kacos2000/Win10/blob/master/EventLogs/keyall.csv)*<br>
+
 ### Event log 'Keywords' *p2*
 
 

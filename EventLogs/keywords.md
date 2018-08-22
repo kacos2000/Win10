@@ -20,15 +20,15 @@
              
              if($i -ne $null){           
                         [PSCustomObject]@{
-                                            name = $i.name
-                                            value_hex = "0x"+'{0:x16}'-f $i.value
-                                            value_decimal= $i.value
-                                            displayname = $i.displayname
+                                            Name = $i.name
+                                            ValueHEX = "0x"+'{0:x16}'-f $i.value
+                                            ValueDEC= $i.value
+                                            DisplayName = $i.displayname
                                         }
                                       }
                                     }
                                   ) 
-        $keywords = ($keywords|sort-object -Property value_decimal -unique) 
+        $keywords = ($keywords|sort-object -Property ValueDEC -unique) 
         $keywords |format-table -autosize
         $keywords |Export-Csv -path "$($env:userprofile)\desktop\keymain.csv" -Delimiter ","
 

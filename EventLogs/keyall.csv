@@ -1,4 +1,4 @@
-"Provider"	"EventID"	"#"	"ValueHEX"	"ValueDEC"	"Name"	"Displayname"
+"Provider"	"EventID"	"Nr"	"ValueHEX"	"ValueDEC"	"Name"	"Displayname"
 "AESMService"	"0"	"0"	"0x0000000000000000"			
 "Microsoft-Windows-WiFiNetworkManager"	"1609"	"1"	"0x0000000000000001"	"1, "	"S, "	
 "Microsoft-Windows-Wallet"	"315"	"1"	"0x0000000000000002"	"2, "	"P, "	

@@ -14,8 +14,7 @@
 
         try{$event = @((Get-WinEvent -Listprovider *  -ErrorAction SilentlyContinue ).events.keywords) }
         catch{$event=$null}
-        write-host "found $($event.count) entries"
-
+        
         $keywords = @(foreach($i in $event) {
              
              if($i -ne $null){           

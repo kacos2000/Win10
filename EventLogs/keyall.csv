@@ -1,4 +1,3 @@
-#TYPE System.Management.Automation.PSCustomObject
 "Provider"	"EventID"	"#"	"ValueHEX"	"ValueDEC"	"Name"	"Displayname"
 "AESMService"	"0"	"0"	"0x0000000000000000"			
 "Microsoft-Windows-WiFiNetworkManager"	"1609"	"1"	"0x0000000000000001"	"1, "	"S, "	

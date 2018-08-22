@@ -12,27 +12,28 @@
  
  - **PowerShell script** to list all unique event log *'keywords'* 
 
-        try{$v = @((Get-WinEvent -Listprovider *  -ErrorAction SilentlyContinue ).events.keywords) }
-        catch{$v=$null}
-        write-host "found $($v.count) entries"
+        try{$event = @((Get-WinEvent -Listprovider *  -ErrorAction SilentlyContinue ).events.keywords) }
+        catch{$event=$null}
+        write-host "found $($event.count) entries"
 
-        $val = @(foreach($i in $v) {
+        $keywords = @(foreach($i in $event) {
+             
              if($i -ne $null){           
-            [PSCustomObject]@{
-                name = $i.name
-                value_hex = "0x"+'{0:x16}'-f $i.value
-                value_decimal= $i.value
-                displayname = $i.displayname
-            }
-          }
-        })|sort-object -Property value_decimal -unique  
+                        [PSCustomObject]@{
+                                            name = $i.name
+                                            value_hex = "0x"+'{0:x16}'-f $i.value
+                                            value_decimal= $i.value
+                                            displayname = $i.displayname
+                                        }
+                                      }
+                                    }
+                                  ) 
+        $keywords = ($keywords|sort-object -Property value_decimal -unique) 
+        $keywords |format-table -autosize
+        $keywords |Export-Csv -path "$($env:userprofile)\desktop\keymain.csv" -Delimiter ","
 
-        # write output to text file
-        # otherwise just replace the next 2 lines with $val
 
-        $out = foreach ($x in $val){"|$($x.name) | $($x.value_hex) | $($x.value_decimal) | $($x.displayname)"} 
-        $out|out-file D:\keywall.txt -append
-
+  -  [Output in **CSV**](https://github.com/kacos2000/Win10/blob/master/EventLogs/keymain.csv)
 
   - **Output:**
   

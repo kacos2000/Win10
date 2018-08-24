@@ -11,7 +11,7 @@ ________________________________________________________________________________
 
  - [**Notifications_WPNdatabase.sql**](https://github.com/kacos2000/Win10-Research/blob/master/Notifications/Notifications_WPNdatabase.sql)<br> SQLite query to parse the Windows 10 Notifications Wpndatabase.
   
-  ![Preview](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/Not.JPG)
+    ![Preview](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/Not.JPG)
   
  - [**Notifications.ps1**](https://github.com/kacos2000/Win10-Research/blob/master/Notifications/Notifications.ps1)
     <br> Powershell script to parse the Windows 10 Notifications Wpndatabase as well as information from the XML blobs: 

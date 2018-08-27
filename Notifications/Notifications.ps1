@@ -91,10 +91,10 @@ $output = foreach ($item in $dbnresults ){$rn++
                     
                     $ID=$HandlerId=$HandlerType=$Type=$Application=$BadgeValue=$Version=$Text1=$Text2=$Text3=$Text4=$ToastLaunch=$ToastActivationType=$ToastScenario=$SubText1=$SubText2=$SubText3=$SubText4=$TImeStamp=$Audio=$Hint1=$Hint2=$Hint3=$Arg=$Content=$AltText1=$ImgHint1=$Image1=$AltText2=$ImgHint2=$Image2=$DisplayName=$Tag=$ArrivalTime=$ExpiryTime=$HandlerCreated=$HandlerModified=$WNSId=$WNFEventName =$ChannelID =$Uri =$WNSCreatedTime =$WNSExpiryTime=$ActivityId=$PayloadType=$Payload = $null                   
                     
-                   try {$xmlitem = [xml]($item.payload)} catch {}   
-                     
+                    #Remove-variable xmlitem
+                    try {$xmlitem = [xml]($item.payload)} catch {}   
                     
-                   
+                                                          
                    if ($item.Type -eq 'toast' -and $xmlitem.toast -ne $false) { 
 
                      
@@ -104,15 +104,15 @@ $output = foreach ($item in $dbnresults ){$rn++
                             else {$ToastActivationType = $null| Out-Null}
                         if($xmlitem.toast.scenario.count -ge 1 -and $xmlitem.toast.scenario -ne $false) {$ToastScenario = $xmlitem.toast.scenario} 
                             else {$ToastScenario = $null| Out-Null}
-                        if ($xmlitem.toast.visual.binding.text.'#text'.count -eq 1 -and $xmlitem.toast.visual.binding.text.'#text'-ne $null){$text1 =$xmlitem.toast.visual.binding.text.'#text'}
-                            elseif ($xmlitem.toast.visual.binding.text.'#text'.count -ge 1 -and $xmlitem.toast.visual.binding.text[0].'#text' -ne $null){$text1 = $xmlitem.toast.visual.binding.text[0].'#text'}
-                            elseif ($xmlitem.toast.visual.binding.text.count -ge 1 -and $xmlitem.toast.visual.binding.text[0] -ne $null){$text1 = $xmlitem.toast.visual.binding.text[0]}else{}
-                        if ($xmlitem.toast.visual.binding.text.'#text'.count -ge 1 -and $xmlitem.toast.visual.binding.text[1].'#text' -ne $null){$text2 =$xmlitem.toast.visual.binding.text[1].'#text'}
-                             elseif ($xmlitem.toast.visual.binding.text.count -ge 1 -and $xmlitem.toast.visual.binding.text[1] -ne $null){$text2 = $xmlitem.toast.visual.binding.text[1]}else{}
-                        if ($xmlitem.toast.visual.binding.text.'#text'.count -ge 1 -and $xmlitem.toast.visual.binding.text[2].'#text' -ne $null){$text3 =$xmlitem.toast.visual.binding.text[2].'#text'}
-                             elseif ($xmlitem.toast.visual.binding.text.count -ge 1 -and $xmlitem.toast.visual.binding.text[2] -ne $null){$text3 = $xmlitem.toast.visual.binding.text[2]}else{}
-                        if ($xmlitem.toast.visual.binding.text.'#text'.count -ge 1 -and $xmlitem.toast.visual.binding.text[3].'#text' -ne $null){$text4 =$xmlitem.toast.visual.binding.text[3].'#text'}
-                             elseif ($xmlitem.toast.visual.binding.text.count -ge 1 -and $xmlitem.toast.visual.binding.text[3] -ne $null){$text4 = $xmlitem.toast.visual.binding.text[3]}else{}
+                        if ($xmlitem.toast.visual.binding.text.'#text'.count -eq 1 -and $xmlitem.toast.visual.binding.text.'#text'-ne $false){$text1 =$xmlitem.toast.visual.binding.text.'#text'}
+                            elseif ($xmlitem.toast.visual.binding.text.'#text'.count -ge 1 -and $xmlitem.toast.visual.binding.text[0].'#text' -ne $false){$text1 = $xmlitem.toast.visual.binding.text[0].'#text'}
+                            elseif ($xmlitem.toast.visual.binding.text.count -ge 1 -and $xmlitem.toast.visual.binding.text[0] -ne $false){$text1 = $xmlitem.toast.visual.binding.text[0]}else{}
+                        if ($xmlitem.toast.visual.binding.text.'#text'.count -ge 1 -and $xmlitem.toast.visual.binding.text[1].'#text' -ne $false){$text2 =$xmlitem.toast.visual.binding.text[1].'#text'}
+                             elseif ($xmlitem.toast.visual.binding.text.count -ge 1 -and $xmlitem.toast.visual.binding.text[1] -ne $false){$text2 = $xmlitem.toast.visual.binding.text[1]}else{}
+                        if ($xmlitem.toast.visual.binding.text.'#text'.count -ge 1 -and $xmlitem.toast.visual.binding.text[2].'#text' -ne $false){$text3 =$xmlitem.toast.visual.binding.text[2].'#text'}
+                             elseif ($xmlitem.toast.visual.binding.text.count -ge 1 -and $xmlitem.toast.visual.binding.text[2] -ne $false){$text3 = $xmlitem.toast.visual.binding.text[2]}else{}
+                        if ($xmlitem.toast.visual.binding.text.'#text'.count -ge 1 -and $xmlitem.toast.visual.binding.text[3].'#text' -ne $false){$text4 =$xmlitem.toast.visual.binding.text[3].'#text'}
+                             elseif ($xmlitem.toast.visual.binding.text.count -ge 1 -and $xmlitem.toast.visual.binding.text[3] -ne $false){$text4 = $xmlitem.toast.visual.binding.text[3]}else{}
                         if($xmlitem.toast.visual.binding.image.src.count -ge 1 -and $xmlitem.toast.visual.binding.image.src -ne $false) {$Image1 = $xmlitem.toast.visual.binding.image.src} 
                             else {$Image1 = $null| Out-Null}
                         if($xmlitem.toast.action.activationtype.count -ge 1 -and $xmlitem.toast.action.activationtype -ne $false) {$Act_type = $xmlitem.toast.action.activationtype} 
@@ -147,14 +147,14 @@ $output = foreach ($item in $dbnresults ){$rn++
                         foreach($x in $xmlitem.tile.visual.binding[0].text.'#cdata-section'){$Text1 += $x + " "}}
                     else{}  
                     if ($xmlitem.tile.visual.binding[1].text.'#text'.count -ge 1 -and $xmlitem.tile.visual.binding[1].text.'#text' -ne $null){
-                        foreach($x in $xmlitem.tile.visual.binding[1].text.'#text'){$Text21 += $x + " "}}
+                        foreach($x in $xmlitem.tile.visual.binding[1].text.'#text'){$Text2 += $x + " "}}
                     elseif($xmlitem.tile.visual.binding[1].text.'#cdata-section'.count -ge 1 -and $xmlitem.tile.visual.binding[1].text.'#cdata-section' -ne $null){ 
                         foreach($x in $xmlitem.tile.visual.binding[1].text.'#cdata-section'){$Text2 += $x + " "}}
                     else{}  
                     if ($xmlitem.tile.visual.binding[2].text.'#text'.count -ge 1 -and $xmlitem.tile.visual.binding[2].text.'#text' -ne $null){
                         foreach($x in $xmlitem.tile.visual.binding[2].text.'#text'){$Text3 += $x + " "}}
                     elseif($xmlitem.tile.visual.binding[2].text.'#cdata-section'.count -ge 1 -and $xmlitem.tile.visual.binding[2].text.'#cdata-section' -ne $null){ 
-                        foreach($x in $xmlitem.tile.visual.binding[2].text.'#cdata-section'){$Text3 += $x + " ,"}}
+                        foreach($x in $xmlitem.tile.visual.binding[2].text.'#cdata-section'){$Text3 += $x + " "}}
                     else{}  
                     if ($xmlitem.tile.visual.binding[3].text.'#text'.count -ge 1 -and $xmlitem.tile.visual.binding[3].text.'#text' -ne $null){
                         foreach($x in $xmlitem.tile.visual.binding[3].text.'#text'){$Text4 += $x + " "}}
@@ -274,5 +274,5 @@ $filenameFormat = $env:userprofile + "\desktop\Notifications_" + (Get-Date -Form
 Write-host "Selected Rows will be saved as: " -f Yellow -nonewline; Write-Host $filenameFormat -f White
 
 #Output results to screen table (and save selected rows to csv)          
-$output|Out-GridView -PassThru -Title "There are ($dbncount) Notifications in : '$File' - QueryTime $Tn"|Export-Csv -Path $filenameFormat -Encoding Unicode
+$output|Out-GridView -PassThru -Title "There are ($dbncount) Notifications in : '$File' - QueryTime $Tn"#Export-Csv -Path $filenameFormat -Encoding Unicode
 [gc]::Collect() 

@@ -106,6 +106,8 @@
        - [ ] Check / Parse EventIDs 4663/4567 (Audit File	System	=	Success, (Audit Registry =	Success ) )
        - [ ] Check / Parse EventID 4675
        - [X] Check / Parse EventID 4688 (Audit Process Creation =	Success)
+       - [ ] Check / Parse EventID [4720](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4720)): A user account was created
+       - [ ] Check / Parse EventID [4726](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4726)): A user account was deleted
        - [ ] Check / Parse EventIDs 5140/5560 (Audit File	Share	=	Success )
        - [ ] Check / Parse EventID 5156 (Audit Filtering Platform Connection = Success)
        - [ ] Check / Parse EventIDs 7045/7040 

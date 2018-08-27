@@ -9,6 +9,10 @@
        * *A [toast](https://docs.microsoft.com/en-us/windows/uwp/design/shell/tiles-and-notifications/toast-schema) notification is a notification a UWP app sends to the user via a pop-up UI element (toast or banner).*
 ______________________________________________________________________________________________________   
 
+   - Time notifications were last seen by the user:<br> 
+NTUSER.dat - \Software\Microsoft\Windows\CurrentVersion\Notifications - ValueName: TimestampWhenSeen Value:(Filetime)
+______________________________________________________________________________________________________   
+
  - [**Notifications_WPNdatabase.sql**](https://github.com/kacos2000/Win10-Research/blob/master/Notifications/Notifications_WPNdatabase.sql)<br> SQLite query to parse the Windows 10 Notifications Wpndatabase.
   
     ![Preview](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/Not.JPG)

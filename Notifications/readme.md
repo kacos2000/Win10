@@ -85,6 +85,7 @@ ________________________________________________________________________________
   ______________________________________________________________________________________________________  
   
    * **References:**
+      - [Win10 'YourPhone' app, Notifications & Timeline - A quick test](https://www.linkedin.com/pulse/win10-yourphone-app-notifications-timeline-quick-katsavounidis/)   
       - [Microsoft Notifications Visualizer](https://www.microsoft.com/en-us/p/notifications-visualizer/9nblggh5xsl1?rtc=1)
       - [Toast content](https://docs.microsoft.com/en-us/windows/uwp/design/shell/tiles-and-notifications/adaptive-interactive-toasts)
       - [Toast content schema](https://docs.microsoft.com/en-us/windows/uwp/design/shell/tiles-and-notifications/toast-schema)

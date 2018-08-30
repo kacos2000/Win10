@@ -274,5 +274,5 @@ $filenameFormat = $env:userprofile + "\desktop\Notifications_" + (Get-Date -Form
 Write-host "Selected Rows will be saved as: " -f Yellow -nonewline; Write-Host $filenameFormat -f White
 
 #Output results to screen table (and save selected rows to csv)          
-$output|Out-GridView -PassThru -Title "There are ($dbncount) Notifications in : '$File' - QueryTime $Tn"#Export-Csv -Path $filenameFormat -Encoding Unicode
+$output|Out-GridView -PassThru -Title "There are ($dbncount) Notifications in : '$File' - QueryTime $Tn"|Export-Csv -Path $filenameFormat -Encoding Unicode
 [gc]::Collect() 

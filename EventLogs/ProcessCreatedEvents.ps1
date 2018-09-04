@@ -5,21 +5,29 @@
 # https://support.microsoft.com/en-us/help/243330/well-known-security-identifiers-in-windows-operating-systems
 #
 #               
-# The authentication information fields provide detailed information about this specific logon request.
-#    - Logon GUID is a unique identifier that can be used to correlate this event with a KDC event.
-#    - Transited services indicate which intermediate services have participated in this logon request.
-#    - Package name indicates which sub-protocol was used among the NTLM protocols.
-#    - Key length indicates the length of the generated session key. This will be 0 if no session key was requested.
-# Critical - Value: 1. Indicates logs for a critical alert.
-# Error	- Value: 2. Indicates logs for an error.
+# Critical -    Value: 1. Indicates logs for a critical alert.
+# Error	-       Value: 2. Indicates logs for an error.
 # Information - Value: 4. Indicates logs for an informational message.
-# Undefined	- Value: 0. Indicates logs at all levels.
-# Verbose - Value: 5. Indicates logs at all levels.
-# Warning - Value: 3. Indicates logs for a warning.
+# Undefined	-   Value: 0. Indicates logs at all levels.
+# Verbose -     Value: 5. Indicates logs at all levels.
+# Warning -     Value: 3. Indicates logs for a warning.
 #
 # https://msdn.microsoft.com/en-us/library/microsoft.windowsazure.diagnostics.loglevel.aspx 
 # https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.loglevel?view=aspnetcore-2.1
 #
+# %%1832 Identification
+# %%1833 Impersonation
+# %%1840 Delegation
+# %%1841 Denied by Process Trust Label ACE
+# %%1842 Yes
+# %%1843 No
+# %%1844 System
+# %%1845 Not Available
+# %%1846 Default
+# %%1847 DisallowMmConfig
+# %%1848 Off
+# %%1849 Auto
+# (https://tinyurl.com/y7gx8578)
 
 #https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventID=4688
 
@@ -27,7 +35,7 @@
 #    %%1936  - Type 1 is a full token with no privileges removed or groups disabled.  A full token is only used if User Account Control is disabled or if the user is the built-in Administrator account or a service account.
 #    %%1937 - Type 2 is an elevated token with no privileges removed or groups disabled.  An elevated token is used when User Account Control is enabled and the user chooses to start the program using Run as administrator.  An elevated token is also used when an application is configured to always require administrative privilege or to always require maximum privilege, and the user is a member of the Administrators group.
 #    %%1938 - Type 3 is the normal value when UAC is enabled and a user simply starts a program from the Start Menu.  It's a limited token with administrative privileges removed and administrative groups disabled.  The limited token is used when User Account Control is enabled, the application does not require administrative privilege, and the user does not choose to start the program using Run as administrator.
-#
+
 # Show an Open File Dialog and return the file selected by the user
 Function Get-Folder($initialDirectory)
 
@@ -56,7 +64,6 @@ $Folder = $F +"\"
 $DesktopPath = ($Env:WinDir+"\System32\winevt\Logs\")
 
 $File = $Folder + "Security.evtx"
-Write-Host "(ProcessCreatedEvents.ps1):" -f Yellow -nonewline; write-host " Selected Event Log: ($File)" -f White
 $f=0
 
 $sw3 = [Diagnostics.Stopwatch]::StartNew()
@@ -79,27 +86,28 @@ $Events3 = foreach ($p in $xmllog3) {$f++
 			write-progress -id 1 -activity "Collecting Security entries with EventID=4688 - $f of $($xmllog3.Count)"  -PercentComplete (($f / $xmllog3.Count) * 100)		
 			
 			# Format output fields
-            $version = if ($p.Event.System.Version -eq 0){"Windows Server 2008, Windows Vista"}
-                        elseif($p.Event.System.Version -eq 01){"Windows Server 2012R2, Windows 8.1"}
-                        elseif($p.Event.System.Version -eq 02){"Windows 10"}
-            
-            $MandatoryLabel = if ($p.Event.EventData.Data[14].'#text' -eq 'S-1-16-0' ){"Untrusted"}
-                        elseif($p.Event.EventData.Data[14].'#text' -eq 'S-1-16-4096'){"Low integrity"}
-                        elseif($p.Event.EventData.Data[14].'#text' -eq 'S-1-16-8192'){"Medium integrity"}
-                        elseif($p.Event.EventData.Data[14].'#text' -eq 'S-1-16-8448'){"Medium high integrity"}
-                        elseif($p.Event.EventData.Data[14].'#text' -eq 'S-1-16-12288'){"High integrity"}
-                        elseif($p.Event.EventData.Data[14].'#text' -eq 'S-1-16-16384'){"System integrity"}
-                        elseif($p.Event.EventData.Data[14].'#text' -eq 'S-1-16-20480'){"Protected process"}
-            
-            $Level = if ($p.Event.System.Level -eq 0 ){"Undefined"}
-                        elseif($p.Event.System.Level -eq 1){"Critical"}
-                        elseif($p.Event.System.Level -eq 2){"Error"}
-                        elseif($p.Event.System.Level -eq 3){"Warning"}
-                        elseif($p.Event.System.Level -eq 4){"Information"}
-                        elseif($p.Event.System.Level -eq 5){"Verbose"}
+                    $version =     if ($p.Event.System.Version -eq 0){"Windows Server 2008, Windows Vista"}
+                                elseif($p.Event.System.Version -eq 1){"Windows Server 2012R2, Windows 8.1"}
+                                elseif($p.Event.System.Version -eq 2){"Windows 10"}
+             
+                $MandatoryLabel =  if ($p.Event.EventData.Data[14].'#text' -eq 'S-1-16-0' )   {"Untrusted"}
+                                elseif($p.Event.EventData.Data[14].'#text' -eq 'S-1-16-4096') {"Low integrity"}
+                                elseif($p.Event.EventData.Data[14].'#text' -eq 'S-1-16-8192') {"Medium integrity"}
+                                elseif($p.Event.EventData.Data[14].'#text' -eq 'S-1-16-8448') {"Medium high integrity"}
+                                elseif($p.Event.EventData.Data[14].'#text' -eq 'S-1-16-12288'){"High integrity"}
+                                elseif($p.Event.EventData.Data[14].'#text' -eq 'S-1-16-16384'){"System integrity"}
+                                elseif($p.Event.EventData.Data[14].'#text' -eq 'S-1-16-20480'){"Protected process"}
+                                # https://docs.microsoft.com/en-us/windows/desktop/SecAuthZ/mandatory-integrity-control
+             
+                $Level =           if ($p.Event.System.Level -eq 0 ){"Undefined"}
+                                elseif($p.Event.System.Level -eq 1) {"Critical"}
+                                elseif($p.Event.System.Level -eq 2) {"Error"}
+                                elseif($p.Event.System.Level -eq 3) {"Warning"}
+                                elseif($p.Event.System.Level -eq 4) {"Information"}
+                                elseif($p.Event.System.Level -eq 5) {"Verbose"}
 
 
-            $ElevatedTokenLevel = if($p.Event.EventData.Data[6].'#text' -eq "%%1936"){"Default (1)"}
+            $ElevatedTokenLevel =   if($p.Event.EventData.Data[6].'#text' -eq "%%1936"){"Default (1)"}
                                 elseif($p.Event.EventData.Data[6].'#text' -eq "%%1937"){"Full (2)"}
                                 elseif($p.Event.EventData.Data[6].'#text' -eq "%%1938"){"Limited (3)"}
 
@@ -146,7 +154,7 @@ $Events3
 $sw3.stop()
 $t3=$sw3.Elapsed
 Result |Out-GridView -PassThru -Title "$Procount - 'Process Created' Events (ID 4688) - Processing Time $t3"
-write-host "Elapsed Time $t3" -f yellow
+write-host "Elapsed Time $t3 minutes" -f yellow
 
 
 [gc]::Collect()

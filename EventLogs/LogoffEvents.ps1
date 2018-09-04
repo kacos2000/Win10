@@ -1,27 +1,22 @@
 ﻿#Requires -RunAsAdministrator
 
 #References: 
-# https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4624
-# https://support.microsoft.com/en-us/help/243330/well-known-security-identifiers-in-windows-operating-systems
+# https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4634
 #
-# This event is generated when a logon session is created. It is generated on the computer that was accessed.
+# This event shows that logon session was terminated and no longer exists.
 #               
 # The subject fields indicate the account on the local system which requested the logon. This is most commonly a service such as the 
 # Server service, or a local process such as Winlogon.exe or Services.exe.
 #               
-# The logon type field indicates the kind of logon that occurred. The most common types are 2 (interactive) and 3 (network).
-#               
-# The New Logon fields indicate the account for whom the new logon was created, i.e. the account that was logged on.
-#               
-# The network fields indicate where a remote logon request originated. Workstation name is not always available and may be left blank in some cases.
-#               
-# The impersonation level field indicates the extent to which a process in the logon session can impersonate.
-#               
-# The authentication information fields provide detailed information about this specific logon request.
-#    - Logon GUID is a unique identifier that can be used to correlate this event with a KDC event.
-#    - Transited services indicate which intermediate services have participated in this logon request.
-#    - Package name indicates which sub-protocol was used among the NTLM protocols.
-#    - Key length indicates the length of the generated session key. This will be 0 if no session key was requested.
+# The main difference between “4647: User initiated logoff.” and 4634 event is that 4647 event 
+# is generated when logoff procedure was initiated by specific account using logoff function, 
+# and 4634 event shows that session was terminated and no longer exists.
+# 4647 is more typical for Interactive and RemoteInteractive logon types when user was logged off using standard methods. 
+# You will typically see both 4647 and 4634 events when logoff procedure was initiated by user.
+# It may be positively correlated with a “4624: An account was successfully logged on.” event using 
+# the Logon ID value. Logon IDs are only unique between reboots on the same computer.
+#
+# https://support.microsoft.com/en-us/help/243330/well-known-security-identifiers-in-windows-operating-systems
 #
 # %%1832 Identification
 # %%1833 Impersonation
@@ -89,10 +84,10 @@ $Events2 = foreach ($l in $xmllog2) {$e++
 			write-progress -id 1 -activity "Collecting Security entries with EventID=4634 - $e of $($Lcount)"  -PercentComplete (($e / $Lcount) * 100)		
 			
 			# Format output fields
-            $version = if ($l.Event.System.Version -eq 0){"Windows Server 2008, Windows Vista"}
+            $version =     if ($l.Event.System.Version -eq 0){"Windows Server 2008, Windows Vista"}
                         elseif($l.Event.System.Version -eq 01){"Windows Server 2012, Windows 8"}
                         elseif($l.Event.System.Version -eq 02){"Windows 10"}
-            $LogonType = if ($l.Event.EventData.Data[4].'#text' -eq 2 ){"Interactive"}
+            $LogonType =   if ($l.Event.EventData.Data[4].'#text' -eq 2 ){"Interactive"}
                         elseif($l.Event.EventData.Data[4].'#text' -eq 3){"Network"}
                         elseif($l.Event.EventData.Data[4].'#text' -eq 4){"Batch"}
                         elseif($l.Event.EventData.Data[4].'#text' -eq 5){"Service"}

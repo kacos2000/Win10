@@ -2,8 +2,11 @@
 
 #References: 
 # https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4634
+# https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4647
 #
-# This event shows that logon session was terminated and no longer exists.
+# 4634: This event shows that logon session was terminated and no longer exists.
+# 4647: This event is generated when a logoff is initiated. No further user-initiated activity can occur. 
+# This event can be interpreted as a logoff event.
 #               
 # The subject fields indicate the account on the local system which requested the logon. This is most commonly a service such as the 
 # Server service, or a local process such as Winlogon.exe or Services.exe.
@@ -49,7 +52,7 @@ Function Get-Folder($initialDirectory)
 		 }
 	        else  
         {
-            Write-Host "(LogoffEvents.ps1):" -f Yellow -nonewline; Write-Host " User Cancelled" -f White
+            Write-Host "(LogoffEvents4634.ps1):" -f Yellow -nonewline; Write-Host " User Cancelled" -f White
 			exit
         }
     return $Folder
@@ -65,8 +68,8 @@ $e=0
 $sw = [Diagnostics.Stopwatch]::StartNew()
 
 Try { 
-    Write-Host "(LoginEvents.ps1):" -f Yellow -nonewline; write-host " Selected Security Event Log: ($File)" -f White 
-	$log2 = (Get-WinEvent -FilterHashtable @{path = $File; ProviderName="Microsoft-Windows-Security-Auditing" ; ID=4634} -ErrorAction Stop)
+    Write-Host "(LogOffEvents.ps1):" -f Yellow -nonewline; write-host " Selected Security Event Log: ($File)" -f White 
+	$log2 = (Get-WinEvent -FilterHashtable @{path = $File; ProviderName="Microsoft-Windows-Security-Auditing" ; ID=4634,4647} -ErrorAction Stop)
     }
 	catch [Exception] {
         if ($_.Exception -match "No events were found that match the specified selection criteria") 
@@ -75,18 +78,17 @@ Try {
 
 [xml[]]$xmllog2 = $log2.toXml()
 $Lcount = $xmllog2.Count
-Write-Host "(LogoffEvents.ps1):" -f Yellow -nonewline; write-host " Found: $Lcount in Event Log: ($File)" -f White
+Write-Host "(LogoffEvents.ps1):" -f Yellow -nonewline; write-host " Found: $Lcount entries in Event Log: ($File)" -f White
 
 
 $Events2 = foreach ($l in $xmllog2) {$e++
 			
 			#Progress Bar
-			write-progress -id 1 -activity "Collecting Security entries with EventID=4634 - $e of $($Lcount)"  -PercentComplete (($e / $Lcount) * 100)		
+			write-progress -id 1 -activity "Collecting Security entries with EventIDs 4634 and 4647 - $e of $($Lcount)"  -PercentComplete (($e / $Lcount) * 100)		
 			
 			# Format output fields
-            $version =     if ($l.Event.System.Version -eq 0){"Windows Server 2008, Windows Vista"}
-                        elseif($l.Event.System.Version -eq 01){"Windows Server 2012, Windows 8"}
-                        elseif($l.Event.System.Version -eq 02){"Windows 10"}
+            $version =     if ($l.Event.System.Version -eq 0){"Windows Server 2008, Windows Vista - Win10"}
+                          else{$l.Event.System.Version}
             $LogonType =   if ($l.Event.EventData.Data[4].'#text' -eq 2 ){"Interactive"}
                         elseif($l.Event.EventData.Data[4].'#text' -eq 3){"Network"}
                         elseif($l.Event.EventData.Data[4].'#text' -eq 4){"Batch"}
@@ -136,8 +138,8 @@ $Events2
 
 $sw.stop()
 $t=$sw.Elapsed
-Result |Out-GridView -PassThru -Title "Processed $Lcount Login Events (ID 4634) - in $t"
-write-host "Processed $Lcount Log Off Events (ID 4634) - in $t" -f white
+Result |Out-GridView -PassThru -Title "Processed $Lcount LogOff Events (IDs 4634, 4647) - in $t"
+write-host "Processed $Lcount Log Off Events (IDs 4634, 4647) - in $t" -f white
 
 
 [gc]::Collect()

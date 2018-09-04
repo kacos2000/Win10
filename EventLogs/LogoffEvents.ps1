@@ -52,7 +52,7 @@ Function Get-Folder($initialDirectory)
 		 }
 	        else  
         {
-            Write-Host "(LogoffEvents4634.ps1):" -f Yellow -nonewline; Write-Host " User Cancelled" -f White
+            Write-Host "(LogoffEvents.ps1):" -f Yellow -nonewline; Write-Host " User Cancelled" -f White
 			exit
         }
     return $Folder

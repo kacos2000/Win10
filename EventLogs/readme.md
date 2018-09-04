@@ -9,7 +9,7 @@
 
 ###  Win 10 *(version 1709+)* Microsoft-Windows-Partition/Diagnostic.evtx EventID: 1006 parser  ###
 
-- [Win 10 EventID: 1006 parser](https://github.com/kacos2000/Win10/blob/master/EventLogs/ProcessCreatedEvents.ps1) - PowerShell script to read a live or offline **Microsoft-Windows-Partition/Diagnostic.evtx** log and list all the [EventID:1006](https://df-stream.com/2018/05/partition-diagnostic-event-log-and-usb-device-tracking-p1/) entries in a window. Selected rows are saved in a comma separated file (csv). This log has 71 fields with diagnostic information for all Storage Devices (including USB and virtual drives like vhd/vhdxs or images mounted with [Arsenal Image Mounter](https://arsenalrecon.com/)). Among them, the MBR or VBR:
+- [Win 10 Microsoft-Windows-Partition/Diagnostic EventID: 1006 parser](https://github.com/kacos2000/Win10/blob/master/EventLogs/ProcessCreatedEvents.ps1) - PowerShell script to read a live or offline **Microsoft-Windows-Partition/Diagnostic.evtx** log and list all the [EventID: 1006](https://df-stream.com/2018/05/partition-diagnostic-event-log-and-usb-device-tracking-p1/) entries in a window. Selected rows are saved in a comma separated file (csv). This log has 71 fields with diagnostic information for all Storage Devices (including USB and virtual drives like vhd/vhdxs or images mounted with [Arsenal Image Mounter](https://arsenalrecon.com/)). Among them, the MBR or VBR:
 
   *Part of the results window:*
   ![PartoftheResults](https://raw.githubusercontent.com/kacos2000/Win10/master/EventLogs/pd00.JPG)
@@ -28,24 +28,28 @@
 
 ###  Win 10 Security.evtx EventID: 4688 parser  ###
 
-- [Win 10 EventID: 4688 parser](https://github.com/kacos2000/Win10/blob/master/EventLogs/ProcessCreatedEvents.ps1) - PowerShell script to read a live or offline **security.evtx** log and list all the [EventID:4688](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4688) entries *(A new process has been created)* in a window. 
+- [Win 10 Security EventID: 4688 parser](https://github.com/kacos2000/Win10/blob/master/EventLogs/ProcessCreatedEvents.ps1) - PowerShell script to read a live or offline **security.evtx** log and list all the [EventID: 4688](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4688) entries *(A new process has been created)* . 
 
-###  Win 10 Security.evtx EventID: 4634 parser  ###
+###  Win 10 Security.evtx EventID: 4624/4634/4647 parser  ###
 
-- [Win 10 EventID: 4634 parser](https://github.com/kacos2000/Win10/blob/master/EventLogs/LogoffEvents.ps1) - PowerShell script to read a live or offline **security.evtx** log and list all the [EventID:4634](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4634) entries *(An account was successfully logged off)* in a window.
+- [Win 10 Security EventID: 4634/4747 parser](https://github.com/kacos2000/Win10/blob/master/EventLogs/LogOnOFFevents.ps1) - PowerShell script to read a live or offline **security.evtx** log and list all the [EventID: 4624](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4624) *(An account was successfully logged on)*, [EventID: 4634](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4634) *(An account was logged off)* and [EventID: 4647](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4647) *(User initiated logoff)* entries in a window.
+
+###  Win 10 Security.evtx EventID: 4634/4647 parser  ###
+
+- [Win 10 Security EventID: 4634/4747 parser](https://github.com/kacos2000/Win10/blob/master/EventLogs/LogoffEvents.ps1) - PowerShell script to read a live or offline **security.evtx** log and list all the [EventID: 4634](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4634) *(An account was logged off)* and [EventID: 4647](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4647) *(User initiated logoff)* entries in a window.
 The main difference between “[4647: User initiated logoff](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4647).” and 4634 event is that 4647 event is generated when logoff procedure was initiated by specific account using logoff function, and 4634 event shows that session was terminated and no longer exists.
 
 ###  Win 10 Security.evtx EventID: 4624 parser  ###
 
-- [Win 10 EventID: 4624 parser](https://github.com/kacos2000/Win10/blob/master/EventLogs/LoginEvents.ps1) - PowerShell script to read a live or offline **security.evtx** log and list all the [EventID:4624](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4624) entries *(An account was successfully logged on)* in a window. 
+- [Win 10 Security EventID: 4624 parser](https://github.com/kacos2000/Win10/blob/master/EventLogs/LoginEvents.ps1) - PowerShell script to read a live or offline **security.evtx** log and list all the [EventID: 4624](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4624) entries *(An account was successfully logged on)* in a window. 
 
 ###  Win 10 Security.evtx EventID: 4648 parser  ###
 
-- [Win 10 EventID: 4648 parser](https://github.com/kacos2000/Win10/blob/master/EventLogs/LogonAttempted.ps1) - PowerShell script to read a live or offline **security.evtx** log and list all the [EventID:4648](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4648) entries *(A logon was attempted using explicit credentials)* in a window. 
+- [Win 10 Security EventID: 4648 parser](https://github.com/kacos2000/Win10/blob/master/EventLogs/LogonAttempted.ps1) - PowerShell script to read a live or offline **security.evtx** log and list all the [EventID: 4648](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4648) entries *(A logon was attempted using explicit credentials)* in a window. 
 
 ###  Win 10 Security.evtx EventID: 4616 & System.evtx EventID: 1 parser ###
 
-- [Win 10 Security EventID: 4616 & System EventID: 1 parser](https://github.com/kacos2000/Win10/blob/master/EventLogs/TimeEventsAll.ps1) - PowerShell script to read both **security.evtx** and **system.evtx** logs from a live or offline Win 10 PC, and list all the [EventID:1](http://www.eventid.net/display-eventid-1-source-Microsoft-Windows-Kernel-General-eventno-10866-phase-1.htm) and [EventID:4616](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4616) entries *(The system time was changed)* in a window. Selected rows are saved in a comma separated file (csv).  
+- [Win 10 Security EventID: 4616 & System EventID: 1 parser](https://github.com/kacos2000/Win10/blob/master/EventLogs/TimeEventsAll.ps1) - PowerShell script to read both **security.evtx** and **system.evtx** logs from a live or offline Win 10 PC, and list all the [EventID:1](http://www.eventid.net/display-eventid-1-source-Microsoft-Windows-Kernel-General-eventno-10866-phase-1.htm) and [EventID: 4616](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4616) entries *(The system time was changed)* in a window. Selected rows are saved in a comma separated file (csv).  
   
   The [script](https://github.com/kacos2000/Win10/blob/master/EventLogs/TimeEventsAll.ps1) *(needs to be executed from an Administrator console)*. 
 
@@ -63,7 +67,7 @@ The main difference between “[4647: User initiated logoff](https://docs.micros
 
 ###  Win 10 Security.evtx EventID: 4616 parser  ###
 
-- [Win 10 EventID: 4616 parser](https://github.com/kacos2000/Win10/blob/master/EventLogs/TimeEvents.ps1) - PowerShell script to read a live or offline **security.evtx** log and list all the [EventID:4616](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4616) entries *(The system time was changed)* in a window. Selected rows are saved in a comma separated file (csv).  
+- [Win 10 Security EventID: 4616 parser](https://github.com/kacos2000/Win10/blob/master/EventLogs/TimeEvents.ps1) - PowerShell script to read a live or offline **security.evtx** log and list all the [EventID: 4616](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4616) entries *(The system time was changed)* in a window. Selected rows are saved in a comma separated file (csv).  
 
    The [script](https://github.com/kacos2000/Win10/blob/master/EventLogs/TimeEvents.ps1) *(needs to be executed from an Administrator console)* will parse the following information for any 4616 event ID:
 
@@ -83,20 +87,11 @@ The main difference between “[4647: User initiated logoff](https://docs.micros
       
        ![File Open](https://raw.githubusercontent.com/kacos2000/Win10/master/EventLogs/O.JPG)
   
-    - [EventID 4616](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4616) The system time was changed
-    - [EventID 4624](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4624) An account was successfully logged on
-    - [EventID 4648](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4648) A logon was attempted using explicit credentials
-    - [EventID 4688](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4688) A new process has been created
     - [Are Windows timezone written in registry reliable?](https://stackoverflow.com/questions/47104967/are-windows-timezone-written-in-registry-reliable)
     - `tzutil  /l` : List timezones
     - [Finding	Advanced Attacks and Malware With Only 6 Windows EventID’s (pdf)](https://conf.splunk.com/session/2015/conf2015_MGough_MalwareArchaelogy_SecurityCompliance_FindingAdvnacedAttacksAnd.pdf)
   
-  __________________
-   
-     Original idea came from the [Jaco](https://twitter.com/jaco_ZA/status/1015495669988122624)'s ["Detecting Time Changes with L2T"](https://www.dfir.co.za/2018/07/07/detecting-time-changes-with-l2t-aint-nobody-got-time-for-that/) *blog post*.
-   
-     ![File Open](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/EventLogs/T.JPG)
-   
+ 
   __________________
    
      - To Do:
@@ -104,8 +99,9 @@ The main difference between “[4647: User initiated logoff](https://docs.micros
        - [X] [List all eventlog-generated *'keywords'*](keywords2.md)
        - [X] List all [OpCodes](OpCodes.md) 
        - [X] Parse EventID 4616
+       - [X] Parse EventID 4624/4634/4647 together 
        - [X] Parse EventIDs 4624/4528/4540 (Audit Logon = Success & Failure)
-       - [ ] Parse EventIDs 4634/4647 (An account was logged off/User initiated logoff)
+       - [X] Parse EventIDs 4634/4647 (An account was logged off/User initiated logoff)
        - [X] Check / Parse EventID 4625
        - [X] Check / Parse EventID 4648
        - [ ] Check / Parse EventIDs 4663/4567 (Audit File	System	=	Success, (Audit Registry =	Success ) )

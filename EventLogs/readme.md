@@ -1,48 +1,53 @@
 <!-- saved from url=(0054) https://kacos2000.github.io/Win10-Research/EventLogs/ --> 
 <!-- https://guides.github.com/features/mastering-markdown/ --> 
 ####  Lists  ####
-- [keywords1](https://github.com/kacos2000/Win10-Research/blob/master/EventLogs/keywords.md) - 
+- [keywords1](https://github.com/kacos2000/Win10/blob/master/EventLogs/keywords.md) - 
   Powershell script to list all eventlog keywords and the resulting list *(from Win10 Pro version 1803)*
-- [keywords2](https://github.com/kacos2000/Win10-Research/blob/master/EventLogs/keywords2.md) - 
+- [keywords2](https://github.com/kacos2000/Win10/blob/master/EventLogs/keywords2.md) - 
   Powershell script to list all event specific generated keywords and sample list *(from the Win10 Pro version 1803 "Microsoft-Windows-PushNotifications-Platform" event provider)*
- - [OpCodes](https://github.com/kacos2000/Win10-Research/blob/master/EventLogs/OpCodes.md)  - Powershell script to list all OpCodes, their Name & DisplayName for AllEvent providers, and 2 csv lists 
+ - [OpCodes](https://github.com/kacos2000/Win10/blob/master/EventLogs/OpCodes.md)  - Powershell script to list all OpCodes, their Name & DisplayName for AllEvent providers, and 2 csv lists 
 
 ###  Win 10 *(version 1709+)* Microsoft-Windows-Partition/Diagnostic.evtx EventID: 1006 parser  ###
 
-- [Win 10 EventID: 1006 parser](https://github.com/kacos2000/Win10-Research/blob/master/EventLogs/ProcessCreatedEvents.ps1) - PowerShell script to read a live or offline **Microsoft-Windows-Partition/Diagnostic.evtx** log and list all the [EventID:1006](https://df-stream.com/2018/05/partition-diagnostic-event-log-and-usb-device-tracking-p1/) entries in a window. Selected rows are saved in a comma separated file (csv). This log has 71 fields with diagnostic information for all Storage Devices (including USB and virtual drives like vhd/vhdxs or images mounted with [Arsenal Image Mounter](https://arsenalrecon.com/)). Among them, the MBR or VBR:
+- [Win 10 EventID: 1006 parser](https://github.com/kacos2000/Win10/blob/master/EventLogs/ProcessCreatedEvents.ps1) - PowerShell script to read a live or offline **Microsoft-Windows-Partition/Diagnostic.evtx** log and list all the [EventID:1006](https://df-stream.com/2018/05/partition-diagnostic-event-log-and-usb-device-tracking-p1/) entries in a window. Selected rows are saved in a comma separated file (csv). This log has 71 fields with diagnostic information for all Storage Devices (including USB and virtual drives like vhd/vhdxs or images mounted with [Arsenal Image Mounter](https://arsenalrecon.com/)). Among them, the MBR or VBR:
 
   *Part of the results window:*
-  ![PartoftheResults](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/EventLogs/pd00.JPG)
+  ![PartoftheResults](https://raw.githubusercontent.com/kacos2000/Win10/master/EventLogs/pd00.JPG)
 
   *VBR0 entry (size & bytes) of a USB stick:*
   ![VBR](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/EventLogs/pd0.JPG)
 
   *VBR above saved & opened with [Active Disk Editor](http://www.disk-editor.org/)*
-  ![VbrinActiveDiskEditor](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/EventLogs/pd1.JPG)
+  ![VbrinActiveDiskEditor](https://raw.githubusercontent.com/kacos2000/Win10/master/EventLogs/pd1.JPG)
   
   *Mbr log entry (copy/pasted to [HxD](https://mh-nexus.de/en/hxd/))*
-  ![MBR](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/EventLogs/mb.JPG)
+  ![MBR](https://raw.githubusercontent.com/kacos2000/Win10/master/EventLogs/mb.JPG)
   
   *GPT Partition table entry of same drive in [Active Disk Editor](http://www.disk-editor.org/)*
-  ![MbrinActiveDiskEditor](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/EventLogs/mb1.JPG)
+  ![MbrinActiveDiskEditor](https://raw.githubusercontent.com/kacos2000/Win10/master/EventLogs/mb1.JPG)
 
 ###  Win 10 Security.evtx EventID: 4688 parser  ###
 
-- [Win 10 EventID: 4688 parser](https://github.com/kacos2000/Win10-Research/blob/master/EventLogs/ProcessCreatedEvents.ps1) - PowerShell script to read a live or offline **security.evtx** log and list all the [EventID:4688](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4688) entries *(A new process has been created)* in a window. 
+- [Win 10 EventID: 4688 parser](https://github.com/kacos2000/Win10/blob/master/EventLogs/ProcessCreatedEvents.ps1) - PowerShell script to read a live or offline **security.evtx** log and list all the [EventID:4688](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4688) entries *(A new process has been created)* in a window. 
+
+###  Win 10 Security.evtx EventID: 4634 parser  ###
+
+- [Win 10 EventID: 4634 parser](https://github.com/kacos2000/Win10/blob/master/EventLogs/LogoffEvents.ps1) - PowerShell script to read a live or offline **security.evtx** log and list all the [EventID:4634](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4634) entries *(An account was successfully logged off)* in a window.
+The main difference between “[4647: User initiated logoff](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4647).” and 4634 event is that 4647 event is generated when logoff procedure was initiated by specific account using logoff function, and 4634 event shows that session was terminated and no longer exists.
 
 ###  Win 10 Security.evtx EventID: 4624 parser  ###
 
-- [Win 10 EventID: 4624 parser](https://github.com/kacos2000/Win10-Research/blob/master/EventLogs/LoginEvents.ps1) - PowerShell script to read a live or offline **security.evtx** log and list all the [EventID:4624](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4624) entries *(An account was successfully logged on)* in a window. Selected rows are saved in a comma separated file (csv).  
+- [Win 10 EventID: 4624 parser](https://github.com/kacos2000/Win10/blob/master/EventLogs/LoginEvents.ps1) - PowerShell script to read a live or offline **security.evtx** log and list all the [EventID:4624](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4624) entries *(An account was successfully logged on)* in a window. 
 
 ###  Win 10 Security.evtx EventID: 4648 parser  ###
 
-- [Win 10 EventID: 4648 parser](https://github.com/kacos2000/Win10-Research/blob/master/EventLogs/LogonAttempted.ps1) - PowerShell script to read a live or offline **security.evtx** log and list all the [EventID:4648](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4648) entries *(A logon was attempted using explicit credentials)* in a window. 
+- [Win 10 EventID: 4648 parser](https://github.com/kacos2000/Win10/blob/master/EventLogs/LogonAttempted.ps1) - PowerShell script to read a live or offline **security.evtx** log and list all the [EventID:4648](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4648) entries *(A logon was attempted using explicit credentials)* in a window. 
 
 ###  Win 10 Security.evtx EventID: 4616 & System.evtx EventID: 1 parser ###
 
-- [Win 10 Security EventID: 4616 & System EventID: 1 parser](https://github.com/kacos2000/Win10-Research/blob/master/EventLogs/TimeEventsAll.ps1) - PowerShell script to read both **security.evtx** and **system.evtx** logs from a live or offline Win 10 PC, and list all the [EventID:1](http://www.eventid.net/display-eventid-1-source-Microsoft-Windows-Kernel-General-eventno-10866-phase-1.htm) and [EventID:4616](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4616) entries *(The system time was changed)* in a window. Selected rows are saved in a comma separated file (csv).  
+- [Win 10 Security EventID: 4616 & System EventID: 1 parser](https://github.com/kacos2000/Win10/blob/master/EventLogs/TimeEventsAll.ps1) - PowerShell script to read both **security.evtx** and **system.evtx** logs from a live or offline Win 10 PC, and list all the [EventID:1](http://www.eventid.net/display-eventid-1-source-Microsoft-Windows-Kernel-General-eventno-10866-phase-1.htm) and [EventID:4616](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4616) entries *(The system time was changed)* in a window. Selected rows are saved in a comma separated file (csv).  
   
-  The [script](https://github.com/kacos2000/Win10-Research/blob/master/EventLogs/TimeEventsAll.ps1) *(needs to be executed from an Administrator console)*. 
+  The [script](https://github.com/kacos2000/Win10/blob/master/EventLogs/TimeEventsAll.ps1) *(needs to be executed from an Administrator console)*. 
 
   - Event Providers *(type the following in a powershell prompt to see the event template)*: 
      - "Microsoft-Windows-Kernel-General" (ID: 1)<br>
@@ -58,9 +63,9 @@
 
 ###  Win 10 Security.evtx EventID: 4616 parser  ###
 
-- [Win 10 EventID: 4616 parser](https://github.com/kacos2000/Win10-Research/blob/master/EventLogs/TimeEvents.ps1) - PowerShell script to read a live or offline **security.evtx** log and list all the [EventID:4616](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4616) entries *(The system time was changed)* in a window. Selected rows are saved in a comma separated file (csv).  
+- [Win 10 EventID: 4616 parser](https://github.com/kacos2000/Win10/blob/master/EventLogs/TimeEvents.ps1) - PowerShell script to read a live or offline **security.evtx** log and list all the [EventID:4616](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4616) entries *(The system time was changed)* in a window. Selected rows are saved in a comma separated file (csv).  
 
-   The [script](https://github.com/kacos2000/Win10-Research/blob/master/EventLogs/TimeEvents.ps1) *(needs to be executed from an Administrator console)* will parse the following information for any 4616 event ID:
+   The [script](https://github.com/kacos2000/Win10/blob/master/EventLogs/TimeEvents.ps1) *(needs to be executed from an Administrator console)* will parse the following information for any 4616 event ID:
 
    -  Field              | Description
       ------------       | -------------
@@ -76,7 +81,7 @@
       Change             | Difference between New and Previous times
       Process Name       | The process that initiated the Time change 
       
-       ![File Open](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/EventLogs/O.JPG)
+       ![File Open](https://raw.githubusercontent.com/kacos2000/Win10/master/EventLogs/O.JPG)
   
     - [EventID 4616](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4616) The system time was changed
     - [EventID 4624](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4624) An account was successfully logged on

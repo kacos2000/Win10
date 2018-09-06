@@ -29,7 +29,7 @@
 
 ###  Win 10 Microsoft-Windows-VolumeSnapshot-Driver/Operational.evtx parser  ###
 
-- [Win 10 Microsoft-Windows-VolumeSnapshot-Driver parser](https://github.com/kacos2000/Win10/blob/master/EventLogs/VolumeSnapshot.ps1) - PowerShell script to read a live or offline **Microsoft-Windows-VolumeSnapshot-Driver/Operational.evtx** log and list all the  entries. Should also work from Win7 onwards. 
+- [Win 10 Microsoft-Windows-VolumeSnapshot-Driver parser](https://github.com/kacos2000/Win10/blob/master/EventLogs/VolumeSnapshot.ps1) - PowerShell script to read a live or offline **Microsoft-Windows-VolumeSnapshot-Driver/Operational.evtx** log and list all the  entries. Should also work from Win7 onwards. (*[Exploring Volume Shadow (VSS) snapshots (pdf)](https://github.com/kacos2000/Win10/blob/master/EventLogs/VolumeShadow.pdf)*)
 
      ![preview](https://raw.githubusercontent.com/kacos2000/Win10/master/EventLogs/vsJPG.JPG)
 

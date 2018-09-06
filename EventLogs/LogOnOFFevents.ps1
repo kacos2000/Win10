@@ -109,8 +109,8 @@ $Events2 = foreach ($l in $xmllog2) {$e++
              $ID = $l.Event.System.EventID
             $version =  if($ID = 4624){            
                            if ($l.Event.System.Version -eq 0){"Windows Server 2008, Windows Vista"}
-                        elseif($l.Event.System.Version -eq 01){"Windows Server 2012, Windows 8"}
-                        elseif($l.Event.System.Version -eq 02){"Windows 10"}
+                        elseif($l.Event.System.Version -eq 1){"Windows Server 2012, Windows 8"}
+                        elseif($l.Event.System.Version -eq 2){"Windows 10"}
                         }
                         elseif($ID = 4634 -or 4647){
                            if ($l.Event.System.Version -eq 0){"Windows Server 2008, Windows Vista - Win10"}
@@ -136,7 +136,6 @@ $Events2 = foreach ($l in $xmllog2) {$e++
                             $SubjectDN =$l.Event.EventData.Data[2].'#text'
                             $SubjectLI =$l.Event.EventData.Data[3].'#text'
                             $TargetSID =$l.Event.EventData.Data[4].'#text'
-                            $Domain =   $l.Event.EventData.Data[2].'#text'
                             $LogonType =
                                     if ($l.Event.EventData.Data[8].'#text' -eq 2) {"Interactive"}
                                  elseif($l.Event.EventData.Data[8].'#text' -eq 3) {"Network"}
@@ -203,7 +202,6 @@ $Events2 = foreach ($l in $xmllog2) {$e++
             'SubjectDomainName' = $SubjectDN 
             'SubjectLogonId' =    $SubjectLI
             'TargetUserSid' =     $TargetSID 
-			'Domain Name' =       $Domain
             'Computer' =          $l.Event.System.Computer            
             'TargetUserName' =    $TargetUN
             'TargetDomainName' =  $TargetDN

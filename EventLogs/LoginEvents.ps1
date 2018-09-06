@@ -1,7 +1,7 @@
 ﻿#Requires -RunAsAdministrator
 
 #References: 
-# https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4624
+# https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4634
 # https://support.microsoft.com/en-us/help/243330/well-known-security-identifiers-in-windows-operating-systems
 #
 # This event is generated when a logon session is created. It is generated on the computer that was accessed.
@@ -54,7 +54,7 @@ Function Get-Folder($initialDirectory)
 		 }
 	        else  
         {
-            Write-Host "(TimeEvents.ps1):" -f Yellow -nonewline; Write-Host " User Cancelled" -f White
+            Write-Host "(LoginEvents.ps1):" -f Yellow -nonewline; Write-Host " User Cancelled" -f White
 			exit
         }
     return $Folder
@@ -89,32 +89,32 @@ $Events2 = foreach ($l in $xmllog2) {$e++
 			write-progress -id 1 -activity "Collecting Security entries with EventID=4624 - $e of $($Lcount)"  -PercentComplete (($e / $Lcount) * 100)		
 			
 			# Format output fields
-            $version = if ($l.Event.System.Version -eq 0){"Windows Server 2008, Windows Vista"}
-                        elseif($l.Event.System.Version -eq 01){"Windows Server 2012, Windows 8"}
-                        elseif($l.Event.System.Version -eq 02){"Windows 10"}
-            $LogonType = if ($l.Event.EventData.Data[8].'#text' -eq 2 ){"Interactive"}
-                        elseif($l.Event.EventData.Data[8].'#text' -eq 3){"Network"}
-                        elseif($l.Event.EventData.Data[8].'#text' -eq 4){"Batch"}
-                        elseif($l.Event.EventData.Data[8].'#text' -eq 5){"Service"}
-                        elseif($l.Event.EventData.Data[8].'#text' -eq 7){"Unlock"}
-                        elseif($l.Event.EventData.Data[8].'#text' -eq 8){"NetworkCleartext"}
-                        elseif($l.Event.EventData.Data[8].'#text' -eq 9){"NewCredentials"}
+            $version =     if ($l.Event.System.Version -eq 0){"Windows Server 2008, Windows Vista"}
+                        elseif($l.Event.System.Version -eq 1){"Windows Server 2012, Windows 8"}
+                        elseif($l.Event.System.Version -eq 2){"Windows 10"}
+            $LogonType =   if ($l.Event.EventData.Data[8].'#text' -eq 2) {"Interactive"}
+                        elseif($l.Event.EventData.Data[8].'#text' -eq 3) {"Network"}
+                        elseif($l.Event.EventData.Data[8].'#text' -eq 4) {"Batch"}
+                        elseif($l.Event.EventData.Data[8].'#text' -eq 5) {"Service"}
+                        elseif($l.Event.EventData.Data[8].'#text' -eq 7) {"Unlock"}
+                        elseif($l.Event.EventData.Data[8].'#text' -eq 8) {"NetworkCleartext"}
+                        elseif($l.Event.EventData.Data[8].'#text' -eq 9) {"NewCredentials"}
                         elseif($l.Event.EventData.Data[8].'#text' -eq 10){"RemoteInteractive"}
                         elseif($l.Event.EventData.Data[8].'#text' -eq 11){"CachedInteractive"}
                             else {$l.Event.EventData.Data[8].'#text'}
              
-            $Level = if ($l.Event.System.Level -eq 0 ){"Undefined"}
+            $Level =       if ($l.Event.System.Level -eq 0 ){"Undefined"}
                         elseif($l.Event.System.Level -eq 1){"Critical"}
                         elseif($l.Event.System.Level -eq 2){"Error"}
                         elseif($l.Event.System.Level -eq 3){"Warning"}
                         elseif($l.Event.System.Level -eq 4){"Information"}
                         elseif($l.Event.System.Level -eq 5){"Verbose"}
 
-            $ElevatedToken = if($l.Event.EventData.Data[26].'#text' -eq "%%1842"){"Yes"}
+            $ElevatedToken =        if($l.Event.EventData.Data[26].'#text' -eq "%%1842"){"Yes"}
                                 elseif($l.Event.EventData.Data[26].'#text' -eq "%%1843"){"No"}
-            $VirtualAccount = if($l.Event.EventData.Data[24].'#text' -eq "%%1842"){"Yes"}
+            $VirtualAccount =       if($l.Event.EventData.Data[24].'#text' -eq "%%1842"){"Yes"}
                                 elseif($l.Event.EventData.Data[24].'#text' -eq "%%1843"){"No"}
-            $ImpersonationLevel = if($l.Event.EventData.Data[20].'#text' -eq "%%1832"){"Identification"}
+            $ImpersonationLevel =   if($l.Event.EventData.Data[20].'#text' -eq "%%1832"){"Identification"}
                                 elseif($l.Event.EventData.Data[20].'#text' -eq "%%1833"){"Impersonation"}
                                 elseif($l.Event.EventData.Data[20].'#text' -eq "%%1834"){"Delegation"}
                                 elseif($l.Event.EventData.Data[20].'#text' -eq $null)  {"Anonymous"}
@@ -131,13 +131,11 @@ $Events2 = foreach ($l in $xmllog2) {$e++
 			'PID' =               ([Convert]::ToInt64(($l.Event.System.Execution.ProcessID),16))
 			'ThreadID' =          $l.Event.System.Execution.ThreadID
             'LogonID' =           $l.Event.EventData.Data[16].'#text'  
-			'User Name' =         $l.Event.EventData.Data[1].'#text'
 			'SID' =               $l.Event.EventData.Data[0].'#text' 
             'SubjectUserName' =   $l.Event.EventData.Data[1].'#text' 
             'SubjectDomainName' = $l.Event.EventData.Data[2].'#text' 
             'SubjectLogonId' =    $l.Event.EventData.Data[3].'#text'
             'TargetUserSid' =     $l.Event.EventData.Data[4].'#text' 
-			'Domain Name' =       $l.Event.EventData.Data[2].'#text'
             'Computer' =          $l.Event.System.Computer            
             'TargetUserName' =    $l.Event.EventData.Data[5].'#text'
             'TargetDomainName' =  $l.Event.EventData.Data[6].'#text'
@@ -174,8 +172,8 @@ $Events2
 
 $sw.stop()
 $t=$sw.Elapsed
-Result |Out-GridView -PassThru -Title "Processed $Lcount Login Events (ID 4624) - in Time $t"
-write-host "Processed $Lcount Login Events (ID 4624) - in Time $t" -f yellow
+Result |Out-GridView -PassThru -Title "Processed $Lcount Login Events (ID 4624) - in $t"
+write-host "Processed $Lcount Login Events (ID 4624) - in $t" -f white
 
 
 [gc]::Collect()

@@ -89,7 +89,7 @@ $Events2 = foreach ($l in $xmllog2) {$e++
 			# Format output fields
             $version =     if ($l.Event.System.Version -eq 0){"Windows Server 2008, Windows Vista - Win10"}
                           else{$l.Event.System.Version}
-            $LogonType =   if ($l.Event.EventData.Data[4].'#text' -eq 2 ){"Interactive"}
+            $LogonType =   if ($l.Event.EventData.Data[4].'#text' -eq 2){"Interactive"}
                         elseif($l.Event.EventData.Data[4].'#text' -eq 3){"Network"}
                         elseif($l.Event.EventData.Data[4].'#text' -eq 4){"Batch"}
                         elseif($l.Event.EventData.Data[4].'#text' -eq 5){"Service"}
@@ -100,7 +100,7 @@ $Events2 = foreach ($l in $xmllog2) {$e++
                         elseif($l.Event.EventData.Data[4].'#text' -eq 11){"CachedInteractive"}
                          else {$l.Event.EventData.Data[4].'#text'}
             
-            $Level =       if ($l.Event.System.Level -eq 0 ){"Undefined"}
+            $Level =       if ($l.Event.System.Level -eq 0){"Undefined"}
                         elseif($l.Event.System.Level -eq 1){"Critical"}
                         elseif($l.Event.System.Level -eq 2){"Error"}
                         elseif($l.Event.System.Level -eq 3){"Warning"}

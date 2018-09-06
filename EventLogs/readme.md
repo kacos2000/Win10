@@ -26,6 +26,13 @@
   *GPT Partition table entry of same drive in [Active Disk Editor](http://www.disk-editor.org/)*
   ![MbrinActiveDiskEditor](https://raw.githubusercontent.com/kacos2000/Win10/master/EventLogs/mb1.JPG)
 
+
+###  Win 10 Microsoft-Windows-VolumeSnapshot-Driver/Operational.evtx parser  ###
+
+- [Win 10 Microsoft-Windows-VolumeSnapshot-Driver parser](https://github.com/kacos2000/Win10/blob/master/EventLogs/VolumeSnapshot.ps1) - PowerShell script to read a live or offline **Microsoft-Windows-VolumeSnapshot-Driver/Operational.evtx** log and list all the  entries. Should also work from Win7 onwards. 
+
+     ![preview](https://raw.githubusercontent.com/kacos2000/Win10/master/EventLogs/vsJPG.JPG)
+
 ###  Win 10 Security.evtx EventID: 4688 parser  ###
 
 - [Win 10 Security EventID: 4688 parser](https://github.com/kacos2000/Win10/blob/master/EventLogs/ProcessCreatedEvents.ps1) - PowerShell script to read a live or offline **security.evtx** log and list all the [EventID: 4688](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4688) entries *(A new process has been created)* . 
@@ -114,5 +121,6 @@ The main difference between “[4647: User initiated logoff](https://docs.micros
        - [ ] Check / Parse EventIDs 7045/7040 
        - [ ] ~~Correlate entries in EventIDs 4616, 4624, 4688 etc~~
        - [X] [Parse EventLog Microsoft-Windows-PushNotification-Platform%4Operational.evtx](https://github.com/kacos2000/Win10/blob/master/Notifications/wpn.ps1)
+       - [X] Parse Microsoft-Windows-VolumeSnapshot-Driver/Operational.evtx
        - [X] Check /Parse EventID 1006 of Microsoft-Windows-Partition%4Diagnostic.evtx [(USB Device Tracking ..)](https://df-stream.com/2018/07/partition-diagnostic-event-log-and-usb-device-tracking-p2/)
       

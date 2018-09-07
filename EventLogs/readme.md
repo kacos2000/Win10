@@ -33,6 +33,13 @@
 
      ![preview](https://raw.githubusercontent.com/kacos2000/Win10/master/EventLogs/pnp.JPG)
 
+###  Win 10 Microsoft-Windows-PowerShell/Operational.evtx EventIDs: 24577,40961, 40962 parser  ###
+
+- [Win 10 Microsoft-Windows-PowerShell parser](https://github.com/kacos2000/Win10/blob/master/EventLogs/Powershell.ps1) - PowerShell script to read a live or offline **Microsoft-Windows-PowerShell/Operational.evtx** log and list all the  entries. Should also work from Win7 onwards. Curiously, Powershell script execution is not recorded - just console startups. Only Powershell ISE script execution.
+
+    - Event ID: 40961 - PowerShell console is starting up
+    - Event ID: 40962 - PowerShell console is ready for user input
+    - Event ID: 40962 - Windows PowerShell ISE has started to run script XXX
 
 ###  Win 10 Microsoft-Windows-VolumeSnapshot-Driver/Operational.evtx parser  ###
 

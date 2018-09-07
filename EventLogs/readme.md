@@ -27,6 +27,13 @@
   ![MbrinActiveDiskEditor](https://raw.githubusercontent.com/kacos2000/Win10/master/EventLogs/mb1.JPG)
 
 
+###  Win 10 Microsoft-Windows-Kernel-PnP/Configuration.evtx parser  ###
+
+- [Win 10 Microsoft-Windows-Kernel-PnP parser](https://github.com/kacos2000/Win10/blob/master/EventLogs/PnP.ps1) - PowerShell script to read a live or offline **Microsoft-Windows-Kernel-PnP/Configuration.evtx** log and list all the  entries. Should also work from Win7 onwards. 
+
+     ![preview](https://raw.githubusercontent.com/kacos2000/Win10/master/EventLogs/pnp.JPG)
+
+
 ###  Win 10 Microsoft-Windows-VolumeSnapshot-Driver/Operational.evtx parser  ###
 
 - [Win 10 Microsoft-Windows-VolumeSnapshot-Driver parser](https://github.com/kacos2000/Win10/blob/master/EventLogs/VolumeSnapshot.ps1) - PowerShell script to read a live or offline **Microsoft-Windows-VolumeSnapshot-Driver/Operational.evtx** log and list all the  entries. Should also work from Win7 onwards. (*[Exploring Volume Shadow (VSS) snapshots (pdf)](https://github.com/kacos2000/Win10/blob/master/EventLogs/VolumeShadow.pdf)*)
@@ -121,6 +128,7 @@ The main difference between “[4647: User initiated logoff](https://docs.micros
        - [ ] Check / Parse EventIDs 7045/7040 
        - [ ] ~~Correlate entries in EventIDs 4616, 4624, 4688 etc~~
        - [X] [Parse EventLog Microsoft-Windows-PushNotification-Platform%4Operational.evtx](https://github.com/kacos2000/Win10/blob/master/Notifications/wpn.ps1)
+       - [X] Parse Microsoft-Windows-Kernel-PnP/Configuration.evtx      
        - [X] Parse Microsoft-Windows-VolumeSnapshot-Driver/Operational.evtx
        - [X] Check /Parse EventID 1006 of Microsoft-Windows-Partition%4Diagnostic.evtx [(USB Device Tracking ..)](https://df-stream.com/2018/07/partition-diagnostic-event-log-and-usb-device-tracking-p2/)
       

@@ -127,8 +127,8 @@ The main difference between “[4647: User initiated logoff](https://docs.micros
        - [ ] Check / Parse EventID 5156 (Audit Filtering Platform Connection = Success)
        - [ ] Check / Parse EventIDs 7045/7040 
        - [ ] ~~Correlate entries in EventIDs 4616, 4624, 4688 etc~~
-       - [X] [Parse EventLog Microsoft-Windows-PushNotification-Platform%4Operational.evtx](https://github.com/kacos2000/Win10/blob/master/Notifications/wpn.ps1)
+       - [X] [Parse EventLog Microsoft-Windows-PushNotification-Platform/Operational.evtx](https://github.com/kacos2000/Win10/blob/master/Notifications/wpn.ps1)
        - [X] Parse Microsoft-Windows-Kernel-PnP/Configuration.evtx      
        - [X] Parse Microsoft-Windows-VolumeSnapshot-Driver/Operational.evtx
-       - [X] Check /Parse EventID 1006 of Microsoft-Windows-Partition%4Diagnostic.evtx [(USB Device Tracking ..)](https://df-stream.com/2018/07/partition-diagnostic-event-log-and-usb-device-tracking-p2/)
+       - [X] Check /Parse EventID 1006 of Microsoft-Windows-Partition/Diagnostic.evtx [(USB Device Tracking ..)](https://df-stream.com/2018/07/partition-diagnostic-event-log-and-usb-device-tracking-p2/)
       

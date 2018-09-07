@@ -137,5 +137,6 @@ The main difference between “[4647: User initiated logoff](https://docs.micros
        - [X] [Parse EventLog Microsoft-Windows-PushNotification-Platform/Operational.evtx](https://github.com/kacos2000/Win10/blob/master/Notifications/wpn.ps1)
        - [X] Parse Microsoft-Windows-Kernel-PnP/Configuration.evtx      
        - [X] Parse Microsoft-Windows-VolumeSnapshot-Driver/Operational.evtx
+       - [X] Parse Microsoft-Windows-PowerShell/Operational.evtx
        - [X] Check /Parse EventID 1006 of Microsoft-Windows-Partition/Diagnostic.evtx [(USB Device Tracking ..)](https://df-stream.com/2018/07/partition-diagnostic-event-log-and-usb-device-tracking-p2/)
       

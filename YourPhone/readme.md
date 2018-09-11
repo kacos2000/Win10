@@ -1,6 +1,8 @@
 ## Windows 10 1809: YourPhone app ##
 
 In Windows 10 1809 *(Oct 2018 version upgrade)* the new [YourPhone app](https://www.microsoft.com/en-us/p/your-phone/9nmpj99vjbwv?ocid=AID681541_aff_7593_1243925&activetab=pivot:overviewtab) allows a user to synchronise Messages & Contacts and the most recent 25 Photos in an Android phone with a Win10 workstation. The folder **"C:\Users\%username%\AppData\Local\Packages\Microsoft.YourPhone_8wekyb3d8bbwe\LocalCache\Indexed\1C8ABB45-8138-4600-8CA0-13FD3A82F826\System\Database\"** has the **Phone.db**, an SQLite database with all synchronised messages & contacts.
+   
+   ![dB](https://raw.githubusercontent.com/kacos2000/Win10/master/YourPhone/PhonedBJPG.JPG)
 
   * SQLite query to view the [**Contacts**](https://github.com/kacos2000/Win10/blob/master/YourPhone/phonedb_contacts.sql)<br>
   

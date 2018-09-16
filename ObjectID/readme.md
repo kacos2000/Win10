@@ -5,7 +5,7 @@
 
 The script uses the "[fsutil.exe](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/fsutil) objectid query" command.<br>
 
-Output values include:<br>
+Output example:<br>
 
 Path                : D:\Temp\jpg<br>
 File/Directory Name : Image.JPG<br>

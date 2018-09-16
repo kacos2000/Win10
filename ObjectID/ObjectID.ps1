@@ -10,17 +10,10 @@ Function Get-Folder($initialDirectory)
 	$foldername.ShowNewFolderButton = $false
 	
     if($foldername.ShowDialog() -eq "OK")
-		{
-        $folder += $foldername.SelectedPath
-		 }
-	        else  
-        {
-            Write-Host "(ObjectID.ps1):" -f Yellow -nonewline; Write-Host " User Cancelled" -f White
-			exit
-        }
-    return $Folder
-
-	}
+		{$folder += $foldername.SelectedPath}else  
+        {Write-Host "(ObjectID.ps1):" -f Yellow -nonewline; Write-Host " User Cancelled" -f White
+		exit}
+    return $Folder}
 
 $Folder = Get-Folder
 Write-Host "(ObjectID.ps1):" -f Yellow -nonewline; write-host " Selected directory: ($Folder)" -f White
@@ -29,7 +22,6 @@ Write-Host "(ObjectID.ps1):" -f Yellow -nonewline; write-host " Selected directo
 $Files = Get-ChildItem -Path $Folder -recurse -ErrorAction Ignore
 $fcount = $Files.Count
 $i=$null
-
 			  
 #Create output:
 $results = ForEach  ($File in $Files) {$i++
@@ -43,19 +35,17 @@ $results = ForEach  ($File in $Files) {$i++
 	 
 
 	[PSCustomObject]@{ 
-	Path = Split-Path -literalpath $File.FullName 
-	'File/Directory Name' = $File 
-    'ObjectID' = if($ob -like 'Object ID*'){[GUID]$ob[0].SubString(19)}else{$ob}
+	'Path'           = Split-Path -literalpath $File.FullName 
+	'File Name'      = $File 
+    'ObjectID'       = if($ob -like 'Object ID*'){[GUID]$ob[0].SubString(19)}else{$ob}
     'BirthVolume ID' = if($ob -like 'Object ID*'){[GUID]$ob[1].SubString(19)}else{''}
     'BirthObject ID' = if($ob -like 'Object ID*'){[GUID]$ob[2].SubString(19)}else{''}
-    'Domain ID' = if($ob -like 'Object ID*'){[GUID]$ob[3].SubString(19)}else{''}
-    
-	}
-	
+    'Domain ID'      = if($ob -like 'Object ID*'){[GUID]$ob[3].SubString(19)}else{''}
+   	}
  }
 
 
 #Output results 
 $results|Out-GridView -PassThru -Title "Results for $($fcount) files in the selected folder: $Folder" 
-[gc]::Collect()
+
 

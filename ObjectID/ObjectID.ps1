@@ -45,10 +45,10 @@ $results = ForEach  ($File in $Files) {$i++
 	[PSCustomObject]@{ 
 	Path = Split-Path -literalpath $File.FullName 
 	'File/Directory Name' = $File 
-    'ObjectID' = if($ob -like 'Object ID*'){$ob[0].SubString(19)}else{$ob}
-    'BirthVolume ID' = if($ob -like 'Object ID*'){$ob[1].SubString(19)}else{''}
-    'BirthObject ID' = if($ob -like 'Object ID*'){$ob[2].SubString(19)}else{''}
-    'Domain ID' = if($ob -like 'Object ID*'){$ob[3].SubString(19)}else{''}
+    'ObjectID' = if($ob -like 'Object ID*'){[GUID]$ob[0].SubString(19)}else{$ob}
+    'BirthVolume ID' = if($ob -like 'Object ID*'){[GUID]$ob[1].SubString(19)}else{''}
+    'BirthObject ID' = if($ob -like 'Object ID*'){[GUID]$ob[2].SubString(19)}else{''}
+    'Domain ID' = if($ob -like 'Object ID*'){[GUID]$ob[3].SubString(19)}else{''}
     
 	}
 	

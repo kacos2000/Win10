@@ -1,6 +1,6 @@
  ### Object IDs ###
  
-**[ObjectID.ps1](https://github.com/kacos2000/Win10/blob/master/ObjectID/ObjectID.ps1)**  -  powershell script listing the NTFS $MFT ObjectID's of files in selected Folder & subfolders. <br>
+**[ObjectID.ps1](https://github.com/kacos2000/Win10/blob/master/ObjectID/ObjectID.ps1)**  -  powershell script listing the NTFS $MFT [ObjectID](https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/ntifs/ns-ntifs-_file_objectid_information)'s of files in selected Folder & subfolders. <br>
 **Note:** Must be run as an Administrator<br>
 
 The script uses the "[fsutil.exe](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/fsutil) objectid query" command.<br>

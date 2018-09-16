@@ -1,4 +1,6 @@
-﻿# Show a Select Folder Dialog and return the folder selected by the user
+﻿#Requires -RunAsAdministrator
+
+# Show a Select Folder Dialog and return the folder selected by the user
 Function Get-Folder($initialDirectory)
 {
     [System.Reflection.Assembly]::LoadWithPartialName("System.windows.forms")|Out-Null
@@ -29,7 +31,7 @@ $fcount = $Files.Count
 $i=$null
 
 			  
-#Display the following results for each file in the Directory:
+#Create output:
 $results = ForEach  ($File in $Files) {$i++
 
     $fs = @("objectid", "query" ,"$($file.FullName)")
@@ -43,17 +45,17 @@ $results = ForEach  ($File in $Files) {$i++
 	[PSCustomObject]@{ 
 	Path = Split-Path -literalpath $File.FullName 
 	'File/Directory Name' = $File 
-    'ObjectID' = if($ob -like 'Object ID*'){$ob[0].trim("Object ID : ")}else{$ob}
-    'BirthVolume ID' = if($ob -like 'Object ID*'){$ob[1].trim("BirthVolume ID : ")}else{''}
-    'BirthObject ID' = if($ob -like 'Object ID*'){$ob[2].trim("BirthObject ID : ")}else{''}
-    'Domain ID' = if($ob -like 'Object ID*'){$ob[3].trim("Domain ID : ")}else{''}
+    'ObjectID' = if($ob -like 'Object ID*'){$ob[0].SubString(19)}else{$ob}
+    'BirthVolume ID' = if($ob -like 'Object ID*'){$ob[1].SubString(19)}else{''}
+    'BirthObject ID' = if($ob -like 'Object ID*'){$ob[2].SubString(19)}else{''}
+    'Domain ID' = if($ob -like 'Object ID*'){$ob[3].SubString(19)}else{''}
     
 	}
 	
  }
 
 
-#Output results to screen table (and saves selected rows to txt) 
-$results|Out-GridView -PassThru -Title "$ObjectIDs of selected folder: $Folder" 
+#Output results 
+$results|Out-GridView -PassThru -Title "Results for $($fcount) files in the selected folder: $Folder" 
 [gc]::Collect()
 

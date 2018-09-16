@@ -23,7 +23,7 @@
 - **[USN.ps1](https://github.com/kacos2000/Win10/blob/master/ObjectID/USN.ps1)** - Powershell script to parse a local or mounted drive and save the $USN journal to a comma separated file. The script uses the "[fsutil usn](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/fsutil-usn) readjournal driveletter csv" command.<br>
 
   
-- **[NTFS.ps1](https://github.com/kacos2000/Win10/blob/master/ObjectID/NTFS.ps1)** - Powershell script to get NTFS information from a local or mounted drive and get user readable results. The last 8 bytes from the Volume Serial number is the same with the [VolumeID](https://docs.microsoft.com/en-us/sysinternals/downloads/volumeid) used by Windows OS.  The script uses the "[fsutil fsinfo](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/fsutil-fsinfo) ntfsinfo driveletter" command.<br>  
+- **[NTFS.ps1](https://github.com/kacos2000/Win10/blob/master/ObjectID/NTFS.ps1)** - Powershell script to get NTFS information from a local or mounted drive and get user readable results. The last 4 bytes from the Volume Serial number is the [Volume Serial Number](https://en.wikipedia.org/wiki/Volume_serial_number) used by Windows OS.  The script uses the "[fsutil fsinfo](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/fsutil-fsinfo) ntfsinfo driveletter" command.<br>  
   
   ![NTFS](https://raw.githubusercontent.com/kacos2000/Win10/master/ObjectID/ntfs.JPG)
 

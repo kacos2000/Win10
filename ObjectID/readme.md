@@ -18,3 +18,24 @@ Domain ID           | 00000000-0000-0000-0000-000000000000<br>
 
 
 *The idea came from [Phil Moore](https://github.com/randomaccess3)'s [Python script](https://github.com/randomaccess3/SundayFunday/blob/master/ListObjectIDs/allObjectIDs.py)*<br>
+
+
+**References #1:**<br>
+*[Object Identifiers](https://docs.microsoft.com/en-us/windows/desktop/FileIO/distributed-link-tracking-and-object-identifiers)*
+
+The link tracking service maintains its link to an object by using an object identifier (ID). An object ID is an optional attribute that uniquely identifies a file or directory on a volume.
+
+An index of all object IDs is stored on the volume. Rename, backup, and restore operations preserve object IDs. However, copy operations do not preserve object IDs, because that would violate their uniqueness.
+
+You can perform the following operations on object IDs:
+
+    Creation
+    Deletion
+    Query
+
+When you create an object ID, you establish the identity of the file to the link tracking service. Conversely, when you delete an object ID, the link tracking service stops maintaining links to the file.
+
+
+**References #2:**<br>
+[NTFS File Attributes](https://blogs.technet.microsoft.com/askcore/2010/08/25/ntfs-file-attributes/)<br>
+[_FILE_OBJECTID_INFORMATION structure](https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/ntifs/ns-ntifs-_file_objectid_information)<br>

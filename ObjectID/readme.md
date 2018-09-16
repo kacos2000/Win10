@@ -7,12 +7,14 @@ The script uses the "[fsutil.exe](https://docs.microsoft.com/en-us/windows-serve
 
 Output example:<br>
 
-Path                : D:\Temp\jpg<br>
-File/Directory Name : Image.JPG<br>
-ObjectID            : 18f51114-187f-e811-aa2b-18dbf227d093<br>
-BirthVolume ID      : 8a289a36-3d3f-b549-a555-3cf5f3bcf201<br>
-BirthObject ID      : 18f51114-187f-e811-aa2b-18dbf227d093<br>
-Domain ID           : 00000000-0000-0000-0000-000000000000<br>
+Field | Value
+:---- | :-----
+Path                | D:\Temp\jpg<br>
+File/Directory Name | Image.JPG<br>
+ObjectID            | 18f51114-187f-e811-aa2b-18dbf227d093<br>
+BirthVolume ID      | 8a289a36-3d3f-b549-a555-3cf5f3bcf201<br>
+BirthObject ID      | 18f51114-187f-e811-aa2b-18dbf227d093<br>
+Domain ID           | 00000000-0000-0000-0000-000000000000<br>
 
 
 *The idea came from [Phil Moore](https://github.com/randomaccess3)'s [Python script](https://github.com/randomaccess3/SundayFunday/blob/master/ListObjectIDs/allObjectIDs.py)*<br>

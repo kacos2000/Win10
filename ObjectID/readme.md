@@ -13,11 +13,12 @@
      BirthObject ID      | 18f51114-187f-e811-aa2b-18dbf227d093<br>
      Domain ID           | 00000000-0000-0000-0000-000000000000<br><br>
 
-
-
      - **Birth Volume Id**: Birth Volume Id is the Object Id of the Volume on which the Object Id was allocated. It never changes.<br>
      - **Birth Object Id**: Birth Object Id is the first Object Id that was ever assigned to this MFT Record. I.e. If the Object Id is changed for some reason, this field will reflect the original value of the Object Id.<br>
  
+   - **[FILETIME Extractor](http://www.kazamiya.net/en/fte)** - "fte(FILETIME Extractor) gets accurate timestamps and several information on NTFS." parses NTFS internal files like $MFT file, $ObjID file, $INDX_ALLOCATION attribute. Supports mounted drives (eg FTK mounted images) also.
+  
+     ![Sample from Lone Wolf scenario E01](https://raw.githubusercontent.com/kacos2000/Win10/master/ObjectID/fte_lw.JPG)
  
 
 - **[USN.ps1](https://github.com/kacos2000/Win10/blob/master/ObjectID/USN.ps1)** - Powershell script to parse a local or mounted drive and save the $USN journal to a comma separated file. The script uses the "[fsutil usn](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/fsutil-usn) readjournal driveletter csv" command.<br>

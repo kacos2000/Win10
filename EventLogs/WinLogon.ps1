@@ -82,11 +82,8 @@ $Events10 = foreach ($l in $xmllog) {$e++
             $Opcode =   if($l.Event.System.Opcode -eq 0) {'Win:Info'}
                     elseif($l.Event.System.Opcode -eq 1) {'Win:Start'}
                     elseif($l.Event.System.Opcode -eq 2) {'Win:Stop'}
-                    elseif($l.Event.System.Opcode -eq 8) {'Suspend'}
-                    elseif($l.Event.System.Opcode -eq 10){'QueryStart'}
-                    elseif($l.Event.System.Opcode -eq 11){'QueryStop'}
-                    elseif($l.Event.System.Opcode -eq 12){'ProcessingStart'}
-                    elseif($l.Event.System.Opcode -eq 13){'ProcessingStop'}
+                    elseif($l.Event.System.Opcode -eq 201) {'NotificationPended'}
+                    elseif($l.Event.System.Opcode -eq 202) {'NotificationFailed'}
                       else{$l.Event.System.Opcode}
 
             $Date = (Get-Date ($l.Event.System.TimeCreated.SystemTime) -f o)

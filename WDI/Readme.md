@@ -1,7 +1,7 @@
 ### Windows Diagnostics Infrastructure ###
 **Path**: "\Windows\System32\WDI"
 
-  - **[WDI.ps1](https://github.com/kacos2000/Win10/blob/master/WDI/WDI.ps1)**  - Powershell script that uses [Microsoft TraceRpt.Exe](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/tracerpt_1) to convert all Event Trace Logs *(.ETL)* of the target "\Windows\System32\WDI" folder to respective summary.txt and eventlog.csv (comma separated file). It also copies the StartupInfo folder and it's contents. Target output folder is the user's 'Desktop\WDI_currentdatetime'. 
+  - **[WDI.ps1](https://github.com/kacos2000/Win10/blob/master/WDI/WDI.ps1)**  - Powershell script that uses [Microsoft TraceRpt.Exe](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/tracerpt_1) to convert all Event Trace Logs *(.ETL)* of the target "\Windows\System32\WDI" folder to the respective summary.txt and eventlog.csv (comma separated file). It also copies the StartupInfo folder and it's contents. Target output folder is the user's 'Desktop\WDI_currentdatetime'. 
   
     - **Sample images:**
       

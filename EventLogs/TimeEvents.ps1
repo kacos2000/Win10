@@ -48,9 +48,9 @@ $Events = foreach ($i in $xmllog) {$c++
 			
 			$Previous = [DateTime] ($i.Event.EventData.Data[4].'#text')
 			$New = [DateTime] ($i.Event.EventData.Data[5].'#text')
-            $version = if ($i.Event.System.Version -eq 0){Windows Server 2008, Windows Vista}
-                        elseif($i.Event.System.Version -eq 01){Windows Server 2012, Windows 8}
-                        else {$i.Event.System.Version}
+            $version =     if ($i.Event.System.Version -eq 0) {'Windows Server 2008, Windows Vista'}
+                        elseif($i.Event.System.Version -eq 1) {'Windows Server 2012, Windows 8'}
+                         else {$i.Event.System.Version}
 
                          
             $Level = if ($i.Event.System.Level -eq 0 ){"Undefined"}
@@ -68,6 +68,7 @@ $Events = foreach ($i in $xmllog) {$c++
 			'Time Created' =  Get-Date ($i.Event.System.TimeCreated.SystemTime) -format o
 			'EventID' =       $i.Event.System.EventRecordID
 			'Level' =         $Level
+            'Version' =       $version
             'PID' =           [Convert]::ToInt64(($i.Event.System.Execution.ProcessID),16) 
 			'ThreadID' =      $i.Event.System.Execution.ThreadID
             'LogonID' =       $i.Event.EventData.Data[6].'#text'

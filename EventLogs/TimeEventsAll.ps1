@@ -71,7 +71,12 @@ $Events = foreach ($i in $xmllog) {$c++
 			
 			$Previous = [DateTime] ($i.Event.EventData.Data[4].'#text')
 			$New = [DateTime] ($i.Event.EventData.Data[5].'#text')
-                         
+            
+            $versioni =    if ($i.Event.System.Version -eq 0) {'Windows Server 2008, Windows Vista'}
+                        elseif($i.Event.System.Version -eq 1) {'Windows Server 2012, Windows 8'}
+                         else {$i.Event.System.Version}
+                       
+                       
             $Leveli = if ($i.Event.System.Level -eq 0 ){"Undefined"}
                         elseif($i.Event.System.Level -eq 1){"Critical"}
                         elseif($i.Event.System.Level -eq 2){"Error"}
@@ -87,7 +92,7 @@ $Events = foreach ($i in $xmllog) {$c++
 			'EventID' = $i.Event.System.EventID
             'Time Created' = Get-Date ($i.Event.System.TimeCreated.SystemTime) -format o
 			'RecordID' = $i.Event.System.EventRecordID
-            'Version' = $i.Event.System.Version
+            'Version' = $versioni
             'Level' = $Leveli
             'Task' = $i.Event.System.Task
             'Opcode' = $i.Event.System.Opcode
@@ -122,7 +127,10 @@ $Events1 = foreach ($e in $xmllog1) {$d++
                         elseif ($e.Event.EventData.Data[2].'#text' -eq 2){"System time synchronized with the hardware clock"} 
                         elseif ($e.Event.EventData.Data[2].'#text' -eq 3){"System time adjusted to the new time zone"}
                         else {$e.Event.EventData.Data[2].'#text'}
-
+            
+            $versione =     if ($i.Event.System.Version -eq 0) {'Windows Server 2008, Windows Vista'}
+                        elseif($i.Event.System.Version -eq 1) {'Windows Server 2012, Windows 8'}
+                         else {$i.Event.System.Version}
             
                          
             $Levele = if ($e.Event.System.Level -eq 0 ){"Undefined"}
@@ -141,7 +149,7 @@ $Events1 = foreach ($e in $xmllog1) {$d++
 			'EventID' = $e.Event.System.EventID
             'Time Created' = Get-Date ($e.Event.System.TimeCreated.SystemTime) -format o
 			'RecordID' = $e.Event.System.EventRecordID
-			'Version' = $e.Event.System.Version
+			'Version' = $versione
             'Level' = $Levele
             'Task' = $e.Event.System.Task
             'Opcode' = $e.Event.System.Opcode
@@ -169,7 +177,7 @@ $Events1
 $filenameFormat = $env:userprofile + "\desktop\TimeEventsAll_" + (Get-Date -Format "dd-MM-yyyy_hh-mm") + ".csv"
 Write-host "Selected Rows will be saved as: " -f Yellow -nonewline; Write-Host $filenameFormat -f White
 
-#Output results to screen table (and saves selected rows to txt) 		
+#Output results to screen table (and save selected rows to csv) 		
 Result |Out-GridView -PassThru -Title "A total of $count EventID=(4616) & $count1 EventID=(1) entries were found (Time Changed) in $File & File1"|Export-Csv -Path $filenameFormat
 #notepad $filenameFormat
 [gc]::Collect() 

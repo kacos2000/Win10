@@ -90,6 +90,11 @@ The main difference between “[4647: User initiated logoff](https://docs.micros
      - "Microsoft-Windows-Security-Auditing" (ID: 4616)<br>
         `(Get-WinEvent -ListProvider "Microsoft-Windows-Security-Auditing").Events|Where-Object {$_.Id -eq 4616}`
 
+###  Win 10 Microsoft-Windows-Winlogon/Operational.evtx parser  ###
+
+- [Win 10 Microsoft-Windows-Winlogon parser](https://github.com/kacos2000/Win10/blob/master/EventLogs/WinLogon.ps1) - PowerShell script to read a live or offline **Microsoft-Windows-Winlogon/Operational.evtx** log and list all the relevant entries in a window. 
+
+
 ###  Win 10 Security.evtx EventID: 4616 parser  ###
 
 - [Win 10 Security EventID: 4616 parser](https://github.com/kacos2000/Win10/blob/master/EventLogs/TimeEvents.ps1) - PowerShell script to read a live or offline **security.evtx** log and list all the [EventID: 4616](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4616) entries *(The system time was changed)* in a window. Selected rows are saved in a comma separated file (csv).  
@@ -127,6 +132,7 @@ The main difference between “[4647: User initiated logoff](https://docs.micros
        - [X] Parse EventID 4624/4634/4647 together 
        - [X] Parse EventIDs 4624/4528/4540 (Audit Logon = Success & Failure)
        - [X] Parse EventIDs 4634/4647 (An account was logged off/User initiated logoff)
+       - [X] Parse Microsoft-Windows-Winlogon/Operational.evtx
        - [X] Check / Parse EventID 4625
        - [X] Check / Parse EventID 4648
        - [ ] Check / Parse EventIDs 4663/4567 (Audit File	System	=	Success, (Audit Registry =	Success ) )

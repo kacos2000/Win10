@@ -19,5 +19,5 @@
 |[Windows 10 AmCache.hve parser](https://github.com/kacos2000/Win10-Research/blob/master/AmCache/readme.md)| PowerShell scripts 
 |[Windows 10 Notifications](https://github.com/kacos2000/Win10-Research/blob/master/Notifications/readme.md)| SQLite query of the (Push) Notifications dB, Powershell scripts & other info 
 |[Windows 10 Search JumpList](https://github.com/kacos2000/Win10-Research/blob/master/JumpList/readme.md)| PowerShell script to parse the 'Search JumpList' entries
-|[ObjectID.ps1](https://github.com/kacos2000/Win10/blob/master/ObjectID/readme.md)| powershell script listing the NTFS $MFT ObjectID's of files in selected Folder & subfolders.
-
+|[NTFS ObjectIDs](https://github.com/kacos2000/Win10/blob/master/ObjectID/readme.md)| powershell script listing the NTFS $MFT ObjectID's of files in selected Folder & subfolders.Also, a script to get NTFS information from a local or mounted drive and get user readable results using the "fsutil fsinfo ntfsinfo driveletter" command.
+|[Windows Diagnostics Infrastructure](https://github.com/kacos2000/Win10/blob/master/WDI/Readme.md)| Powershell script that uses Microsoft TraceRpt.Exe to convert all Event Trace Logs (.ETL) of the target "\Windows\System32\WDI" folder to the respective summary.txt and eventlog.csv (comma separated file). It also copies the StartupInfo folder and it's contents. 

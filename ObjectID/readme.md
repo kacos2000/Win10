@@ -26,8 +26,32 @@
   
 - **[NTFS.ps1](https://github.com/kacos2000/Win10/blob/master/ObjectID/NTFS.ps1)** - Powershell script to get NTFS information from a local or mounted drive and get user readable results. The last 4 bytes of the Volume Serial number is the [Serial Number](https://en.wikipedia.org/wiki/Volume_serial_number) used by Windows OS. *[(The serial number is a function of
 the time/date of the formatting or the diskcopying.)](http://www.faqs.org/faqs/assembly-language/x86/general/part3/)*  The script uses the "[fsutil fsinfo](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/fsutil-fsinfo) ntfsinfo driveletter" command.<br>  
-  
-  ![NTFS](https://raw.githubusercontent.com/kacos2000/Win10/master/ObjectID/ntfs.JPG)
+   
+   - sample output:
+   
+     Name                            | Value
+     :------                         | :------
+     NTFS Volume Serial Number       | B05E-A304-**5EA2-C288**
+     NTFS Version                    | 3
+     LFS Version                     | 2
+     Number Sectors                  | 34.815
+     Total Clusters                  | 4.351
+     Free Clusters                   | 2.854
+     Total Reserved                  | 1.024
+     Bytes Per Sector                | 512
+     Bytes Per Physical Sector       | 4096
+     Bytes Per Cluster               | 4096
+     Bytes Per FileRecord Segment    | 1024
+     Clusters Per FileRecord Segment | 0
+     Mft Valid Data Length           | 262.144
+     Mft Start Lcn                   | 1.450
+     Mft2 Start Lcn                  | 2
+     Mft Zone Start                  | 1.440
+     Mft Zone End                    | 2.016
+     Max Device Trim Extent Count    | 4.096
+     Max Device Trim Byte Count      | 4.294.967.295
+     Max Volume Trim Extent Count    | 62
+     Max Volume Trim Byte Count      | 1.073.741.824
 
 
 - **References #1:**<br>

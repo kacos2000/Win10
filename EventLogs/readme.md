@@ -46,6 +46,10 @@
 - [Win 10 Microsoft-Windows-VolumeSnapshot-Driver parser](https://github.com/kacos2000/Win10/blob/master/EventLogs/VolumeSnapshot.ps1) - PowerShell script to read a live or offline **Microsoft-Windows-VolumeSnapshot-Driver/Operational.evtx** log and list all the  entries. Should also work from Win7 onwards. (*[Exploring Volume Shadow (VSS) snapshots (pdf)](https://github.com/kacos2000/Win10/blob/master/EventLogs/VolumeShadow.pdf)*)
 
      ![preview](https://raw.githubusercontent.com/kacos2000/Win10/master/EventLogs/vsJPG.JPG)
+     
+###  Win 10 Microsoft-Windows-VHDMP-Operational.evtx parser  ###
+
+- [Win 10 Microsoft-Windows-VHDMP-Operational parser](https://github.com/kacos2000/Win10/blob/master/EventLogs/VHD.ps1) - PowerShell script to read a live or offline **Microsoft-Windows-VHDMP-Operational.evtx** log and list all the  entries. (Supports Event IDs: 1,2,50,51)
 
 ###  Win 10 Security.evtx EventID: 4688 parser  ###
 
@@ -137,6 +141,7 @@ The main difference between “[4647: User initiated logoff](https://docs.micros
        - [X] [Parse EventLog Microsoft-Windows-PushNotification-Platform/Operational.evtx](https://github.com/kacos2000/Win10/blob/master/Notifications/wpn.ps1)
        - [X] Parse Microsoft-Windows-Kernel-PnP/Configuration.evtx      
        - [X] Parse Microsoft-Windows-VolumeSnapshot-Driver/Operational.evtx
+       - [X] Parse Microsoft-Windows-VHDMP-Operational.evtx       
        - [X] Parse Microsoft-Windows-PowerShell/Operational.evtx
        - [X] Check /Parse EventID 1006 of Microsoft-Windows-Partition/Diagnostic.evtx [(USB Device Tracking ..)](https://df-stream.com/2018/07/partition-diagnostic-event-log-and-usb-device-tracking-p2/)
       

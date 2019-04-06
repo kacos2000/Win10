@@ -122,7 +122,9 @@ The main difference between “[4647: User initiated logoff](https://docs.micros
     - [Finding	Advanced Attacks and Malware With Only 6 Windows EventID’s (pdf)](https://conf.splunk.com/session/2015/conf2015_MGough_MalwareArchaelogy_SecurityCompliance_FindingAdvnacedAttacksAnd.pdf)
   
  
-  __________________
+     - Windows Security Audit Events with message schema ![spreadsheet](https://download.microsoft.com/download/8/E/1/8E11AD26-98A1-4EE3-9F7F-1DB4EB18BADF/WindowsSecurityAuditEvents.xlsx) from Microsoft.
+       
+ __________________
    
      - To Do:
        - [X] [List all event log *'keywords'*](keywords.md)

@@ -1,12 +1,18 @@
 <!-- saved from url=(0048) https://kacos2000.github.io/Win10-Research/Bam/ --> 
 <!-- https://guides.github.com/features/mastering-markdown/ --> 
 
+   
+### -> UPDATE (04/2019) ###
+  - In Win10 **v1809** & **v1903**, BAM stopped updating  "\bam\UserSettings" (old entries may still be found there) and now updates "bam\*State*\UserSettings". These two powershell scripts get the data from the new location:<br>
+    [bam1809.ps1](https://github.com/kacos2000/Win10-Research/blob/master/Bam/bam1809.ps1) <br>
+    [bamoffline1809.ps1](https://github.com/kacos2000/Win10-Research/blob/master/Bam/bamoffline1809.ps1)<br> 
+
 ## Windows 10 *(1703+)* Background Activity Moderator ##
 
 - [**BAMparser.ps1** - PowerShell script](https://github.com/kacos2000/Win10-Research/blob/master/Bam/BAMParser.ps1) by [Matthew Green](https://github.com/mgreen27) *(original is [here](https://github.com/mgreen27/Powershell-IR/blob/master/Content/Other/Get-BAMParser.ps1))* for live parsing of the BAM service key:
 
   ![BAMparser.ps1 results](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Bam/utc_results.JPG)
-
+    
 
 - [**bam.ps1** - Modification of the above script](https://github.com/kacos2000/Win10-Research/blob/master/Bam/bam.ps1) to get the results in a pop-up Window with Filestamps in both UTC and user's locatime
 
@@ -39,6 +45,8 @@
     console example:
    
     ![console example](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Bam/0_02.JPG)
+    
+
   
 
 - [**Documentation**](https://github.com/kacos2000/Win10-Research/blob/master/Bam/BAM%20-%20Background%20Activity%20Moderator.pdf) of the Background Activity Moderator service key (**[pdf](https://github.com/kacos2000/Win10-Research/blob/master/Bam/BAM%20-%20Background%20Activity%20Moderator.pdf)**)

@@ -16,7 +16,7 @@ $Key.PSObject.Properties| ForEach-Object {
 function EndOffline {
 reg unload HKEY_LOCAL_MACHINE\Temp 
 $after = (Get-FileHash $File -Algorithm SHA256).Hash 
-write-host "SHA256 Hash of ($File) before access = " -f magenta -nonewline;write-host "($before)" -f Yellow
+write-host "SHA256 Hash of ($File) after access = " -f magenta -nonewline;write-host "($after)" -f Yellow
 $result = (compare-object -ReferenceObject $before -DifferenceObject $after -IncludeEqual).SideIndicator 
 write-host "The before and after Hashes of ($File) are ($result) `n `n" -ForegroundColor White
 }

@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Artifacts version="2.0">
+  <Artifact type="SqliteArtifact" name="Win 10 YourPhone app (Contacts)" version="1.0" platform="Computer">
+    <Source type="FileName">Phone.db</Source>
+    <Query>
+		select 
+
+		Contact.contact_id,
+		contact.display_name,
+		contact.alternative_name,
+		contact.nicknames,
+		address.address,
+		address.address_type, 
+		address.times_contacted,
+		case 
+			when contact.last_updated_time notnull 
+			then contact.last_updated_time
+		end as 'Last_Updated',
+		case 
+			when address.last_contacted_time notnull 
+			then address.last_contacted_time
+		end as 'Last_Contacted'
+
+		from contact 
+		left join address on  address.contact_id = contact.contact_id
+		order by address.times_contacted desc
+    </Query>
+    <Fragments>
+      <Fragment source="contact_id" alias="Contact Id" datatype="Integer" category="None" />
+      <Fragment source="display_name" alias="Display Name" datatype="String" category="PersonIdentifier" />
+      <Fragment source="alternative_name" alias="Alternative Name" datatype="String" category="PersonIdentifier" />
+      <Fragment source="nicknames" alias="Nicknames" datatype="String" category="PersonIdentifier" />
+	  <Fragment source="address" alias="Address" datatype="String" category="PersonIdentifier" />
+      <Fragment source="address_type" alias="Address Type" datatype="String" category="None" />
+      <Fragment source="times_contacted" alias="Times Contacted" datatype="Integer" category="None" />
+      <Fragment source="Last_Updated" alias="Last Updated" datatype="datetime" category="datetime" />
+      <Fragment source="Last_Contacted" alias="Last Contacted" datatype="datetime" category="datetime"/>
+    </Fragments>
+  </Artifact>
+ 
+  
+  <Artifact type="SqliteArtifact" name="Win 10 YourPhone app (Messages)" version="1.0" platform="Computer">
+    <Source type="FileName">Phone.db</Source>
+    <Query>
+		select  
+			message.Message_id as 'MessageID',
+			message.Thread_id as 'ThreadId',
+			message.Status as 'Status',
+			case  
+				message.Type 
+					when 1 then 'Received' 
+					when 2 then 'Sent' 
+			end as 'Type',
+			message.from_address as 'fromaddress',
+			case 
+				when message.from_address notnull
+				then contact.display_name
+			end as 'Sender',
+			message.timestamp as 'timestamp',
+			message.body as 'body',
+			message_to_address.address as 'address',
+			case 
+				when message_to_address.address notnull
+				then contact.display_name 
+			end as 'recipientname',
+			conversation.msg_count as 'msgcount',
+			case 
+				when conversation.unread_count > 0
+				then 'Yes'||', '|| conversation.unread_count
+				else 'No'
+			end as 'unreadcount',
+			conversation.Recipient_list as 'recipientlist'
+		from message
+		left join message_to_address on message.message_id = message_to_address.message_id
+		join conversation on message.thread_id = conversation.thread_id
+		left join address on address.address = conversation.recipient_list or address.address = message_to_address.address
+		left join contact on contact.contact_id = address.contact_id
+		order by TimeStamp desc
+    </Query>
+    <Fragments>
+      <Fragment source="MessageID" alias="Message ID" datatype="Integer" category="None" />
+      <Fragment source="ThreadId" alias="Thread ID" datatype="Integer" category="None" />
+      <Fragment source="Status" alias="Status" datatype="Integer" category="None" />
+      <Fragment source="Type" alias="Type" datatype="String" category="None" />
+      <Fragment source="fromaddress" alias="From Address" datatype="String" category="PersonIdentifier" />
+	  <Fragment source="Sender" alias="Sender" datatype="String" category="PersonIdentifier" />
+      <Fragment source="timestamp" alias="Timestamp" datatype="datetime" category="datetime"/>
+      <Fragment source="body" alias="Message Body" datatype="String" category="Attachment" />
+      <Fragment source="address" alias="To Address" datatype="String" category="None" />
+	  <Fragment source="recipientname" alias="Recipient" datatype="String" category="PersonIdentifier" />
+      <Fragment source="msgcount" alias="Message Count" datatype="Integer" category="None" />
+      <Fragment source="unreadcount" alias="Unread Count" datatype="String" category="None" />
+      <Fragment source="recipientlist" alias="Recipient List" datatype="String" category="PersonIdentifier" />	  
+
+    </Fragments>
+  </Artifact>
+  
+
+  
+  <Signature>
+
+  </Signature>
+</Artifacts>

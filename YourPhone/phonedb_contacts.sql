@@ -1,4 +1,4 @@
--- C:\Users\%username%\AppData\Local\Packages\Microsoft.YourPhone_8wekyb3d8bbwe\LocalCache\Indexed\1C8ABB45-8138-4600-8CA0-13FD3A82F826\System\Database\Phone.db
+-- C:\Users\%username%\AppData\Local\Packages\Microsoft.YourPhone_8wekyb3d8bbwe\LocalCache\Indexed\<GUID>\System\Database\Phone.db
 
 
 select 

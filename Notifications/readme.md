@@ -13,7 +13,7 @@ ________________________________________________________________________________
 NTUSER.dat - \Software\Microsoft\Windows\CurrentVersion\Notifications - ValueName: TimestampWhenSeen Value:(Filetime)
 ______________________________________________________________________________________________________   
 
- - [**Notifications_WPNdatabase.sql**](https://github.com/kacos2000/Win10-Research/blob/master/Notifications/Notifications_WPNdatabase.sql)<br> SQLite query to parse the Windows 10 Notifications Wpndatabase.
+ - [**Notifications.sql**](https://github.com/kacos2000/Win10-Research/blob/master/Notifications/Notifications.sql)<br> SQLite query to parse the Windows 10 Notifications Wpndatabase.
   
     ![Preview](https://raw.githubusercontent.com/kacos2000/Win10-Research/master/Notifications/Not.JPG)
   

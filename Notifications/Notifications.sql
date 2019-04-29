@@ -1,12 +1,19 @@
 select
 Notification.Id as 'ID',
-Notification.HandlerId as 'Handler_Id',
+Notification."Order" as 'Order',
+Notification.HandlerId as 'HandlerId',
 NotificationHandler.PrimaryId as 'Application',
+case 
+	when NotificationHandler.ParentId 
+	then NotificationHandler.ParentId 
+	else ''
+end as 'Parent',
 NotificationHandler.HandlerType as 'HandlerType',
 Notification.Type as 'Type',
 replace(replace(replace(replace(Notification.Payload, x'0A',''),x'09',''),x'20'||x'20',''),x'0D','') as 'payload',
 Notification.PayloadType as 'PayloadType',
 Notification.Tag as 'Tag',
+Notification."Group" as 'Group',
 datetime((Notification.ArrivalTime - 116444736000000000)/10000000, 'unixepoch') as 'ArrivalTime',
 case when Notification.ExpiryTime = 0 then 'Expired' else datetime((Notification.ExpiryTime - 116444736000000000)/10000000, 'unixepoch') end as 'ExpiryTime',
 NotificationHandler.CreatedTime as 'Handler_Created',
@@ -32,12 +39,12 @@ case
 	else ''
 end as 'Uri',
 case 
-	when WNSPushChannel.CreatedTime
+	when WNSPushChannel.CreatedTime notnull
 	then datetime((WNSPushChannel.CreatedTime - 116444736000000000)/10000000, 'unixepoch') 
 	else ''
 end as 'WNS_CreatedTime',
 case 
-	when WNSPushChannel.ExpiryTime
+	when WNSPushChannel.ExpiryTime notnull 
 	then datetime((WNSPushChannel.ExpiryTime - 116444736000000000)/10000000, 'unixepoch')
 	else ''	
 end as 'WNS_ExpiryTime',
@@ -49,4 +56,5 @@ end as 'ActivityId'
 from Notification
 Join NotificationHandler on NotificationHandler.RecordId = Notification.HandlerId
 Left Join WNSPushChannel on WNSPushChannel.HandlerId = NotificationHandler.RecordId
+
 order by Id desc

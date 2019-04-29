@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Artifacts version="2.0">
+  <Artifact type="SqliteArtifact" name="Win 10 Notifications Database" version="1.0" platform="Computer">
+    <Source type="FileName">wpndatabase.db</Source>
+    <Query>
+	select
+		Notification.Id as 'ID',
+		Notification."Order" as 'Order',
+		Notification.HandlerId as 'HandlerId',
+		NotificationHandler.PrimaryId as 'Application',
+		case 
+			when NotificationHandler.ParentId 
+			then NotificationHandler.ParentId 
+			else ''
+		end as 'ParentId',
+		NotificationHandler.HandlerType as 'HandlerType',
+		Notification.Type as 'Type',
+		Notification.Payload as 'Payload',
+		Notification.PayloadType as 'PayloadType',
+		Notification.Tag as 'Tag',
+		Notification."Group" as 'Group',
+		Notification.ArrivalTime as 'ArrivalTime',
+		case 
+			when Notification.ExpiryTime = 0 
+			then 'Expired' 
+			else datetime((Notification.ExpiryTime - 116444736000000000)/10000000, 'unixepoch') 
+		end as 'ExpiryTime',
+		NotificationHandler.CreatedTime as 'Handler_Created',
+		NotificationHandler.ModifiedTime as 'Handler_Modified',
+		case 
+			when NotificationHandler.WNSId notnull 
+			then NotificationHandler.WNSId
+			else ''
+		end as 'WNSId',
+		case 
+			when NotificationHandler.WNFEventName notnull 
+			then NotificationHandler.WNFEventName
+			else ''
+		end as 'WNFEventName',
+		case 
+			when WNSPushChannel.ChannelId notnull 
+			then WNSPushChannel.ChannelId
+			else ''
+		end as 'ChannelID',
+		case 
+			when WNSPushChannel.Uri notnull 
+			then WNSPushChannel.Uri
+			else ''
+		end as 'Uri',
+		case 
+			when WNSPushChannel.CreatedTime notnull
+			then datetime((WNSPushChannel.CreatedTime - 116444736000000000)/10000000, 'unixepoch') 
+			else ''
+		end as 'WNSCreatedTime',
+		case 
+			when WNSPushChannel.ExpiryTime notnull
+			then WNSPushChannel.ExpiryTime
+			else ''	
+		end as 'WNSExpiryTime',
+		case 
+			when hex(Notification.ActivityId) = '00000000000000000000000000000000'
+			then ''
+			else hex(Notification.ActivityId)
+		end as 'ActivityId'
+	from Notification
+	Join NotificationHandler on NotificationHandler.RecordId = Notification.HandlerId
+	Left Join WNSPushChannel on WNSPushChannel.HandlerId = NotificationHandler.RecordId
+
+	order by Id desc
+    </Query>
+    <Fragments>
+      <Fragment source="ID" alias="ID" datatype="Integer" category="None"/>
+      <Fragment source="Order" alias="Order" datatype="Integer" category="None"/>
+      <Fragment source="HandlerId" alias="Handler ID" datatype="Integer" category="None"/>
+      <Fragment source="Application" alias="Application" datatype="String" category="None"/>	  
+      <Fragment source="ParentId" alias="Parent ID" datatype="String" category="None"/>	
+      <Fragment source="HandlerType" alias="Handler Type" datatype="String" category="None"/>		  
+	  <Fragment source="Type" alias="Type" datatype="String" category="None"/>
+      <Fragment source="Payload" alias="Payload" datatype="Attachment" category="None"/>
+      <Fragment source="PayloadType" alias="PayloadType" datatype="String" category="None"/>
+	  <Fragment source="Tag" alias="Tag" datatype="String" category="None"/>
+	  <Fragment source="Group" alias="Group" datatype="String" category="None"/>	  
+      <Fragment source="ArrivalTime" alias="Arrival Time" datatype="datetime" category="datetime"/>
+      <Fragment source="ExpiryTime" alias="Expiry Time" datatype="String" category="datetime"/>	
+      <Fragment source="Handler_Created" alias="Handler Created" datatype="datetime" category="datetime"/>
+      <Fragment source="Handler_Modified" alias="Handler Modified" datatype="datetime" category="datetime"/>		
+	  <Fragment source="WNSId" alias="WNSId" datatype="String" category="None"/>
+	  <Fragment source="WNFEventName" alias="WNF EventName" datatype="String" category="None"/>
+	  <Fragment source="ChannelID" alias="Channel ID" datatype="String" category="None"/>
+	  <Fragment source="Uri" alias="Uri" datatype="String" category="None"/>
+	  <Fragment source="WNSCreatedTime" alias="WNS CreatedTime" datatype="datetime" category="datetime"/>
+      <Fragment source="WNSExpiryTime" alias="WNS ExpiryTime" datatype="datetime" category="datetime"/>
+      <Fragment source="ActivityId" alias="ActivityId" datatype="String" category="None"/>
+    </Fragments>
+  </Artifact>
+  <Signature>
+  </Signature>
+</Artifacts>

@@ -24,5 +24,5 @@ In Windows 10 1809 *(Oct 2018 version upgrade)* the new [YourPhone app](https://
      
      *(Tested with Win 10 version 1809 (Build 17755.1) & Win10 version 1903 (Build 18875.1000) &Android 7.1.1)*<br>
 
-   * SQLite query to view the  [**Notifications**](https://github.com/kacos2000/Win10/blob/master/YourPhone/phone_notifications.sql) which is still in beta (v1903)<br>
+   * SQLite query to view the  [**Notifications**](https://github.com/kacos2000/Win10/blob/master/YourPhone/phone_notifications.sql) found at **"C:\Users\%username%\AppData\Local\Packages\Microsoft.YourPhone_8wekyb3d8bbwe\LocalCache\Indexed\<GUID>\System\Database\Notifications.db** - still in beta (v1903)<br>
    ![hint](https://raw.githubusercontent.com/kacos2000/Win10/master/YourPhone/notif.JPG)

@@ -15,12 +15,13 @@ In Windows 10 1809 *(Oct 2018 version upgrade)* the new [YourPhone app](https://
      ![Messages](https://raw.githubusercontent.com/kacos2000/Win10/master/YourPhone/messages.JPG)
 
      Photos as seen in the App:<br>
-     ![Photos in App](https://raw.githubusercontent.com/kacos2000/Win10/master/YourPhone/Photos.JPG)
+     ![Photos in App](https://raw.githubusercontent.com/kacos2000/Win10/master/YourPhone/Photos.JPG)<br>
+      *Note: [.heic](https://en.wikipedia.org/wiki/High_Efficiency_Image_File_Format) images are synced (can be found in the 'Recent Photos' folder as seen below), but are not displayed in YourPhone's app window.*
 
      Photos as seen in the "**C:\Users\ %UserName% \AppData\Local\Packages\Microsoft.YourPhone_8wekyb3d8bbwe\LocalCache\Indexed\GUID\User\PhoneName\Recent Photos**" folder:<br>
 
      ![Photos in Folder](https://raw.githubusercontent.com/kacos2000/Win10/master/YourPhone/Photos1.JPG)
-     
+         
      
      *(Tested with Win 10 version 1809 (Build 17755.1) & Win10 version 1903 (Build 18875.1000) &Android 7.1.1)*<br>
 

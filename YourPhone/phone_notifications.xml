@@ -43,10 +43,10 @@
       <Fragment source="tickerText" alias="Ticker Text" datatype="String" category="None"/>
       <Fragment source="title" alias="Title" datatype="String" category="None"/>
       <Fragment source="bigText" alias="Big Text" datatype="String" category="None"/>	  
-      <Fragment source="text" alias="Text" datatype="String" category="None"/>	
+      <Fragment source="text" alias="Text" datatype="Attachment" category="None"/>	
       <Fragment source="key" alias="Key" datatype="String" category="None"/>		  
 	  <Fragment source="groupkey" alias="Group Key" datatype="String" category="None"/>
-      <Fragment source="tag" alias="Tag" datatype="Attachment" category="None"/>
+      <Fragment source="tag" alias="Tag" datatype="String" category="None"/>
       <Fragment source="packagename" alias="Package Name" datatype="String" category="None"/>
 	  <Fragment source="appname" alias="App Name" datatype="String" category="None"/>
 	  <Fragment source="isClearable" alias="isClearable" datatype="Integer" category="None"/>	  

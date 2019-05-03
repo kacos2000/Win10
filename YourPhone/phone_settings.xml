@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Artifacts version="2.0">
+  <Artifact type="SqliteArtifact" name="Win 10 YourPhone app (Settings)" version="1.0" platform="Computer">
+    <Source type="FileName">settings.db</Source>
+    <Query>
+	SELECT
+		phone_apps.app_name as 'ApplicationName',
+		phone_apps.package_name as 'PackageName',
+		phone_apps.version as 'Version',
+		phone_apps.blob as 'Icon',
+		phone_apps.etag as 'etag'
+	from phone_apps
+	order by app_name asc
+    </Query>
+    <Fragments>
+	  <Fragment source="ApplicationName" alias="ApplicationName" datatype="String" category="None"/>
+      <Fragment source="PackageName" alias="PackageName" datatype="String" category="None"/>
+      <Fragment source="Version" alias="Version" datatype="String" category="None"/>
+      <Fragment source="Icon" alias="Icon" datatype="Attachment " category="None"/>
+      <Fragment source="etag" alias="etag" datatype="String" category="None"/>	  
+    </Fragments>
+  </Artifact>
+  <Signature>
+  </Signature>
+</Artifacts>

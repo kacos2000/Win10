@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Artifacts version="2.0">
+  <Artifact type="SqliteArtifact" name="Win 10 YourPhone app (Notifications)" version="1.0" platform="Computer">
+    <Source type="FileName">notifications.db</Source>
+    <Query>
+	select 
+		id as 'dbID',
+		json_extract(json,'$.id') as 'id',
+		json_extract(json,'$.tickerText') as 'tickerText',
+		json_extract(json,'$.title') as 'title',
+		json_extract(json,'$.bigText') as 'bigText',
+		json_extract(json,'$.text') as 'text',
+		json_extract(json,'$.subText') as 'subText',
+		json_extract(json,'$.key') as 'key',
+		json_extract(json,'$.groupkey') as 'groupkey',
+		json_extract(json,'$.tag') as 'tag',
+		json_extract(json,'$.packagename') as 'packagename',
+		json_extract(json,'$.appname') as 'appname',
+		case json_extract(json,'$.isClearable') 
+			when 0 then 'No'
+			when 1 then 'Yes'
+			else json_extract(json,'$.isClearable') 
+		end as 'isClearable',
+		json_extract(json,'$.isGroup') as 'isGroup',
+		json_extract(json,'$.isOngoing') as 'isOngoing',
+		json_extract(json,'$.featureFlags') as 'featureFlags',
+		json_extract(json,'$.platform') as 'platform',
+		json_extract(json,'$.version') as 'version',
+		json_extract(json,'$.category') as 'category',
+		json_extract(json,'$.flags') as 'flags',
+		json_extract(json,'$.postTime') as 'postTime',
+		json_extract(json,'$.timestamp') as 'timestamp',
+        post_time as 'posttimelocal',
+		json_extract(json,'$.notificationClass') as 'notificationClass',
+		json_extract(json,'$.template') as 'template',
+		state as 'state'
+	from notifications
+	order by postTime desc
+    </Query>
+    <Fragments>
+	  <Fragment source="dbID" alias="dbID" datatype="String" category="None"/>
+      <Fragment source="id" alias="ID" datatype="Integer" category="None"/>
+      <Fragment source="tickerText" alias="Ticker Text" datatype="String" category="None"/>
+      <Fragment source="title" alias="Title" datatype="String" category="None"/>
+      <Fragment source="bigText" alias="Big Text" datatype="String" category="None"/>	  
+      <Fragment source="text" alias="Text" datatype="String" category="None"/>	
+      <Fragment source="key" alias="Key" datatype="String" category="None"/>		  
+	  <Fragment source="groupkey" alias="Group Key" datatype="String" category="None"/>
+      <Fragment source="tag" alias="Tag" datatype="Attachment" category="None"/>
+      <Fragment source="packagename" alias="Package Name" datatype="String" category="None"/>
+	  <Fragment source="appname" alias="App Name" datatype="String" category="None"/>
+	  <Fragment source="isClearable" alias="isClearable" datatype="Integer" category="None"/>	  
+      <Fragment source="isGroup" alias="isGroup" datatype="String" category="None"/>
+      <Fragment source="isOngoing" alias="isOngoing" datatype="String" category="None"/>	
+      <Fragment source="featureFlags" alias="featureFlags" datatype="String" category="None"/>
+      <Fragment source="platform" alias="platform" datatype="String" category="None"/>		
+	  <Fragment source="version" alias="version" datatype="String" category="None"/>
+	  <Fragment source="category" alias="category" datatype="String" category="None"/>
+	  <Fragment source="flags" alias="flags" datatype="String" category="None"/>
+	  <Fragment source="postTime" alias="json PostTime" datatype="datetime" category="datetime"/>
+	  <Fragment source="timestamp" alias="timestamp" datatype="datetime" category="datetime"/>
+      <Fragment source="posttimelocal" alias="PostTime" datatype="datetime" category="datetime"/>
+	  <Fragment source="notificationClass" alias="notificationClass" datatype="String" category="None"/>
+      <Fragment source="template" alias="template" datatype="String" category="None"/>
+	  <Fragment source="state" alias="state" datatype="String" category="None"/>
+	</Fragments>
+  </Artifact>
+  <Signature>
+  </Signature>
+</Artifacts>

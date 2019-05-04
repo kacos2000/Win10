@@ -32,6 +32,10 @@ In Windows 10 1809 *(Oct 2018 version upgrade)* the new [YourPhone app](https://
    
      ![folders](https://raw.githubusercontent.com/kacos2000/Win10/master/YourPhone/y1.JPG)
    
-   * Settings.db lists all the applications installed on the phone, their version number, and icon (blob):</br>
+   * Settings.db lists all the applications installed on the phone, their version number, and icon (blob), as well as the notification setting (on/off) :</br>
    
-     ![Applications](https://raw.githubusercontent.com/kacos2000/Win10/master/YourPhone/y2.JPG)
+     ![Applications](https://raw.githubusercontent.com/kacos2000/Win10/master/YourPhone/y2.JPG)<br>
+     ![Settings](https://raw.githubusercontent.com/kacos2000/Win10/master/YourPhone/p3.JPG)<br>
+     
+      [Query](https://github.com/kacos2000/Win10/blob/master/YourPhone/phone_settings.xml) for the settings.db + [Magnet AXIOM 3 custom artifact](https://github.com/kacos2000/Win10/blob/master/YourPhone/phone_settings.xml) <br>
+     ![Magnet Axiom preview](https://raw.githubusercontent.com/kacos2000/Win10/master/YourPhone/p1a.JPG)<br>

@@ -22,9 +22,9 @@
 	order by app_name asc
     </Query>
     <Fragments>
-	  <Fragment source="ApplicationName" alias="ApplicationName" datatype="String" category="None"/>
-      <Fragment source="PackageName" alias="PackageName" datatype="String" category="None"/>
-      <Fragment source="Version" alias="Version" datatype="String" category="None"/>
+      	  <Fragment source="ApplicationName" alias="ApplicationName" datatype="String" category="None"/>
+      	  <Fragment source="PackageName" alias="PackageName" datatype="String" category="None"/>
+      	  <Fragment source="Version" alias="Version" datatype="String" category="None"/>
 	  <Fragment source="groupid" alias="Settings Group" datatype="String" category="None"/>
 	  <Fragment source="settingstype" alias="Settings Type" datatype="String" category="None"/>
 	  <Fragment source="settingsvalue" alias="Settings Value" datatype="String" category="None"/>

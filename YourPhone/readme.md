@@ -25,6 +25,8 @@ In Windows 10 1809 *(Oct 2018 version upgrade)* the new [YourPhone app](https://
      
      *(Tested with Win 10 version 1809 (Build 17755.1) & Win10 version 1903 (Build 18875.1000) &Android 7.1.1)*<br>
 
+**UPDATE:  Your Phone 1.19041.481.0 (Win 10 v18890.1000)**
+
    * SQLite query to view the  [**Notifications**](https://github.com/kacos2000/Win10/blob/master/YourPhone/phone_notifications.sql) found at **"C:\Users\ %username% \AppData\Local\Packages\Microsoft.YourPhone_8wekyb3d8bbwe\LocalCache\Indexed\GUID\System\Database\Notifications.db"** <br>
      ![hint](https://raw.githubusercontent.com/kacos2000/Win10/master/YourPhone/notif.JPG)
 
@@ -38,4 +40,7 @@ In Windows 10 1809 *(Oct 2018 version upgrade)* the new [YourPhone app](https://
      ![Settings](https://raw.githubusercontent.com/kacos2000/Win10/master/YourPhone/p3.JPG)<br>
      
       [Query](https://github.com/kacos2000/Win10/blob/master/YourPhone/phone_settings.xml) for the settings.db + [Magnet AXIOM 3 custom artifact](https://github.com/kacos2000/Win10/blob/master/YourPhone/phone_settings.xml) <br>
+      
+      *Note: The Settings table gets/updates values only after the user changes any settings in the 'Your Phone' app settings (as seen in the image above).* <br>
+      
      ![Magnet Axiom preview](https://raw.githubusercontent.com/kacos2000/Win10/master/YourPhone/p1a.JPG)<br>

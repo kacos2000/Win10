@@ -3,6 +3,7 @@
 select  
 			message.Message_id as 'MessageID',
 			message.Thread_id as 'ThreadId',
+			datetime ((message.timestamp /10000000)-11644473600, 'unixepoch', 'localtime') as 'TimeStamp',
 			message.Status as 'Status',
 			case  
 				message.Type 
@@ -14,8 +15,9 @@ select
 				when message.from_address notnull
 				then contact.display_name
 			end as 'Sender',
-			datetime ((message.timestamp /10000000)-11644473600, 'unixepoch', 'localtime') as 'TimeStamp',
+			
 			message.body as 'Body',
+			conversation.summary as 'conversation summery',
 			message_to_address.address as 'To Address',
 			case 
 				when message_to_address.address notnull
@@ -27,10 +29,11 @@ select
 				then 'Yes'||', '||conversation.unread_count
 				else 'No'
 			end as 'unreadcount',
-			conversation.Recipient_list as 'recipientlist'
-		from message
-		left join message_to_address on message.message_id = message_to_address.message_id
+			message.pc_status
+	from message
 		join conversation on message.thread_id = conversation.thread_id
-		left join address on address.address = conversation.recipient_list or address.address = message_to_address.address
+		left join message_to_address on message.message_id = message_to_address.message_id
+		left join address on address.address = message.from_address or address.address = message_to_address.address
 		left join contact on contact.contact_id = address.contact_id
-		order by TimeStamp desc
+	group by message.message_id
+	order by TimeStamp desc

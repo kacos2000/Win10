@@ -5,7 +5,7 @@ App available [in the MS Store](https://www.microsoft.com/en-us/p/microsoft-stic
 <br>
 - Application folder:<br>
        C:\Users\%username%\AppData\Local\Packages\Microsoft.MicrosoftStickyNotes_8wekyb3d8bbwe<br>
-- Database folder:<br>
+- Database:<br>
         C:\Users\%username%\AppData\Local\Packages\Microsoft.MicrosoftStickyNotes_8wekyb3d8bbwe\LocalState\plum.sqlite<br>
 - Media folder:<br>
         C:\Users\%username%\AppData\Local\Packages\Microsoft.MicrosoftStickyNotes_8wekyb3d8bbwe\LocalState\media<br>

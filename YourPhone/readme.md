@@ -44,3 +44,10 @@ In Windows 10 1809 *(Oct 2018 version upgrade)* the new [YourPhone app](https://
       *Note: The Settings table gets/updates values only after the user changes any settings in the 'Your Phone' app settings (as seen in the image above).* <br>
       
      ![Magnet Axiom preview](https://raw.githubusercontent.com/kacos2000/Win10/master/YourPhone/p1a.JPG)<br>
+     
+ **UPDATE:  Your Phone 1.19061.410.0 (Win 10 v18932.1000)**  
+    
+   * [Photos.db](https://github.com/kacos2000/Win10/blob/master/YourPhone/yourphone_photos.sql): There is a 4th db file now: Photos.db lists all the synchronised images, timestamp, their size, location on phone, full thumbnail (blob), and full image (blob). Images are also saved in the 'Recent Photos' folder. </br> 
+      
+      ![dBs](https://raw.githubusercontent.com/kacos2000/Win10/master/YourPhone/dbs.JPG)
+    

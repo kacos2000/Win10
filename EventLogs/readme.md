@@ -142,7 +142,7 @@ eg: 528 *(Successful Logon)* + 4096 = 4624<br>
        - [X] Parse Microsoft-Windows-Winlogon/Operational.evtx
        - [X] Check / Parse EventID 4625
        - [X] Check / Parse EventID 4648
-       - [ ] Check / Parse EventIDs 4663/4567 (Audit File	System	=	Success, (Audit Registry =	Success ) )
+       - [ ] Check / Parse EventIDs 4663/4567 (Audit File	System = Success, (Audit Registry = Success ))
        - [ ] Check / Parse EventID 4675
        - [X] Check / Parse EventID 4688 (Audit Process Creation =	Success)
        - [ ] Check / Parse EventID [4720](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4720)): A user account was created

@@ -126,6 +126,10 @@ The main difference between “[4647: User initiated logoff](https://docs.micros
        
  eof
  __________________
+
+**Note:** Old Windows event IDs can be converted to new event IDs [by adding 4096](https://www.andreafortuna.org/2019/06/12/windows-security-event-logs-my-own-cheatsheet/) to the Event ID<br>
+eg: 528 *(Successful Logon)* + 4096 = 4624<br>
+ __________________
    
      - To Do:
        - [X] [List all event log *'keywords'*](keywords.md)

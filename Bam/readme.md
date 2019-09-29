@@ -3,7 +3,7 @@
 
    
 ### -> UPDATE (04/2019) ###
-  - In Win10 **v1809** & **v1903**, BAM stopped updating  "\bam\UserSettings" (old entries may still be found there) and now updates "bam\*State*\UserSettings". These two powershell scripts get the data from the new location:<br>
+  - In Win10 **v1809** & **v1903**, BAM stopped updating  "\bam\UserSettings" (old entries may still be found there) and now updates "bam\ *State* \UserSettings". These two powershell scripts get the data from the new location:<br>
     [bam1809.ps1](https://github.com/kacos2000/Win10-Research/blob/master/Bam/bam1809.ps1) <br>
     [bamoffline1809.ps1](https://github.com/kacos2000/Win10-Research/blob/master/Bam/bamoffline1809.ps1)<br> 
 

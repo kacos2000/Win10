@@ -1,8 +1,8 @@
 <!-- saved from url=(0044) https://kacos2000.github.io/Win10/ --> 
 ## Windows 10 stuff ##
 
-| **File**                      |**Description**
-| :---                        |     :---    
+| **File**                         |**Description**
+| :--------                        |     :---    
 |[Background Activity Moderator (Win10 v1803/1809/1903)](https://github.com/kacos2000/Win10-Research/blob/master/Bam/readme.md) |![Bam preview](bam.jpg) <br>Background Activity Service and registry entries. Powershell parsers & info.
 |[PowerShell history](ConsoleHost_history.pdf) |History of PowerShell commands *(pdf)*
 |[SQLite queries](https://github.com/kacos2000/queries/blob/master/README.md) |Various sqlite queries *(Browser data, Skype etc)*
@@ -23,3 +23,4 @@
 |[Windows 10 Search JumpList](https://github.com/kacos2000/Win10-Research/blob/master/JumpList/readme.md)| PowerShell script to parse the Windows 10 '**Search JumpList**' entries
 |[NTFS ObjectIDs](https://github.com/kacos2000/Win10/blob/master/ObjectID/readme.md)| powershell script listing the NTFS $MFT ObjectID's of files in selected Folder & subfolders. Powershell script to parse a local or mounted drive and save the $USN journal to a comma separated file. Also, a script to get NTFS information from a local or mounted drive and get user readable results. All three  use  Windows's "fsutil.exe" command.
 |[Windows Diagnostics Infrastructure](https://github.com/kacos2000/Win10/blob/master/WDI/Readme.md)| Powershell script that uses Microsoft TraceRpt.Exe to convert all Event Trace Logs (.ETL) of the target "\Windows\System32\WDI" folder to the respective summary.txt and eventlog.csv (comma separated file). It also copies the StartupInfo folder and it's contents. 
+|[Office Document Cache](https://github.com/kacos2000/Other/blob/master/OfficeFileCache/Readme.md)| PowerShell scripts & EXEs to parse MS Office ..stuff :)

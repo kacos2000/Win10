@@ -10,6 +10,7 @@
       *Note4: "[UserLastPlayedTime Attribute](https://docs.microsoft.com/el-gr/windows/win32/wmp/userlastplayedtime-attribute)": the date and time the item was most recently played.*<br>
       
         *Links:*<br>
+        - [about Media Player Library](https://docs.microsoft.com/el-gr/windows/win32/wmp/about-the-library)
         - [Media Type Identifiers](https://docs.microsoft.com/en-us/windows/win32/wmformat/media-type-identifiers)<br>
         - [MediaClassPrimaryID](https://docs.microsoft.com/en-us/windows/win32/wmformat/wm-mediaprimaryid)<br>
         - [MediaClassSecondaryID](https://docs.microsoft.com/en-us/windows/win32/wmformat/wm-mediasecondaryid)

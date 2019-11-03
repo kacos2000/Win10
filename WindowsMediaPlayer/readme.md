@@ -4,11 +4,15 @@
    
       *Note1: Can take some time to parse large libraries.*<br>
       *Note2: Uses [WMPLAYER.OCX](https://docs.microsoft.com/en-us/windows/win32/wmp/player-object) which is installed with Windows Media Player. Requires WMP to be enabled on the host Computer.*<br>
-        -    ![wmp](https://raw.githubusercontent.com/kacos2000/Win10/master/WindowsMediaPlayer/MO.JPG)
+        -    ![wmp](https://raw.githubusercontent.com/kacos2000/Win10/master/WindowsMediaPlayer/MO.JPG)<br><br>
+        
+      *Note3: "[AcquisitionTime Attribute](https://docs.microsoft.com/el-gr/windows/win32/wmp/acquisitiontime-attribute)":  the date and time the item was added to the library.*<br>
+      *Note4: "[UserLastPlayedTime Attribute](https://docs.microsoft.com/el-gr/windows/win32/wmp/userlastplayedtime-attribute)": the date and time the item was most recently played.*<br>
       
         *Links:*<br>
         - [Media Type Identifiers](https://docs.microsoft.com/en-us/windows/win32/wmformat/media-type-identifiers)<br>
         - [MediaClassPrimaryID](https://docs.microsoft.com/en-us/windows/win32/wmformat/wm-mediaprimaryid)<br>
+        - [MediaClassSecondaryID](https://docs.microsoft.com/en-us/windows/win32/wmformat/wm-mediasecondaryid)
         - [Media Foundation and DirectShow Media Types](https://gix.github.io/media-types/)
    
    

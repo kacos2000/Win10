@@ -15,6 +15,26 @@
 
      - **Birth Volume Id**: Birth Volume Id is the Object Id of the Volume on which the Object Id was allocated. It never changes.<br>
      - **Birth Object Id**: Birth Object Id is the first Object Id that was ever assigned to this MFT Record. I.e. If the Object Id is changed for some reason, this field will reflect the original value of the Object Id.<br>
+     
+    - **References #1:**<br>
+       *[Object Identifiers](https://docs.microsoft.com/en-us/windows/desktop/FileIO/distributed-link-tracking-and-object-identifiers)*
+
+       The link tracking service maintains its link to an object by using an object identifier (ID). An object ID is an optional attribute that uniquely identifies a file or directory on a volume.
+
+       An index of all object IDs is stored on the volume. Rename, backup, and restore operations preserve object IDs. However, copy operations do not preserve object IDs, because that would violate their uniqueness.
+
+       You can perform the following operations on object IDs:
+
+           Creation
+           Deletion
+           Query
+
+       When you create an object ID, you establish the identity of the file to the link tracking service. Conversely, when you delete an object ID, the link tracking service stops maintaining links to the file.
+
+
+    - **References #2:**<br>
+       [NTFS File Attributes](https://blogs.technet.microsoft.com/askcore/2010/08/25/ntfs-file-attributes/)<br>
+       [_FILE_OBJECTID_INFORMATION structure](https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/ntifs/ns-ntifs-_file_objectid_information)<br>     
  
    - **[FILETIME Extractor](http://www.kazamiya.net/en/fte)** - "fte(FILETIME Extractor) gets accurate timestamps and several information on NTFS." parses NTFS internal files like $MFT file, $ObjID file, $INDX_ALLOCATION attribute. Supports mounted drives (eg FTK mounted images) also.
   
@@ -54,22 +74,4 @@ the time/date of the formatting or the diskcopying.)](http://www.faqs.org/faqs/a
      Max Volume Trim Byte Count      | 1.073.741.824
 
 
-- **References #1:**<br>
-   *[Object Identifiers](https://docs.microsoft.com/en-us/windows/desktop/FileIO/distributed-link-tracking-and-object-identifiers)*
 
-   The link tracking service maintains its link to an object by using an object identifier (ID). An object ID is an optional attribute that uniquely identifies a file or directory on a volume.
-
-   An index of all object IDs is stored on the volume. Rename, backup, and restore operations preserve object IDs. However, copy operations do not preserve object IDs, because that would violate their uniqueness.
-
-   You can perform the following operations on object IDs:
-
-       Creation
-       Deletion
-       Query
-
-   When you create an object ID, you establish the identity of the file to the link tracking service. Conversely, when you delete an object ID, the link tracking service stops maintaining links to the file.
-
-
-- **References #2:**<br>
-   [NTFS File Attributes](https://blogs.technet.microsoft.com/askcore/2010/08/25/ntfs-file-attributes/)<br>
-   [_FILE_OBJECTID_INFORMATION structure](https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/ntifs/ns-ntifs-_file_objectid_information)<br>

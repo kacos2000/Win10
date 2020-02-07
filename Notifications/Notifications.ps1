@@ -1,6 +1,4 @@
-﻿#Set encoding to UTF-8 
-$OutputEncoding = [console]::InputEncoding = [console]::OutputEncoding = (New-Object System.Text.UTF8Encoding)
-
+﻿clear-host
 #Check if SQLite exists
 try{write-host "sqlite3.exe version => "-f Yellow -nonewline; sqlite3.exe -version }
 catch {
@@ -18,7 +16,7 @@ catch {
 # Show an Open File Dialog 
 Function Get-FileName($initialDirectory)
 {  
-[System.Reflection.Assembly]::LoadWithPartialName("System.windows.forms") |Out-Null
+[Void][System.Reflection.Assembly]::LoadWithPartialName("System.windows.forms") 
 		$OpenFileDialog = New-Object System.Windows.Forms.OpenFileDialog
 		$OpenFileDialog.Title = 'Select wpndatabase.db database to access'
 		$OpenFileDialog.initialDirectory = $initialDirectory
@@ -31,6 +29,8 @@ Function Get-FileName($initialDirectory)
 
 $dBPath =  $env:LOCALAPPDATA+"\Microsoft\Windows\Notifications\"
 $File = Get-FileName -initialDirectory $dBPath
+
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
 
 # Run SQLite query of the Selected dB
@@ -224,17 +224,9 @@ $output = foreach ($item in $dbnresults ){$rn++
                                 ExpiryTime = $item.ExpiryTime
                                 BadgeValue = $BadgeValue
                                 Version = $Version
-                                Text1 = $text1
-                                Text2 = $text2
-                                Text3 = $text3
-                                Text4 = $text4
-                                SubText1 = $SubText1
-                                SubText2 = $SubText2
-                                SubText3 = $SubText3
-                                SubText4 = $SubText4
-                                Hint1 = $hintlockDetailedStatus1
-                                Hint2 = $hintlockDetailedStatus2
-                                Hint3 = $hintlockDetailedStatus3
+                                Text = "$($text1) $($text2) $($text3) $($text4)"
+                                SubText = "$($SubText1) $($SubText2) $($SubText3) $($SubText4)"
+                                Hint = "$($hintlockDetailedStatus1) $($hintlockDetailedStatus2) $($hintlockDetailedStatus3)"
                                 ToastLaunch = $ToastLaunch
                                 ToastActivationType = $ToastActivationType
                                 ToastScenario = $ToastScenario
@@ -274,5 +266,5 @@ $filenameFormat = $env:userprofile + "\desktop\Notifications_" + (Get-Date -Form
 Write-host "Selected Rows will be saved as: " -f Yellow -nonewline; Write-Host $filenameFormat -f White
 
 #Output results to screen table (and save selected rows to csv)          
-$output|Out-GridView -PassThru -Title "There are ($dbncount) Notifications in : '$File' - QueryTime $Tn"|Export-Csv -Path $filenameFormat -Encoding Unicode
+$output|Out-GridView -PassThru -Title "There are ($dbncount) Notifications in : '$File' - QueryTime $Tn"#Export-Csv -Path $filenameFormat -Encoding Unicode
 [gc]::Collect() 

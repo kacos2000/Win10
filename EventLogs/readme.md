@@ -49,7 +49,7 @@
      
 ###  Win 10 Microsoft-Windows-VHDMP-Operational.evtx parser  ###
 
-- [Win 10 Microsoft-Windows-VHDMP-Operational parser](https://github.com/kacos2000/Win10/blob/master/EventLogs/VHD.ps1) - PowerShell script to read a live or offline **Microsoft-Windows-VHDMP-Operational.evtx** log and list all the  entries. (Supports Event IDs: 1,2,50,51)
+- [Win 10 Microsoft-Windows-VHDMP-Operational parser](https://github.com/kacos2000/Win10/blob/master/EventLogs/VHD_log.ps1) - PowerShell script to read a live or offline **Microsoft-Windows-VHDMP-Operational.evtx** log and list all the  entries. (Supports Event IDs: 1,2,50,51)
 
 ###  Win 10 Security.evtx EventID: 4688 parser  ###
 

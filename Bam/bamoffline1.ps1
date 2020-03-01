@@ -1,5 +1,16 @@
 #Requires -RunAsAdministrator
-
+Clear-Host
+# Check Validity of script
+if ((Get-AuthenticodeSignature $MyInvocation.MyCommand.Path).Status -ne "Valid")
+{
+	
+	$check = [System.Windows.Forms.MessageBox]::Show($this, "WARNING:`n$(Split-path $MyInvocation.MyCommand.Path -Leaf) has been modified since it was signed.`nPress 'YES' to Continue or 'No' to Exit", "Warning", 'YESNO', 48)
+	switch ($check)
+	{
+		"YES"{ Continue }
+		"NO"{ Exit }
+	}
+}
 # Show an Open File Dialog and return the file selected by the user
 Function Get-FileName($initialDirectory)
 {  
@@ -144,8 +155,8 @@ write-host "The before and after SHA256 Hashes of ($File) are ($result) `n `n" -
 # SIG # Begin signature block
 # MIIfcAYJKoZIhvcNAQcCoIIfYTCCH10CAQExDzANBglghkgBZQMEAgEFADB5Bgor
 # BgEEAYI3AgEEoGswaTA0BgorBgEEAYI3AgEeMCYCAwEAAAQQH8w7YFlLCE63JNLG
-# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCBU14ncS8i3QVfG
-# mrA8/U1LX6TcNN3vcsJhOAEuJP3qeKCCGf4wggQVMIIC/aADAgECAgsEAAAAAAEx
+# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCCpf3QVBUn40K+O
+# vT5Df5CLJL4Bgb9zfR46+nBcKYi3yaCCGf4wggQVMIIC/aADAgECAgsEAAAAAAEx
 # icZQBDANBgkqhkiG9w0BAQsFADBMMSAwHgYDVQQLExdHbG9iYWxTaWduIFJvb3Qg
 # Q0EgLSBSMzETMBEGA1UEChMKR2xvYmFsU2lnbjETMBEGA1UEAxMKR2xvYmFsU2ln
 # bjAeFw0xMTA4MDIxMDAwMDBaFw0yOTAzMjkxMDAwMDBaMFsxCzAJBgNVBAYTAkJF
@@ -288,26 +299,26 @@ write-host "The before and after SHA256 Hashes of ($File) are ($result) `n `n" -
 # R3JlYXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9T
 # ZWN0aWdvIExpbWl0ZWQxJDAiBgNVBAMTG1NlY3RpZ28gUlNBIENvZGUgU2lnbmlu
 # ZyBDQQIRALjpohQ9sxfPAIfj9za0FgUwDQYJYIZIAWUDBAIBBQCgTDAZBgkqhkiG
-# 9w0BCQMxDAYKKwYBBAGCNwIBBDAvBgkqhkiG9w0BCQQxIgQgxcphqtXQ8XNPiXSu
-# eOYfPnoDfC+7hJw18xyvPcL9SpMwDQYJKoZIhvcNAQEBBQAEggEAX/HTXS49MP9A
-# /GQXiFo2QQ6M3UcjB8AYa10zhJjw66bP9+tpmI0ZT/vlcW4L0oeVHPwNGxdW0jSD
-# VljLwBk1t+474Lu9tP9mthppUSSRXvneN2wx4TMp3Qa2vLt6mEhROdYxTyCNiNwG
-# BM2cnQZpXKAIusRi/73ot/1bH5Dxfkb03l+spHVjxmWnOW9IRs4mNPMMnTK2xinz
-# g8v+YIOdUI2zu8gRQRiHc069HgEUXRUz/s11YGyeCW+DbstP26V7jo42UlK5hTXc
-# k+4WXf/lEC+5/SdTAF28X0qvKnSx9gpsu9IR8SVRlXqKinZMDQjQH7LUx5kgcwZD
-# iNtVirSE56GCArkwggK1BgkqhkiG9w0BCQYxggKmMIICogIBATBrMFsxCzAJBgNV
+# 9w0BCQMxDAYKKwYBBAGCNwIBBDAvBgkqhkiG9w0BCQQxIgQg0kBYl2DI77/iVPBI
+# QLC4gXpTwTHDxi7Dz9zy0NVJSl8wDQYJKoZIhvcNAQEBBQAEggEAHFOZqhP4zIy0
+# 20/q019Aqn0+pJIaU9iq3eXnTl5BZSgMFAw4kEpYM97jh4pP+Gbvc2VPgOu6vqkD
+# XUUXLiM/nwTfxz97wX+9wAGvJgJpm5MqI1YaiTW4xvNb7wUDZ5uWKG7cBlC7YYHH
+# nHf/QHbXGjn8mn4dL0mmz2BnyWGDZ02FsgSWjGDKGaMz8JC8hOJyj/Vibb0C9kSE
+# JhAFwk8kVn+PCb6vwW1NArwli3daaA5f+hAQ7b21e0oaGUQOmN4rD7NivwbYLeUh
+# 2zKeo9i8ZTbLHN3wsSuY9QzpUJ0Yqfz6pdUNW4hPUhYOb+sIT7ks3EYNCPfmOH3z
+# D89SJ5k/bqGCArkwggK1BgkqhkiG9w0BCQYxggKmMIICogIBATBrMFsxCzAJBgNV
 # BAYTAkJFMRkwFwYDVQQKExBHbG9iYWxTaWduIG52LXNhMTEwLwYDVQQDEyhHbG9i
 # YWxTaWduIFRpbWVzdGFtcGluZyBDQSAtIFNIQTI1NiAtIEcyAgwkVLh/HhRTrTf6
 # oXgwDQYJYIZIAWUDBAIBBQCgggEMMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEw
-# HAYJKoZIhvcNAQkFMQ8XDTIwMDIyMDEyMTczMVowLwYJKoZIhvcNAQkEMSIEIBZn
-# sllZ+e1Cwa/olP/xRodggW+3n/U4REQJ87LEfDkRMIGgBgsqhkiG9w0BCRACDDGB
+# HAYJKoZIhvcNAQkFMQ8XDTIwMDMwMTEyMzEwOFowLwYJKoZIhvcNAQkEMSIEID5I
+# sALnDHLcGPjWpbfIfSyXGeeHjFaeiAbhS/H7nThNMIGgBgsqhkiG9w0BCRACDDGB
 # kDCBjTCBijCBhwQUPsdm1dTUcuIbHyFDUhwxt5DZS2gwbzBfpF0wWzELMAkGA1UE
 # BhMCQkUxGTAXBgNVBAoTEEdsb2JhbFNpZ24gbnYtc2ExMTAvBgNVBAMTKEdsb2Jh
 # bFNpZ24gVGltZXN0YW1waW5nIENBIC0gU0hBMjU2IC0gRzICDCRUuH8eFFOtN/qh
-# eDANBgkqhkiG9w0BAQEFAASCAQBBBca8+k6DkwruPj7VSarOV4HpEBsSG7DMT9o9
-# FKhGZ+5uXMhWk+9iKZzXQlrnIdLHwc2yw00+Fcg6oNfJ6yf2yIMzFtCSd2HcKuro
-# m+uGNr50O2JI1uslHx1iwLJPuOzh7nKlKh8LJNPgvCEbwHMuTndVYDB8i+HD0DSX
-# LffFZfi14XfXLN8TxuqvFoZU+9HiMWYekCf7lYo8yv8YAtGkuWgd++BzmUoL21rO
-# 9f/wQuy4a8KdfECscq4hC8jFWoLriXpp8f2e8OWA/9eFfqpEROm5TlWehnzK3uIN
-# dmngEiUiJtGhoEoomFwiYm+lVQkvdnSB+UZ+BUhSiulpddEp
+# eDANBgkqhkiG9w0BAQEFAASCAQAjamQkhynRuT+NxTI8v3L0zSDAlMnp65ig2n/f
+# /Zm+n6QPK8kEGrLVbHgODuDKXmlraJoBpmSIJzGi1xgtP/JBy/skznVibPu1U4j0
+# 1fjqU+mCz8p3Dx38hGLYIuDHRuOkDZeLWTiLTkaXNL6BrstrJzsGXEruTAPLghS8
+# gkiLIh40gmWUSV11FMCbTZLSTAk81Rjb0ApDh5BZITkyfsrH1VvqlbPPRFPNI4Uf
+# /HyKqsqlCkLYTaaW7PMCRf/jiFdLbDeTElZ/rqiRn5Jea8xoT7S/7zSd0CkFQRkD
+# +Sa3n9H24g8b1Yv73j39QwokgCF705aQmWo31I84y/73JYxq
 # SIG # End signature block

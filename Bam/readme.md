@@ -61,6 +61,7 @@
      3.  *[About BAM key (execution trace #2) -in Japanese](https://padawan-4n6.hatenablog.com/entry/2018/03/07/191419)*
      4.  *[BAM Key and Process Execution, Updated Plugins](http://windowsir.blogspot.com.au/2018/03/new-and-updated-plugins-other-items.html)*
      5. *[Bam - Alternative to Prefetch](https://www.linkedin.com/pulse/alternative-prefetch-bam-costas-katsavounidis/)*
+     6. *[BAM Internals](https://dfir.ru/2020/04/08/bam-internals/)*
 
 Status
  - **[x]** Live Parser 

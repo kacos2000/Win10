@@ -1,9 +1,11 @@
 ### Windows Search ###
 
 **[Powershell script](https://github.com/kacos2000/Win10/blob/master/Cortana/Cortana_AppCache.ps1)** to parse AppCache?????????????.txt files in either:<br>
-  '$env:LOCALAPPDATA"\Packages\ **Microsoft.Windows.Cortana_cw5n1h2txyewy** \LocalState\DeviceSearchCache\' or <br>
-  '$env:LOCALAPPDATA"\Packages\ **Microsoft.Windows.Search_cw5n1h2txyewy** \LocalState\DeviceSearchCache\' folders <br>
-
+  '$env:LOCALAPPDATA"\Packages\ **Microsoft.Windows.Cortana_cw5n1h2txyewy** \LocalState\DeviceSearchCache\' (Win10 -v1909) or <br>
+  '$env:LOCALAPPDATA"\Packages\ **Microsoft.Windows.Search_cw5n1h2txyewy** \LocalState\DeviceSearchCache\' (Win10 v2004+) folders <br>
+  
+  *Note: Not sure from which update exactly, but Cortana was separated from Windows Seach & became a separate MS Store app* 
+  
   ![sample_output](https://raw.githubusercontent.com/kacos2000/Win10/master/Cortana/C_AppCache.JPG)
 
   **NOTE:** The 'Type,Name,Path,Description' (Jumplist) fields are from the recently used list/history of the respective app if Type = 1!<br>
@@ -36,7 +38,8 @@ Decoded from Base64, the dataBlob looks like:
              L a s t U p d a t e d      �_0   S u g g e s t i o n E n g a g e m e n t D a t a    �   3 6 	 { 1 A C 1 4 E 7 7 - 0 2 E 7 - 4 E 5 D - B 7 4 4 - 2 E B 1 A E 5 1 9 8 B 7 } \ W i n d o w s P o w
      e r S h e l l \ v 1 . 0 \ P o w e r S h e l l _ I S E . e x e      "   p r e f i x L a u n c h C o u n t            l a s t L a u n c h T i m e    �_   g r o u p T y p e      $ 
      ```
-
+     <br><br>
+*'$env:LOCALAPPDATA"\Packages\Microsoft.Windows.Cortana_cw5n1h2txyew\AppData\Indexed DB''s **T-8** table contains similar info too.*
 
 
 **A brief look at Win10 Windows.edb**

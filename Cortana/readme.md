@@ -634,3 +634,38 @@ the last table of the known database (**SystemIndex_PropertyStore**) is a Gold M
       <Column Name="5-System_ItemTypeText" Value="File folder" />
       <Column Name="WorkID" Value="1" />
     </Row>
+
+The (**SystemIndex_Gthr**) table's columns:<br>
+
+    <Row>
+      <Column Name="AppOwnerId"/>
+      <Column Name="CalculatedPropertyFlags" Value="4864"/>
+      <Column Name="ClientID"/>
+      <Column Name="CrawlNumberCrawled" Value="88"/>
+      <Column Name="DeletedCount"/>
+      <Column Name="DocumentID" Value="1"/>
+      <Column Name="FailureUpdateAttempts"/>
+      <Column Name="FileName" Value="Start Menu"/>
+      <Column Name="LastModified" Value="AdZhFAbxSx8="/>
+      <Column Name="LastRequestedRunTime"/>
+      <Column Name="Priority"/>
+      <Column Name="RequiredSIDs"/>
+      <Column Name="RunTime"/>
+      <Column Name="ScopeID" Value="8"/>
+      <Column Name="SDID" Value="1"/>
+      <Column Name="StartAddressIdentifier" Value="0"/>
+      <Column Name="StorageProviderId"/>
+      <Column Name="TransactionExtendedFlags"/>
+      <Column Name="TransactionFlags" Value="-2143286922"/>
+      <Column Name="UserData"/>
+    </Row>
+    
+  The (**SystemIndex_GthrPth**) table's columns:<br>
+  
+    <Row>
+      <Column Name="Name" Value="C:"/>
+      <Column Name="Parent" Value="2"/>
+      <Column Name="Scope" Value="3"/>
+    </Row>
+    
+ 

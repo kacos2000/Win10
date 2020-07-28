@@ -17,10 +17,6 @@ $selected = if(test-path  "$($env:LOCALAPPDATA)\Packages\Microsoft.Windows.Corta
                             "$($env:LOCALAPPDATA)\Packages\Microsoft.Windows.Search_cw5n1h2txyewy\LocalState\DeviceSearchCache\"}
             else{"$($env:USERPROFILE)\Desktop"}
 
-# Hash table with Known Folder GUIDs  
-# Reference: "https://docs.microsoft.com/en-us/dotnet/framework/winforms/controls/known-folder-guids-for-file-dialog-custom-places"
-
-
 # Show an Open folder Dialog and return the file selected by the user
 Function Get-Folder($initialDirectory="")
 {
@@ -47,6 +43,8 @@ if($AppcacheFiles.Count -lt 1){Write-warning "No 'AppCache**.txt' files found"; 
 write-host "Files found:" -f Yellow
 write-host $AppcacheFiles.name -f White
 
+# Hash table with Known Folder GUIDs  
+# Reference: "https://docs.microsoft.com/en-us/dotnet/framework/winforms/controls/known-folder-guids-for-file-dialog-custom-places"
 $known = @{
             "308046B0AF4A39CB" = "Mozilla Firefox 64bit";
             "E7CF176E110C211B" = "Mozilla Firefox 32bit";

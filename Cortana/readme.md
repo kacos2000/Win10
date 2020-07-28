@@ -1,6 +1,6 @@
 ### Windows Search ###
 
-**[Powershell script](https://github.com/kacos2000/Win10/blob/master/Cortana/Cortana_AppCache.ps1)** to parse AppCache?????????????.txt files in either:<br>
+**[Powershell script](https://github.com/kacos2000/Win10/blob/master/Cortana/Search_AppCache.ps1)** to parse AppCache?????????????.txt files in either:<br>
   '$env:LOCALAPPDATA"\Packages\ **Microsoft.Windows.Cortana_cw5n1h2txyewy** \LocalState\DeviceSearchCache\' (Win10 -v1909) or <br>
   '$env:LOCALAPPDATA"\Packages\ **Microsoft.Windows.Search_cw5n1h2txyewy** \LocalState\DeviceSearchCache\' (Win10 v2004+) folders <br>
   

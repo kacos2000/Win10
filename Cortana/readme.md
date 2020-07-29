@@ -1,4 +1,4 @@
-### Windows Search ###
+## Windows Search ###
 
 **[Powershell script](https://github.com/kacos2000/Win10/blob/master/Cortana/Search_AppCache.ps1)** to parse AppCache?????????????.txt files in either:<br>
   '$env:LOCALAPPDATA"\Packages\ **Microsoft.Windows.Cortana_cw5n1h2txyewy** \LocalState\DeviceSearchCache\' (Win10 -v1909) or <br>
@@ -14,9 +14,10 @@
   ![SW](https://raw.githubusercontent.com/kacos2000/Win10/master/Cortana/ln.JPG)
 
 
-**A brief look at '$env:LOCALAPPDATA"\Packages\Microsoft.Windows.Search_cw5n1h2txyewy\AppData\Indexed DB\IndexedDB.edb**
+### A brief look at IndexedDB.edb
+   *(Full path: '$env:LOCALAPPDATA"\Packages\Microsoft.Windows.Search_cw5n1h2txyewy\AppData\Indexed DB\IndexedDB.edb')*
    
-   The (**T2**) table seems to contain similar info to AppCache*.txt, but in a BLOB:<br>
+   The (**T2**) table (mruWithIndex) seems to contain similar info to AppCache*.txt, but in a BLOB:<br>
    
  ```    <Row>
         <Column Name="autoIncObjectCount" Value="1870"/>
@@ -32,17 +33,33 @@
       </Row> 
  ```
 
-Decoded from Base64, the dataBlob looks like:
+Decoded, the above dataBlob looks like:
     ```
-    [System.Text.Encoding]::utf8.GetString([System.Convert]::FromBase64String($dataBlob))
-             L a s t U p d a t e d      �_0   S u g g e s t i o n E n g a g e m e n t D a t a    �   3 6 	 { 1 A C 1 4 E 7 7 - 0 2 E 7 - 4 E 5 D - B 7 4 4 - 2 E B 1 A E 5 1 9 8 B 7 } \ W i n d o w s P o w
+          L a s t U p d a t e d      �_0   S u g g e s t i o n E n g a g e m e n t D a t a    �   3 6 	 { 1 A C 1 4 E 7 7 - 0 2 E 7 - 4 E 5 D - B 7 4 4 - 2 E B 1 A E 5 1 9 8 B 7 } \ W i n d o w s P o w
      e r S h e l l \ v 1 . 0 \ P o w e r S h e l l _ I S E . e x e      "   p r e f i x L a u n c h C o u n t            l a s t L a u n c h T i m e    �_   g r o u p T y p e      $ 
      ```
      <br><br>
-*'$env:LOCALAPPDATA"\Packages\Microsoft.Windows.Cortana_cw5n1h2txyew\AppData\Indexed DB''s **T-8** table contains similar info too.*
+*'$env:LOCALAPPDATA"\Packages\Microsoft.Windows.Cortana_cw5n1h2txyew\AppData\Indexed DB\IndexedDB.edb''s **T-8** table (mruWithIndex) contains similar info too.*
 
+ - Microsoft.Windows.**Search**_cw5n1h2txyewy\AppData\Indexed DB\IndexedDB.edb object store friendly names:
+ 1. mruWithIndexStore
+ 2. mruWithIndex
+ 3. msb
+ 4. mru
+ 5. person
+ 6. bookmark
+ 7. qna
+ 8. location
+ 9. token
+        <br>
+   - Microsoft.Windows.**Cortana**_cw5n1h2txyew\AppData\Indexed DB\IndexedDB.edb object store friendly names:
+ 1. mruWithIndexStore
+ 2. BingClientStore 
+ 3. BingClientStore2 
+ 4. mruWithIndex  
+ <br>
 
-**A brief look at Win10 Windows.edb**
+### A brief look at Win10 Windows.edb
 
 the last table of the known database (**SystemIndex_PropertyStore**) is a Gold Mine and a pain in the @ to extract:
 

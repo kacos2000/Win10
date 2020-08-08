@@ -38,7 +38,11 @@ Decoded, the above dataBlob looks like:
           L a s t U p d a t e d      �_0   S u g g e s t i o n E n g a g e m e n t D a t a    �   3 6 	 { 1 A C 1 4 E 7 7 - 0 2 E 7 - 4 E 5 D - B 7 4 4 - 2 E B 1 A E 5 1 9 8 B 7 } \ W i n d o w s P o w
      e r S h e l l \ v 1 . 0 \ P o w e r S h e l l _ I S E . e x e      "   p r e f i x L a u n c h C o u n t            l a s t L a u n c h T i m e    �_   g r o u p T y p e      $ 
      ```
-     <br><br>
+The dataBlob entries are in Little Endian and the LastUpdated & LastLaunchTime (or LastPreviewPanelLaunchTime) are in **Unix seconds**.
+
+   ![img](https://raw.githubusercontent.com/kacos2000/Win10/master/Cortana/tb.JPG)
+
+<br><br>
 *'$env:LOCALAPPDATA"\Packages\Microsoft.Windows.Cortana_cw5n1h2txyew\AppData\Indexed DB\IndexedDB.edb''s **T-8** table (mruWithIndex) contains similar info too.*
 
  - Microsoft.Windows.**Search**_cw5n1h2txyewy\AppData\Indexed DB\IndexedDB.edb object store friendly names:

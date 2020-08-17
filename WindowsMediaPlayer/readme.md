@@ -1,5 +1,7 @@
 ## Windows Media Player Library
 
+   - ![WMPL](https://raw.githubusercontent.com/kacos2000/Win10/master/WindowsMediaPlayer/wmpl.JPG)<br><br>
+
    - [wmpl64.exe](https://github.com/kacos2000/Win10/blob/master/WindowsMediaPlayer/wmpl64.exe) - Parses the Windows Media Player Libraries of a live PC, and extracts all stored Metadata *(eg. 33-101 metadata fields observed)*. Optionally saves the output to csv & json.<br>
    
       *Note1: Can take some time to parse large libraries.*<br>
@@ -16,8 +18,7 @@
         - [MediaClassSecondaryID](https://docs.microsoft.com/en-us/windows/win32/wmformat/wm-mediasecondaryid)
         - [Media Foundation and DirectShow Media Types](https://gix.github.io/media-types/)
    
-   
-        * ![WMPL](https://raw.githubusercontent.com/kacos2000/Win10/master/WindowsMediaPlayer/wmpl.JPG)<br><br>
+
         
 
         

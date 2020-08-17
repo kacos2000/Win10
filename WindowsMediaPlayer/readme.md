@@ -19,7 +19,7 @@
    
         * ![WMPL](https://raw.githubusercontent.com/kacos2000/Win10/master/WindowsMediaPlayer/wmpl.JPG)<br><br>
         
-        * ![WMPL1](https://raw.githubusercontent.com/kacos2000/Win10/master/WindowsMediaPlayer/wmpl1.JPG)
+
         
 
         

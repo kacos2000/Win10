@@ -1,4 +1,5 @@
 <!-- saved from url=(0044) https://kacos2000.github.io/Win10/ --> 
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/donate?hosted_button_id=69L3MWGCKVMA6)
 ## Windows 10 stuff ##
 
 | **File**                         |**Description**

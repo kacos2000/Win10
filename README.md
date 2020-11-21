@@ -5,7 +5,7 @@
 | **File**                         |**Description**
 | :--------                        |     :---    
 |[Background Activity Moderator (Win10 v1803/1809/1903)](https://github.com/kacos2000/Win10-Research/blob/master/Bam/readme.md) |![Bam preview](bam.jpg) <br>Background Activity Service and registry entries. Powershell parsers & info.
-|[PowerShell history](ConsoleHost_history.pdf) |History of PowerShell commands *(pdf)*
+|[PowerShell History (pdf)](ConsoleHost_history.pdf) |[PowerShell script](https://github.com/kacos2000/Win10/blob/master/PS-History.ps1) to read the current user's log(s).
 |[SQLite queries](https://github.com/kacos2000/queries/blob/master/README.md) |Various sqlite queries *(Browser data, Skype etc)*
 |[Cortana](Cortana.pdf) |![Cortana preview](cortana.jpg) <br>Some notes on Cortana *(pdf)*
 |[Desktop Icon Layouts](Desktop_IconLayouts.pdf) |![Desktop preview](desktop.jpg) <br>List of user desktop icon/shortcuts/files (registry) *(pdf)*

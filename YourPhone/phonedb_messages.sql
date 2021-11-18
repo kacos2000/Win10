@@ -17,7 +17,7 @@ select
 			end as 'Sender',
 			
 			message.body as 'Body',
-			conversation.summary as 'conversation summery',
+			conversation.summary as 'conversation summary',
 			message_to_address.address as 'To Address',
 			case 
 				when message_to_address.address notnull

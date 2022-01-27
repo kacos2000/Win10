@@ -1,5 +1,4 @@
 <!-- saved from url=(0044) https://kacos2000.github.io/Win10/ --> 
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/donate?hosted_button_id=69L3MWGCKVMA6)
 ## Windows 10 stuff ##
 
 | **File**                         |**Description**

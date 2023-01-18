@@ -2,16 +2,20 @@
 
 
 - (Powershell script) Event Log parser<br>
-   [Microsoft-Windows-Application-Experience%4Program-Compatibility-Assistant.evtx](https://github.com/kacos2000/Win10/blob/master/ProgramCompatibility/Program-Compatibility-Assistant_evtx%20.ps1)
+   [Microsoft-Windows-Application-Experience%4Program-Compatibility-Assistant.evtx](https://github.com/kacos2000/Win10/blob/master/ProgramCompatibility/Program-Compatibility-Assistant_evtx.ps1)
 
-- [(pca.ps1) Combined parser for:](https://github.com/kacos2000/Win10/blob/master/ProgramCompatibility/pca.ps1)<br>
-- [(pca.exe) Combined parser for:](https://github.com/kacos2000/Win10/blob/master/ProgramCompatibility/pca.exe)<br>
+- [(pca.ps1)](https://github.com/kacos2000/Win10/blob/master/ProgramCompatibility/pca.ps1), [(pca.exe)](https://github.com/kacos2000/Win10/blob/master/ProgramCompatibility/pca.exe) - Combined parser, for:
    - \Windows\appcompat\pca\PcaAppLaunchDic.txt
    - \Windows\appcompat\pca\PcaGeneralDb0.txt
    - \Windows\appcompat\pca\PcaGeneralDb1.txt
    - Windows\System32\winevt\Logs\Microsoft-Windows-Application-Experience%4Program-Compatibility-Assistant.evtx
+   <br>
 
-      ![image](https://user-images.githubusercontent.com/11378310/213296113-8c83ecee-f687-45ea-a822-d3e07487d0fa.png)
+   ``` 
+   Get-Help .\pca.ps1
+    pca.ps1 [[-Pca] <string>] [[-Evtx] <string>] [[-OutPath] <string>] [-CSV] [-NoGUI]
+    ```
+
 
 [Note]: Both scripts need to be run 'As Admin'
 

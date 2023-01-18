@@ -1,7 +1,71 @@
 ﻿#Requires -RunAsAdministrator
+<#
+	.SYNOPSIS
+		Combined Windows 11 Program-Compatibility-Assistant parser
+	
+	.DESCRIPTION
+		Combined parser for Windows 11 22H2+:
+		
+		-  \Windows\appcompat\pca\PcaAppLaunchDic.txt
+		-  \Windows\appcompat\pca\PcaGeneralDb0.txt
+		-  \Windows\appcompat\pca\PcaGeneralDb1.txt
+		-  Windows\System32\winevt\Logs\Microsoft-Windows-Application-Experience%4Program-Compatibility-Assistant.evtx
+	
+	.PARAMETER Pca
+		Full path of \Windows\appcompat\pca folder
+	
+	.PARAMETER Evtx
+		Full Path to Microsoft-Windows-Application-Experience%4Program-Compatibility-Assistant.evtx
+	
+	.PARAMETER CSV
+		A description of the CSV parameter.
+	
+	.PARAMETER OutPath
+		Path for CSV output (Folder)
+	
+	.PARAMETER NoGUI
+		Display the results or not
+		If this parameter is false, the CSV parameter will be forced-set as true
+	
+	.EXAMPLE
+		PS C:\> .\pca.ps1
+	
+	.NOTES
+		Additional information about the file.
+#>
+param
+(
+	[System.String]$Pca = "$($env:windir)\appcompat\pca",
+	[System.String]$Evtx = "$($env:windir)\System32\WinEvt\logs\Microsoft-Windows-Application-Experience%4Program-Compatibility-Assistant.evtx",
+	[Switch]$CSV = $false,
+	[System.String]$OutPath = [Environment]::GetFolderPath('Desktop'),
+	[Switch]$NoGUI = $false
+)
+
 $null = [System.Reflection.Assembly]::Load('System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089')
 
-cls
+function Show-WarningMessage
+{
+	param
+	(
+		[Parameter(Mandatory = $true)]
+		[string]$WarningMessage
+	)
+	[void][System.Windows.Forms.MessageBox]::Show($owner, "$($WarningMessage)", "Program-Compatibility parser", "OK", "Warning")
+}
+
+function Is-Admin
+{
+	$identity = [System.Security.Principal.WindowsIdentity]::GetCurrent()
+	$principal = New-Object System.Security.Principal.WindowsPrincipal($identity)
+	$principal.IsInRole([System.Security.Principal.WindowsBuiltInRole]::Administrator)
+}
+# check priviledges (Admin)
+If (!(Is-Admin))
+{
+	Show-WarningMessage -WarningMessage "This script needs to be run Elevated.`nPlease restart the script as an Administrator."
+	return
+}
 
 Add-Type -TypeDefinition @"
 using System;
@@ -66,8 +130,19 @@ $sw = [Diagnostics.Stopwatch]::StartNew()
 
 $PCAcomplete = [System.Collections.ArrayList]@{}
 
-$Pcafiles = Get-Files
-$Pcafiles|Format-Table -AutoSize
+if ($Pca -ne "$($env:windir)\appcompat\pca" -and !!(Test-Path -Path $Pca))
+{
+	$Pcafiles = $Pca
+}
+else
+{
+	$Pcafiles = Get-Files
+}
+
+if ($null -eq $NoGUI -or $NoGUI -eq $false)
+{
+	$Pcafiles.where{ $_.filename -match 'Pca' } | Format-Table -AutoSize
+}
 
 if($Pcafiles.count -ge 1){
 $PcaAppLaunchDic = $Pcafiles.where{$_.filename -match 'PcaAppLaunchDic.txt' -and $_.Size -gt 0}
@@ -150,9 +225,15 @@ Function Get-File
 	}
 
 
-$e=0
-$sw = [Diagnostics.Stopwatch]::StartNew()
-$file = Get-File
+if ($Evtx -ne "$($env:windir)\System32\WinEvt\logs\Microsoft-Windows-Application-Experience%4Program-Compatibility-Assistant.evtx" -and !!(Test-Path -Path $Evtx))
+{
+	$file = $Evtx
+}
+else
+{
+	$file = Get-File
+}
+
 Try { 
 	$log = (Get-WinEvent -FilterHashtable @{path = $File; ProviderName="Microsoft-Windows-Program-Compatibility-Assistant","Microsoft-Windows-Application-Experience"} -ErrorAction Stop)
     }
@@ -163,8 +244,10 @@ catch [Exception] {
 
 [xml[]]$xmllog = $log.toXml()
 $Lcount = $xmllog.Count
-write-host "Found: $Lcount entries in Event Log: ($File)" -f White
-
+if ($null -eq $NoGUI -or $NoGUI -eq $false)
+{
+	write-host "Found: $Lcount entries in Event Log: ($File)" -f White
+}
 foreach ($l in $xmllog) {$e++
 			
 			#Progress Bar
@@ -208,14 +291,39 @@ foreach ($l in $xmllog) {$e++
                     })
 	}
 
+if ($null -eq $NoGUI -or $NoGUI -eq $false)
+{
+	$PCAcomplete | sort -Property 'Time Created' -Descending | Out-GridView -Title "Program-Compatibility: $($PCAcomplete.Count) entries" -PassThru
+}
+else
+{
+	$CSV = $true
+}
 
-$PCAcomplete | sort -Property 'Time Created' -Descending | Out-GridView -Title "Program-Compatibility: $($PCAcomplete.Count) entries" -PassThru
+# Export the output to CSV if switch is enabled
+if ($CSV -eq $true)
+{
+	if ($OutPath -eq [Environment]::GetFolderPath('Desktop'))
+	{
+		$SaveFolderDialog = New-Object System.Windows.Forms.FolderBrowserDialog
+		$SaveFolderDialog.Description = "Select folder for the CSV output"
+		$SaveFolderDialog.SelectedPath = [Environment]::GetFolderPath('Desktop')
+		if ($SaveFolderDialog.ShowDialog($owner) -eq 'OK')
+		{
+			$OutPath = $SaveFolderDialog.SelectedPath
+		}
+	}
+	$PCAcomplete | sort -Property 'Time Created' -Descending | Export-Csv -Path "$($OutPath)\PCA_list.csv" -Delimiter '|' -Encoding UTF8 -NoTypeInformation
+}
+
+
+
 
 # SIG # Begin signature block
 # MIIviAYJKoZIhvcNAQcCoIIveTCCL3UCAQExDzANBglghkgBZQMEAgEFADB5Bgor
 # BgEEAYI3AgEEoGswaTA0BgorBgEEAYI3AgEeMCYCAwEAAAQQH8w7YFlLCE63JNLG
-# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCA8df5dyoGWyqQ+
-# XgimdYNrb3HaG17D+xYUfoRpCo6em6CCKI0wggQyMIIDGqADAgECAgEBMA0GCSqG
+# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCC1yPO3Ie/29mFq
+# pNAkq4WY7R+HmizQbJA6AsUPIE7k/KCCKI0wggQyMIIDGqADAgECAgEBMA0GCSqG
 # SIb3DQEBBQUAMHsxCzAJBgNVBAYTAkdCMRswGQYDVQQIDBJHcmVhdGVyIE1hbmNo
 # ZXN0ZXIxEDAOBgNVBAcMB1NhbGZvcmQxGjAYBgNVBAoMEUNvbW9kbyBDQSBMaW1p
 # dGVkMSEwHwYDVQQDDBhBQUEgQ2VydGlmaWNhdGUgU2VydmljZXMwHhcNMDQwMTAx
@@ -435,35 +543,35 @@ $PCAcomplete | sort -Property 'Time Created' -Descending | Out-GridView -Title "
 # AQEwaDBUMQswCQYDVQQGEwJHQjEYMBYGA1UEChMPU2VjdGlnbyBMaW1pdGVkMSsw
 # KQYDVQQDEyJTZWN0aWdvIFB1YmxpYyBDb2RlIFNpZ25pbmcgQ0EgUjM2AhALYufv
 # MdbwtA/sWXrOPd+kMA0GCWCGSAFlAwQCAQUAoEwwGQYJKoZIhvcNAQkDMQwGCisG
-# AQQBgjcCAQQwLwYJKoZIhvcNAQkEMSIEIMFkHoBsRZpbqkWAxSOYPypG/wtgiBg/
-# D5DvMXB9v/fdMA0GCSqGSIb3DQEBAQUABIICAIv7yaYXlt79ad00qR8cQsEJj8gx
-# BFbEPBcNSvDix0/C59Z/pCkdEgoxRczgovL3x1u5QQpAsJim7Ku2POIdEPi/kYhx
-# kUBGDmfdyT8+jtNNGyrsh3uKZZ9bKLGfXzZMmsisoOgMO/vk1YUYWS6Yt3d4h2Nx
-# Ucu4hFEqpVcsSMoTnMCzZqhgnv9Yu1PoptVyAh3KgksxUVoilFflx/juZoj5E9m9
-# 0Eu0XbiVyb8w41ePrwJ3XD+lWYRJiV6dmAyj0C71srLzWttgh5YmfXEVCSiNieZL
-# GuKUWFSws1K0Akjos9eW8HFhkKQehZDj8wBpkxeFIjkOqq2yiMvmpqarfKGnEX1I
-# P8ZR6TcKT0l9D5vH9j1VOTRUUXtt+8BZ2FZct4Vnh36pSZSr7wICxKlxetUqWxvL
-# noClZ9TPlAZjMXnlq5lZncUAxbPlOCsbQWXQeloHtj5+kCp5xQ7DsqvGvbHC6WfU
-# LyElE9kFQEQDJapE4Wa7n6ujasxeZFfzAwYDq726ozTA7GnTspOwjZi0aDdyJbxF
-# wf+4KpUcVFSO2Xaq2nCp6A+xnKy5+JDbEkMfkUqzVjb11CNB+/DX9jkA2yZnH2ZW
-# yhMEC31dz5yM+2Zmf2bZG1HAzb9S+y1jzPEgDBe2P4JpFpp2dIFmG4Sz6dqQ0Fin
-# eOROIvxqmEmUOwL5oYIDbDCCA2gGCSqGSIb3DQEJBjGCA1kwggNVAgEBMG8wWzEL
+# AQQBgjcCAQQwLwYJKoZIhvcNAQkEMSIEINqf6hC9M3NhGT2LDUBHeUdYbNAYIMPU
+# /gGRRXW6/DrgMA0GCSqGSIb3DQEBAQUABIICAFx0zvXe1Onzuu8C0Jd1IjYsGNl6
+# ogJsI4C2dFF3sW8tJpzAwnsW8DSeD4wyUxMctp0XHc4j9iLZ6J8Glrig64o05LAu
+# odwYE6OnbcWfk59YKD8v8zBzU//t4KNfwq1gSQLk9Vr/jxpv8PDT9qHySFZx13QA
+# eqcY1//JRZp65f9cWAAclf4G1nz6Q90TA0HODMo4PvT8GXsBxpfGSoTsp4k0vYh1
+# Fx2nwMbgoFbI02bY8gQkWdwe2zA++SIRh04jij0lLXSIYofTHzwon2o7ZKDBP7+A
+# nmXEQyCvgZefbAbJPsDyqLjPap99bo2qxDH1s19267ipNz0QEi14+qHFQalD2FQ6
+# yTKMit7emF1kXODV2YFgBNbMlCEA+8OXJzMpsQZcnXaE2xWCW0lkbvDwSuR/gmr0
+# raiKkYLuRRMWHUdQHIGpuLR7I1nHjlbyLbgj2TMpYFV23ZbLMMmo7QZU16+L7xGn
+# kwh7WAFH5bWx5Dp3ruR+NAumk31aT9h2vvJOQwDpvLLwfcWLobfqKvRSTeaTAG10
+# 4OWIVZgS9+pZ7gc6+QFAHxbMd6zCZHYZ18ZKtgVK/VWHn5KS6aDqwlcGJEVGrVhg
+# qCCLuavAOR/hKHyFZrLqRExkfW34/aXK3GhPRjXvz1d6+kQp7ueelGbs3UY5Z21Y
+# BT6QAhrTN01yzTptoYIDbDCCA2gGCSqGSIb3DQEJBjGCA1kwggNVAgEBMG8wWzEL
 # MAkGA1UEBhMCQkUxGTAXBgNVBAoTEEdsb2JhbFNpZ24gbnYtc2ExMTAvBgNVBAMT
 # KEdsb2JhbFNpZ24gVGltZXN0YW1waW5nIENBIC0gU0hBMzg0IC0gRzQCEAFIkD3C
 # irynoRlNDBxXuCkwCwYJYIZIAWUDBAIBoIIBPTAYBgkqhkiG9w0BCQMxCwYJKoZI
-# hvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0yMzAxMTgxOTIxMDBaMCsGCSqGSIb3DQEJ
+# hvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0yMzAxMTgyMTEwNTFaMCsGCSqGSIb3DQEJ
 # NDEeMBwwCwYJYIZIAWUDBAIBoQ0GCSqGSIb3DQEBCwUAMC8GCSqGSIb3DQEJBDEi
-# BCDpuQM4AFyoKEg5k9wK1ifBMpLdmbenZWhJFHMYODffujCBpAYLKoZIhvcNAQkQ
+# BCAd97BNc1oq6Kw6sDeV4KWbvtZ+avN7mRtNVIDaFkyk5DCBpAYLKoZIhvcNAQkQ
 # AgwxgZQwgZEwgY4wgYsEFDEDDhdqpFkuqyyLregymfy1WF3PMHMwX6RdMFsxCzAJ
 # BgNVBAYTAkJFMRkwFwYDVQQKExBHbG9iYWxTaWduIG52LXNhMTEwLwYDVQQDEyhH
 # bG9iYWxTaWduIFRpbWVzdGFtcGluZyBDQSAtIFNIQTM4NCAtIEc0AhABSJA9woq8
-# p6EZTQwcV7gpMA0GCSqGSIb3DQEBCwUABIIBgKT8t1v2XoA031B7U6xu9r4pxDBY
-# LVosKB7oWsV21rVhuGsJEg3yu6VkIiKRmHD8yocMPy/6LWxvdBBkxNBrofyb7511
-# 8RHKpO4BxDf1Jk0F4+jKa8kxB9kAgej3NjsFJcxvH7VHJqt63SPB7+ncj13jp77x
-# yarZ2OPQbj4LwHKAR142SzUZ7Q6CerpTs8wwqOSKJNfreUbC6Jr8fM+laH2VypPr
-# jVY9vOlMJ23+kPtRwI/4dl/7wdgYvxdzbuScu765x9LEhHjgkc9Iwl3/Cd8vKX8N
-# +prhO8l8MbNhy8EYXZHSyMllbRtgwz2cODDdOXtyMWU7IutUJ/N6qzxQqJmSQvWh
-# YHcic9/iECMTOdfoZBRzRMSGc9HgUEDomSSixxYFVUQozxRadG6Xvccl8oqeUds8
-# 5eTkMmZsawEAA6dtXxjVr+F41uZziSYJtj+j8fXer+lRaeFyJ/Bcq4oUpEP5T7DH
-# CORpbP9RIAxnfliHkOq/uQgTA+DnJs5+XKcb1Q==
+# p6EZTQwcV7gpMA0GCSqGSIb3DQEBCwUABIIBgAGnxFWC1wU9K6ECpZaU8SzbQCTw
+# 6ZOF0WIjO9IrlkmYYupyf1h+Ol+6AAzfZ5B2p60JxdIptem1rCGTtsOGBr1wi7YV
+# y3gCtPZkFeUStHTVKLgqc95NP8SNWHRFuxjqMLNpbovfFOIhsSAOCNXZ/Fv5pkRg
+# QuwF/DnzsTeS6sRa0vmpeAkN90IO/8jlQIsafluuGuJ5AzUg1qTAsRWLi6x8DKS6
+# GOIAtRUtwSzK17jI9l5CnSvS1q7ClZtWtl1k997A9g1q6s+R1cKzgH5cwsDfBoRw
+# vHiqfWOIG5cmT6SIVpBLYL9yF+yZyjS0Av6MHe9ZLsec5Rt/oB6WrMFl4BoydOpW
+# +9fEPmvOoliVYrSMGyi014QnCN38p3r7dVbapnzVbTjSG/7VqYwNLETccmeMwXXk
+# d9fLs4j6t0WMB6PdoqUnBfdlmg2xlfosS0dKjpNVb804IMEkTv1vVI2gxemB15lj
+# zM5gTPIsxn5210133owy8B39yfuQJ9kxy0TBKA==
 # SIG # End signature block

@@ -1,5 +1,6 @@
 ﻿#Requires -RunAsAdministrator
 $null = [System.Reflection.Assembly]::Load('System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089')
+
 cls
 
 Add-Type -TypeDefinition @"
@@ -29,6 +30,7 @@ Function Get-Files
     $folderbrowser = New-Object System.Windows.Forms.FolderBrowserDialog
     $folderbrowser.Description = "Select Program-Compatibility (pca) folder (Windows\appcompat\pca)"
     $folderbrowser.SelectedPath = "$($env:windir)\appcompat\pca"
+    $folderbrowser.ShowNewFolderButton = $false
     	
     if($folderbrowser.ShowDialog($owner) -eq "OK")
 		{
@@ -67,13 +69,14 @@ $PCAcomplete = [System.Collections.ArrayList]@{}
 $Pcafiles = Get-Files
 $Pcafiles|Format-Table -AutoSize
 
+if($Pcafiles.count -ge 1){
 $PcaAppLaunchDic = $Pcafiles.where{$_.filename -match 'PcaAppLaunchDic.txt' -and $_.Size -gt 0}
 if($PcaAppLaunchDic.count -ge 1){
         foreach($PcaAppLaunchDicfile in $PcaAppLaunchDic){
         #Open file & read the text
 	    $DataText = [System.IO.File]::ReadAllText("$($PcaAppLaunchDicfile.Filename)", [System.Text.Encoding]::UTF8 )
         $Header = 'ExePath','Time Created'
-        ($DataText|ConvertFrom-Csv -Delimiter '|' -Header $Header ).foreach{
+        ($DataText|ConvertFrom-Csv -Delimiter '|' -Header $Header )|foreach{
         
             try   {$time = get-date ($_.'Time Created') -f u}
             catch {$time = $_.'Time Created'}
@@ -93,13 +96,14 @@ if($PcaAppLaunchDic.count -ge 1){
     } # end foreach file
 } # end if one or more
 
+
 $PcaGeneralDb = $Pcafiles.where{$_.filename -match 'PcaGeneralDb' -and $_.Size -gt 0}
 if($PcaGeneralDb.count -ge 1){
         foreach($PcaGeneralDbfile in $PcaGeneralDb){
         #Open file & read the text
 	    $DataText = [System.IO.File]::ReadAllText("$($PcaGeneralDbfile.Filename)", [System.Text.Encoding]::Unicode )
         $Header = 'Time Created','Type','ExePath','ApplicationName','Copyright','ApplicationVersion','ProgramID','Exit Code'
-        ($DataText|ConvertFrom-Csv -Delimiter '|' -Header $Header ).foreach{
+        ($DataText|ConvertFrom-Csv -Delimiter '|' -Header $Header )|foreach{
         
             try   {$time = get-date ($_.'Time Created') -f u}
             catch {$time = $_.'Time Created'}
@@ -117,7 +121,8 @@ if($PcaGeneralDb.count -ge 1){
                     })
                 } # end foreach line
     } # end foreach file
-} # end if one or more
+ } # end if one or more
+} # end if pcafiles are more that 0
 
 # Get the pca events
 # Show an Open File Dialog and return the file selected by the user
@@ -205,11 +210,12 @@ foreach ($l in $xmllog) {$e++
 
 
 $PCAcomplete|sort -Property 'Time Created' -Descending|Out-GridView -PassThru
+
 # SIG # Begin signature block
 # MIIviAYJKoZIhvcNAQcCoIIveTCCL3UCAQExDzANBglghkgBZQMEAgEFADB5Bgor
 # BgEEAYI3AgEEoGswaTA0BgorBgEEAYI3AgEeMCYCAwEAAAQQH8w7YFlLCE63JNLG
-# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCDHWceqXu5spPj7
-# q1yxN9EGhXBtS/1tHPQFsjetocEsqKCCKI0wggQyMIIDGqADAgECAgEBMA0GCSqG
+# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCBtxrTG4FecH+YJ
+# 5YVe7AaroIY3Ivx/u9SCeuLQJQ5v/KCCKI0wggQyMIIDGqADAgECAgEBMA0GCSqG
 # SIb3DQEBBQUAMHsxCzAJBgNVBAYTAkdCMRswGQYDVQQIDBJHcmVhdGVyIE1hbmNo
 # ZXN0ZXIxEDAOBgNVBAcMB1NhbGZvcmQxGjAYBgNVBAoMEUNvbW9kbyBDQSBMaW1p
 # dGVkMSEwHwYDVQQDDBhBQUEgQ2VydGlmaWNhdGUgU2VydmljZXMwHhcNMDQwMTAx
@@ -429,35 +435,35 @@ $PCAcomplete|sort -Property 'Time Created' -Descending|Out-GridView -PassThru
 # AQEwaDBUMQswCQYDVQQGEwJHQjEYMBYGA1UEChMPU2VjdGlnbyBMaW1pdGVkMSsw
 # KQYDVQQDEyJTZWN0aWdvIFB1YmxpYyBDb2RlIFNpZ25pbmcgQ0EgUjM2AhALYufv
 # MdbwtA/sWXrOPd+kMA0GCWCGSAFlAwQCAQUAoEwwGQYJKoZIhvcNAQkDMQwGCisG
-# AQQBgjcCAQQwLwYJKoZIhvcNAQkEMSIEIDAdLDNHwRT/v6ES9kOylt3rLHwzS0Oh
-# mjol7eklsHdZMA0GCSqGSIb3DQEBAQUABIICACvTkWUNbTL29PiEd7B9S0uiMEez
-# wrRNNRa/eJvKQBhltY/9VHjLwlrEMHIJ29zokOEuAByLL/9DxU5WFNVzeIUwZFYk
-# 4PTitjT54A2uw6ZvFgrSOi1bNgDOJL6dXtJfGZsuzqlVxHeCWLCbhskTGIcSI6l2
-# LiY/YoDK+BgfybWQrkCynrKef9RRb/1x2Ix6ys9ATkUEzw3+pOSceYeDKiohha1l
-# KkBBI5WSvD047TsU+S0lyFnnB+gC9g+sucdzD4Pryuy6lvl6zDrlvKa6n50Qjj20
-# HI7Nv6dc5ii1WVNvPsgC0j9YZ8tgdNWIRYGoltZI5i/wL+tib2bG+cH+3rA4V/Jv
-# bhngC7TLxTzs0cUyjWb9ySJSB29LYtWO2+IfHOJB22wH9ORdoA4+E1vG0Kanpyq9
-# dDash2HYsFQZnYaWuDAZji07WCaP4hVq3k+V/WchFNZy0SeiTMnj1mPcepM1xHGb
-# k9P2VX/i6RtXCpFRzF31IMKw5h9XlT2g7sjs3uj8iPygZ14Ew/MxuL1E1DSb/zxi
-# PT4cOAALJS/1vjSwMskYlklnpHyO+SE4KmsI7J83xvxbic7M6BlSNm86kwas2Whr
-# BKP6L5epfPug2ucRK+gr93GuQ/AVGnD42F1AoMm5IqduUj+kWbRjWXIgJdnNXIrD
-# Qj/PvmVCb8o0eS0doYIDbDCCA2gGCSqGSIb3DQEJBjGCA1kwggNVAgEBMG8wWzEL
+# AQQBgjcCAQQwLwYJKoZIhvcNAQkEMSIEIEgBduRiDE8Jnas3zo0essukfypYbVqG
+# rrD1FknQI7irMA0GCSqGSIb3DQEBAQUABIICAIfn0K4Ps5OeijKTAwbaquOBPkO1
+# UQ1YIBRr4tHqVF2tGV/38E4g0rZeGMycOIrbsomnGN+409At175OqtPCJV6VybEo
+# X7J2W9wwe4OnfcIsHe2r7blPwwukycfS0TOplCE3Q7N1nru5CbrOifsYJejFV2Kg
+# memJfNQZU2nDNj030JRiy4+IUzILbl27dgv8SRKEDXStQiJ0JGEI1lGO+5IDq6jv
+# Ezy5atapfqwBtMlLDPYtSGftAVyihooD+Qihn3ALMedngMtvRjZOiUaPjfXIQjgm
+# GdhsjQ53axdCpULOZphZolgUSahM8ghi45+fZcXKUejJN/TqGNLqYYGWsPyqEAPl
+# qE5IsLBgGs3EJErhOnumBSGJ4pdfRDcMFjdvIJILu3JszP3GaJjhb4PzNnHafwdm
+# fRLmHHXuhtKKkLuz1f+S63CX3r/GoRvMjzgWf7B6o1x4kvEYAyeB2Y1N41HK799V
+# Cad3Lx32xULgja5zRD43Yqo9L3eXkxkOQKvSgQJTFrHU13sl+K/nnT0MZ7OSyvFu
+# UTc4Y7CFj3pdiIybFYB4QfafK9qI8ILH4T+nRtjNUHS8bUlgVJhs7tSzJqqVudk6
+# mbsMmuXDye48/1RK54Vhs3YrEZU+MCrD+fGorlSLbFUAyAYBCmrf7q74kt1AjZFp
+# 56hI5UKw5UehlVAsoYIDbDCCA2gGCSqGSIb3DQEJBjGCA1kwggNVAgEBMG8wWzEL
 # MAkGA1UEBhMCQkUxGTAXBgNVBAoTEEdsb2JhbFNpZ24gbnYtc2ExMTAvBgNVBAMT
 # KEdsb2JhbFNpZ24gVGltZXN0YW1waW5nIENBIC0gU0hBMzg0IC0gRzQCEAFIkD3C
 # irynoRlNDBxXuCkwCwYJYIZIAWUDBAIBoIIBPTAYBgkqhkiG9w0BCQMxCwYJKoZI
-# hvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0yMzAxMTgxODM1MzFaMCsGCSqGSIb3DQEJ
+# hvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0yMzAxMTgxOTE1MzZaMCsGCSqGSIb3DQEJ
 # NDEeMBwwCwYJYIZIAWUDBAIBoQ0GCSqGSIb3DQEBCwUAMC8GCSqGSIb3DQEJBDEi
-# BCD8h137R1y6Qrmf47Rt3GeveoWe/mOfnTxp1/3PIwjkwzCBpAYLKoZIhvcNAQkQ
+# BCBlMLuNxDFGGKRyC4wQulgolNXs9mIn3uiMHN8j9bVX9jCBpAYLKoZIhvcNAQkQ
 # AgwxgZQwgZEwgY4wgYsEFDEDDhdqpFkuqyyLregymfy1WF3PMHMwX6RdMFsxCzAJ
 # BgNVBAYTAkJFMRkwFwYDVQQKExBHbG9iYWxTaWduIG52LXNhMTEwLwYDVQQDEyhH
 # bG9iYWxTaWduIFRpbWVzdGFtcGluZyBDQSAtIFNIQTM4NCAtIEc0AhABSJA9woq8
-# p6EZTQwcV7gpMA0GCSqGSIb3DQEBCwUABIIBgDyFd/vVUiKklibibJnLCT7s3zji
-# 1/lWZVl/1nMzLn3kkPJ3fOhdY147qxBnhXUoRa9zL71WpDuk6WTxcsrgmzdUj/i6
-# HkzIE12ZFFqyTXqKEbL7EQKAdOX/J4My3gW0gkqD7WLfAKi4GhNENT6fKGF1dLmu
-# k7k1rX9DYJVApnLU5rBigMXthUiuvxlVjKRt2Sy9bzZXfpkvKUKiRyrn2TGf8SYj
-# 1GaRCKmgh0IH9Ul5h3gDQ0s5WSW7EDD3fTe5oYz8YsKKf3vz1FFkcgjOoGL3XmLA
-# qtCX/qMvmMKR6Z+jGc5u4V1QG+d3GpReYlhVtVjEvM1Ghnlo2wM3QVgL7U7m5pj6
-# zqxQBNe4IbSj7bw1nTbG8xipls8HwlONmwfFaggDIfe4pR76wt4OcWeItHOAm231
-# ghioYlFN8ezM7Zf3htYHn+sH/9BkG2z7HfVaASWYufEeffDG8ek0xGQaVrola7S/
-# 4NhBOtxKx7E2VTLjs8NdS1mdlYsOSMPK8yRdDA==
+# p6EZTQwcV7gpMA0GCSqGSIb3DQEBCwUABIIBgBiLJRsGxSv53A+9NvtZjPhsVNWr
+# Q2JADsUwRvC1JcniT/5da/yTqiyV4HdON/LAzv/pgeqkl5dc16tEeffEZNapIwH/
+# luYTZni+nPv1LItsZhEx0QLRUTDuFhTo3QhZ6HzUJ3yFRQ5YVs7wYQB2gkLHdDfx
+# a5zqRHQcNU5nEs4ouyiuZQCMqverTxKevCiT5kSKrLRLl5/E7OC0NJKwsCVxjsbN
+# As5T9vInS4BP3iy8wjO9KiuZ9SNRfntkbL1f67mgnJE1BzmkMFArjk68sLkUSASG
+# 9jSi9b8tU6yWhEG75Y5flVi6g22zgK+IjYzZKQ+8KIkAZ763kZcph9hRD3JWpYRE
+# CVFajdgSenRQKMoZbXC7MTO8735fv/7EEAQjklKfCvP3FCQx23erKnuSO6+0H3Kw
+# VCSUCvCIND12QPC4X2bV1yTRGl2GlrJ4bZOZfPhJjcM2V3soOxGXHUsjBwZZ08YM
+# 595bTGkw1fEQvuywBenr75l3ykMmTgzdb8jzCQ==
 # SIG # End signature block

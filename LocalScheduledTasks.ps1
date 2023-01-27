@@ -23,6 +23,51 @@ if(!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::
 	Exit
 }
 
+# https://learn.microsoft.com/en-us/windows/win32/api/mstask/ne-mstask-task_trigger_type
+$TrigerTypes = [Ordered]@{
+'0' = 'Oncce'
+'1' = 'Daily'
+'2' = 'Weekly'
+'3' = 'Monthly-Date'
+'4' = 'Monthly-DoW' # DoW = Day of Week
+'5' = 'On Idle'
+'6' = 'At System Start'
+'7' = 'At Logon'
+}
+
+# https://learn.microsoft.com/en-us/windows/win32/api/mstask/ne-mstask-taskpage
+$TaskPages = [Ordered]@{
+'0' = 'Task'
+'1' = 'Schedule'
+'2' = 'Settings'
+} 
+
+function ConvertFrom-SID
+{
+	[CmdletBinding()]
+	[OutputType([string])]
+	param
+	(
+		[Parameter(Mandatory = $false,
+				   ValueFromPipeline = $true,
+				   ValueFromPipelineByPropertyName = $true)]
+		[Alias('Value')]
+		$Sid
+	)
+	
+	process
+	{
+		try
+		{
+			
+            $ID = New-Object System.Security.Principal.SecurityIdentifier($sid)
+			$User = $ID.Translate([System.Security.Principal.NTAccount])
+			$User.Value
+		}
+		catch { $Sid }
+	}
+}
+
 $Registry = [Microsoft.Win32.RegistryKey]::OpenBaseKey([Microsoft.Win32.RegistryHive]::LocalMachine,[Microsoft.Win32.RegistryView]::Default)
 $registrykey = $Registry.OpenSubKey('Software\Microsoft\Windows NT\CurrentVersion\Schedule\Taskcache\Tasks')
 $registrySubKeyNames = $registrykey.GetSubKeyNames()
@@ -31,44 +76,58 @@ $Tasks = foreach($Task in $registrySubKeyNames){
 
         $subkey = $registryKey.OpenSubKey($Task)
         $DynInfo = [System.BitConverter]::ToString($subkey.GetValue('DynamicInfo')).Replace('-','')
+        # HRESULT error codes:
+        # https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-tsch/2d1fbbab-fe6c-4ae5-bdf5-41dc526b2439
+        # https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-erref/18d8fbe8-a967-4f1c-ae50-99ca8e491d2d
         if($DynInfo.length -eq 28*2){
-               $TaskRegisteredTime = if(!$DynInfo.Substring(8,16).contains('000')){ Get-Date ([datetime]::FromFileTimeUtc([System.BitConverter]::ToUInt64($subkey.GetValue('DynamicInfo')[4..11],0))) -Format o }else{$null}
-               $TaskLastRun = if(!$DynInfo.Substring(24,16).contains('000')){ Get-Date ( [datetime]::FromFileTimeUtc([System.BitConverter]::ToUInt64($subkey.GetValue('DynamicInfo')[12..19],0))) -Format o }else{$null}
-               $TaskCompleted = if(!$DynInfo.Substring(40,16).contains('000')){  Get-Date ([datetime]::FromFileTimeUtc([System.BitConverter]::ToUInt64($subkey.GetValue('DynamicInfo')[20..27],0))) -Format o }else{$null}
-               $TaskTime4 = $null
-               $Dyndata = $null
+               $CreationTime     = if(!$DynInfo.Substring(8,16).contains('000')){ Get-Date ([datetime]::FromFileTimeUtc([System.BitConverter]::ToUInt64($subkey.GetValue('DynamicInfo')[4..11],0))) -Format o }else{$null}
+               $LastStartTime    = if(!$DynInfo.Substring(24,16).contains('000')){ Get-Date ( [datetime]::FromFileTimeUtc([System.BitConverter]::ToUInt64($subkey.GetValue('DynamicInfo')[12..19],0))) -Format o }else{$null}
+               $LastStopTime     = if(!$DynInfo.Substring(40,16).contains('000')){  Get-Date ([datetime]::FromFileTimeUtc([System.BitConverter]::ToUInt64($subkey.GetValue('DynamicInfo')[20..27],0))) -Format o }else{$null}
+               $LastActionResult = $null
+               $TaskState        = $null
+               $Dyndata          = $null
         }
         elseif($DynInfo.length -eq 36*2){
-               $TaskRegisteredTime = if(!$DynInfo.Substring(8,16).contains('000')){ Get-Date ( [datetime]::FromFileTimeUtc([System.BitConverter]::ToUInt64($subkey.GetValue('DynamicInfo')[4..11],0))) -Format o }else{$null}
-               $TaskLastRun = if(!$DynInfo.Substring(24,16).contains('000')){ Get-Date ([datetime]::FromFileTimeUtc([System.BitConverter]::ToUInt64($subkey.GetValue('DynamicInfo')[12..19],0))) -Format o }else{$null}
-               $TaskTime4 = if(!$DynInfo.Substring(40,16).contains('000')){  Get-Date ([datetime]::FromFileTimeUtc([System.BitConverter]::ToUInt64($subkey.GetValue('DynamicInfo')[20..27],0))) -Format o }else{$null}  
-               $TaskCompleted = if(!$DynInfo.Substring(56,16).contains('000')){ Get-Date ([datetime]::FromFileTimeUtc([System.BitConverter]::ToUInt64($subkey.GetValue('DynamicInfo')[28..35],0))) -Format o }else{$null}
-               $Dyndata = $null
+               $CreationTime     = if(!$DynInfo.Substring(8,16).contains('000')){ Get-Date ( [datetime]::FromFileTimeUtc([System.BitConverter]::ToUInt64($subkey.GetValue('DynamicInfo')[4..11],0))) -Format o }else{$null}
+               $LastStartTime    = if(!$DynInfo.Substring(24,16).contains('000')){ Get-Date ([datetime]::FromFileTimeUtc([System.BitConverter]::ToUInt64($subkey.GetValue('DynamicInfo')[12..19],0))) -Format o }else{$null}
+               $LastActionResult = [System.BitConverter]::ToString( $subkey.GetValue('DynamicInfo')[27..24]).Replace('-','').Replace('00000000','Success')
+               $TaskState        = [System.BitConverter]::ToString( $subkey.GetValue('DynamicInfo')[23..20]).Replace('-','').Replace('00000000','Success')
+               $LastStopTime     = if(!$DynInfo.Substring(56,16).contains('000')){ Get-Date ([datetime]::FromFileTimeUtc([System.BitConverter]::ToUInt64($subkey.GetValue('DynamicInfo')[28..35],0))) -Format o }else{$null}
+               $Dyndata          = $null
         }
         else{$Dyndata = $DynInfo;$TaskRegisteredTime= $TaskLastRun = $TaskCompleted = $TaskTime4 = $null}
 
+        $SecurityDescriptor = [System.Security.AccessControl.RawSecurityDescriptor]::new( $subkey.GetValue('SecurityDescriptor') )
+        $Owner = ConvertFrom-SID -Sid $SecurityDescriptor.Owner
 
+      
         [PSCustomObject]@{
-            'Task GUID' = $Task
-            'TaskRegisteredTime' = $TaskRegisteredTime
-            'TaskLastRun'        = $TaskLastRun
-            'TaskCompleted'      = $TaskCompleted
-            'TaskTime4'          = $TaskTime4
-            'Path' = $subkey.GetValue('Path')
-            'Hash' = [System.BitConverter]::ToString($subkey.GetValue('Hash')).Replace('-','')
-            'Version' = $subkey.GetValue('Version')
-            'SecurityDescriptor' = $subkey.GetValue('SecurityDescriptor')
-            'Source' = $subkey.GetValue('Source')
-            'Author' = $subkey.GetValue('Author')
-            'Description' = $subkey.GetValue('Description')
-            'DynData' = $Dyndata
-            'URI' = $subkey.GetValue('URI')
-            'Triggers' = [System.BitConverter]::ToString($subkey.GetValue('Triggers')).Replace('-','')
-            'Actions' = [System.BitConverter]::ToString($subkey.GetValue('Actions')).Replace('-','')
+            'Task GUID'          = $Task
+            'TaskCreated'        = $CreationTime
+            'TaskLastStartTime'  = $LastStartTime
+            'TaskLastStopTime'   = $LastStopTime
+            'LastActionResult'   = $LastActionResult
+            'TaskState'          = $TaskState
+            'Path'               = $subkey.GetValue('Path')
+            'Version'            = $subkey.GetValue('Version')
+            'Owner'              = $Owner
+            'Control Flags'      = $SecurityDescriptor.ControlFlags -Replace 'DiscretionaryAcl',''
+            'System ACL'         = $SecurityDescriptor.SystemAcl
+            'Discretionary ACL'  = $SecurityDescriptor.DiscretionaryAcl -Replace 'System.Security.AccessControl.',''
+            'Source'             = $subkey.GetValue('Source')
+            'Author'             = $subkey.GetValue('Author')
+            'Description'        = $subkey.GetValue('Description')
+            'DynData'            = $Dyndata
+            'URI'                = $subkey.GetValue('URI')
+            'Triggers'           = [System.BitConverter]::ToString($subkey.GetValue('Triggers')).Replace('-','')
+            'Actions'            = [System.BitConverter]::ToString($subkey.GetValue('Actions')).Replace('-','')
+            'Hash'               = [System.BitConverter]::ToString($subkey.GetValue('Hash')).Replace('-','')
         }
+      
         $subkey.Close()
         $subkey.Dispose()
 }
+#break
 $registrykey.Close()
 $registrykey.Dispose()
 
@@ -76,11 +135,12 @@ $Registry.Close()
 $Registry.Dispose()
 
 $Tasks| Sort -Property 'TaskCompleted' -Descending |Out-GridView -PassThru
+
 # SIG # Begin signature block
 # MIIviAYJKoZIhvcNAQcCoIIveTCCL3UCAQExDzANBglghkgBZQMEAgEFADB5Bgor
 # BgEEAYI3AgEEoGswaTA0BgorBgEEAYI3AgEeMCYCAwEAAAQQH8w7YFlLCE63JNLG
-# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCCXs8j/4658EjrT
-# MWXVYdBhSYwc+fybfOnW0LNBJc5d+6CCKI0wggQyMIIDGqADAgECAgEBMA0GCSqG
+# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCAd0kE5UVvZ567p
+# PEi6QKZzHBKK5m2cpp5U3AWEtK/w4qCCKI0wggQyMIIDGqADAgECAgEBMA0GCSqG
 # SIb3DQEBBQUAMHsxCzAJBgNVBAYTAkdCMRswGQYDVQQIDBJHcmVhdGVyIE1hbmNo
 # ZXN0ZXIxEDAOBgNVBAcMB1NhbGZvcmQxGjAYBgNVBAoMEUNvbW9kbyBDQSBMaW1p
 # dGVkMSEwHwYDVQQDDBhBQUEgQ2VydGlmaWNhdGUgU2VydmljZXMwHhcNMDQwMTAx
@@ -300,35 +360,35 @@ $Tasks| Sort -Property 'TaskCompleted' -Descending |Out-GridView -PassThru
 # AQEwaDBUMQswCQYDVQQGEwJHQjEYMBYGA1UEChMPU2VjdGlnbyBMaW1pdGVkMSsw
 # KQYDVQQDEyJTZWN0aWdvIFB1YmxpYyBDb2RlIFNpZ25pbmcgQ0EgUjM2AhALYufv
 # MdbwtA/sWXrOPd+kMA0GCWCGSAFlAwQCAQUAoEwwGQYJKoZIhvcNAQkDMQwGCisG
-# AQQBgjcCAQQwLwYJKoZIhvcNAQkEMSIEIK74CS38l+KIf5EkENOpqFdueU+l/Z1U
-# bLBliy7avoXVMA0GCSqGSIb3DQEBAQUABIICACUjJS07iPZ038vFvzbn15IlIpuj
-# B6AHIHxI+bWP0UqmY2Qhe+IS1OPir40u+ZtaqaGHIL8e6SuOiqwalCU2uKwtTcRw
-# Yf+3Vv9XdLTiD2F7MOZkylY213Gp4HBplUzUsoYQuleGQeQzd03bIC0VaJZxfBau
-# Sieqedq+xFMltagOPOURVJDevIL99v8gsVIBZPrAfyusdaOpP65tBC0H1neJ5q85
-# 30f3pHdzzqTdqZY4kA7BFYFdOQWbK+Nz3o2K3nxm8zTBJitwoG1UqpMucwyipn0Y
-# qQJXJJIPXZroOxMwBkcwiTUN9p+NBiAOej3U7h7EYvi4LJ26C759dG3pb5pgkg9x
-# gMMv/KXerDWUqOZOoAPevF+N9qwSiG0Py+SaueHf19JvKR6lcQ52CnnWpbl/L9bI
-# ONB/6simCUyCE1OAytznXlPjfjOBcLtIOUaZBDV2xgydwbkxO0feZua7TnzM8upl
-# pXR5q8YtXw3X1nmgAnh6Teg7Fpxo6mww/pZmjt3YvVo9Sg7HuuzKKnytHQQXeyxD
-# nPPDeWwbs5klk2XnntCFmdVIrNMynz5Ir9kB5yaUUYNBMxxNSoVuPzOPHdDZ4Ny/
-# k3ykTtFDDwI3PZSF91S5VCXPJm378CDjOe+M7DwCAxQ7CK+XYmAGYQcBVfFkq39u
-# 8YER/pgjmPu1i7K7oYIDbDCCA2gGCSqGSIb3DQEJBjGCA1kwggNVAgEBMG8wWzEL
+# AQQBgjcCAQQwLwYJKoZIhvcNAQkEMSIEIDsvmI0bAJPnAM8+tfn0NgxASjT6ccSH
+# 3clHq3mxArGgMA0GCSqGSIb3DQEBAQUABIICAGerKIRNCIetCaYysxygpnPTOyVM
+# WiMxnEvfFqRIMAPdAthv+tcSkiuqNRvjA+lJ+0dYK0FHUsB5WE+uUmD2cwu2+Wx0
+# AbfdUwU9WNqATwv5+8SwhlFCkAqNBeLmBDWsihLSyaU8wOadw9j1zIQZUUDfiXJJ
+# Xc/z6wMDMid1qTCupuLnKvCu8yhVkzPBYBEWMaT1ju+d2/wit0AL23tYUXD+OFPp
+# 8/psbOAPaRQK32VAdT1PYvyUJMrsy7SPhAEk5aMvKPwfhVVdL7xY+0yu2XVmQadi
+# On9mTwP+riIh6Jt+SWPocR4r6AENoJIapkSGPTdQgvsx0fthrABhvCSLOWGDZ8HH
+# rTWfEaLo2I5qunzT4FhAWvSofl5KhNttX7nXEVv3hQh9DhoRBf23cxGtfxFw7ENX
+# 4KeybaWZKG9fk2YBzNBvy4tZHyXVDNgTua9WvoLUveC1X8Koc0DZF+ks/LgjbPB/
+# Q6KowogYaL/U/IRfSN3BkZx2XG+6Nmh4yK/rVTDNXGBB4bjyqbWEyLdeCwg6CkcI
+# vYd3MgiewHgHWEqRApgx0L8bVQ74ApybYS9KhrxaMa8hKe31yAzIOedaog4o/3my
+# P17UFxwdvxV4xoFLwKS/q8+zX7cINJqagNw/TqtfLrydL/NPTwPkB6FxrXBVT9Ot
+# C7WOBvor1KizfTGmoYIDbDCCA2gGCSqGSIb3DQEJBjGCA1kwggNVAgEBMG8wWzEL
 # MAkGA1UEBhMCQkUxGTAXBgNVBAoTEEdsb2JhbFNpZ24gbnYtc2ExMTAvBgNVBAMT
 # KEdsb2JhbFNpZ24gVGltZXN0YW1waW5nIENBIC0gU0hBMzg0IC0gRzQCEAFIkD3C
 # irynoRlNDBxXuCkwCwYJYIZIAWUDBAIBoIIBPTAYBgkqhkiG9w0BCQMxCwYJKoZI
-# hvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0yMzAxMjYyMjUyMjJaMCsGCSqGSIb3DQEJ
+# hvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0yMzAxMjcxOTQ2MjlaMCsGCSqGSIb3DQEJ
 # NDEeMBwwCwYJYIZIAWUDBAIBoQ0GCSqGSIb3DQEBCwUAMC8GCSqGSIb3DQEJBDEi
-# BCBZczENFLQYMZqjj2uE9zjxkmv94cxNmgaoaLm4S1aoVDCBpAYLKoZIhvcNAQkQ
+# BCA4Yn421DVLBagg+W5oTgxUcs0So7snOENl/EdMrnBtlzCBpAYLKoZIhvcNAQkQ
 # AgwxgZQwgZEwgY4wgYsEFDEDDhdqpFkuqyyLregymfy1WF3PMHMwX6RdMFsxCzAJ
 # BgNVBAYTAkJFMRkwFwYDVQQKExBHbG9iYWxTaWduIG52LXNhMTEwLwYDVQQDEyhH
 # bG9iYWxTaWduIFRpbWVzdGFtcGluZyBDQSAtIFNIQTM4NCAtIEc0AhABSJA9woq8
-# p6EZTQwcV7gpMA0GCSqGSIb3DQEBCwUABIIBgJ4SzhZxOfUKaocNdqM0tSzKt7bq
-# 6AzTXIUBBfxp/xcswBBPCHqh3ZR7jsq7YHsfi7hHhke9FhPAxbqpPCpgugwZm1Qj
-# QvM9BBJytFjx0COxDgpBqkLu2M64BXlY5RyHZ3Ia6tlC2xO4XirCQxqDAHINe/A6
-# U3SjRue0K0d1KuV6bmThKhM5+O/CX9UF066UzSl3YWeiX+hNgRMsgKQxR9ydw0Qm
-# ep9W7mUb4mMQLpTwajVF39dRySFqEnOxmiVj96XwUqIErUOupSXlDLoUs2RpRZFZ
-# 9lQNJRBwjc9mXGhsnvaySsPYn3CrHq291f8F8PTBbcCgbP5HAvfqhCWmsMZnyIWn
-# AIVJ9mO9eJq7XQ4b4Uc3r06T7vV6NdmXfSiQDjlZh3hu552UkPdJ2P2VmjCCelYy
-# 7SKflILKSgrGjRrPvTMLz8E/CfAPtipdOIj/wNkY7yQQ6lqRUotKcWkLnHKFNwWQ
-# +HrJwgKxn3OdPGQc4ou9wIPKc9L66L4rVlPSDg==
+# p6EZTQwcV7gpMA0GCSqGSIb3DQEBCwUABIIBgMADDcCExUae2IA5q5hpA59uBMMZ
+# 94R9WPrz+l2taBQAr1o/YnYo958eVMB6l9uYO2PQEy6mSihIlDJGimilTily5Ccj
+# HtRit9ZEahKBPKk6IruJ7ds6ikUjEQYaDYkuwhDhSzKpFHwLJVHamXstFMsdsetc
+# HDnHYzrAZj/3S+yZ/pYMewU+13RM92hHDp2+8uwtqDmS4+x9Wq9R8ECkIKzrFqfV
+# wIAkbkDXLL80+E/Vy2kbGb+qcN9lVj11Bzo6nN9T4oOlFyfF0XLbV7RS/BukUWh9
+# CZcHkk0LiSnrBh7df/06IATJix/DkD+UGqypH/9u6+T87jWI1cVgeTxIjZxDxrIj
+# muEsflBAxs6FRPkQ9LNJhlB035DlnhSwBNjkvkcEwH/Jb7v9EPbTgN9AJ1MZHtrF
+# FUe2+oaRgUp3ZDHR/hxiW0SfEuVn5o7tsVefmbRbrejtveBi7aEHHlbYc7b4DTuM
+# Zyi2nJTOMoDs7HpehSDSpJrLzldMHvUxIRkTKw==
 # SIG # End signature block

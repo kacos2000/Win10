@@ -5,7 +5,7 @@
 Powershell script to get a more complete list *(from all event logs)*:
 
         # List all event Log providers:
-        $pnames = @((Get-WinEvent -ListLog * -ErrorAction SilentlyContinue).ProviderNames|sort -unique)
+        $pnames = @((Get-WinEvent -ListLog * -ErrorAction SilentlyContinue).ProviderName|sort -unique)
         $pcount = $pnames.count
         $c=0
         $kw=@()

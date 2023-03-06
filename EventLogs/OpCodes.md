@@ -7,7 +7,7 @@ when it raised the event .
         # OpCodes:
 
         # Get all listprovider names into an array
-        $pnames = @((Get-WinEvent -ListLog * -ErrorAction SilentlyContinue).ProviderNames|sort-object|get-unique)
+        $pnames = @((Get-WinEvent -ListLog * -ErrorAction SilentlyContinue).ProviderName|sort-object|get-unique)
         $pcount = $pnames.count
         $e=0
 

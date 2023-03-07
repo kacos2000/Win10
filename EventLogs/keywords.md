@@ -3,9 +3,15 @@
  
  > **keywords**:	 	[(SystemPropertiesType)](https://docs.microsoft.com/en-us/windows/desktop/WES/eventschema-keywords-systempropertiestype-element)  Element - A bitmask of the keywords defined in the event<br>
  Defines a list of keywords that categorize events (type="HexInt64Type").<br>
- >**[Patterns](https://docs.microsoft.com/en-us/windows/desktop/WES/eventschema-hexint64type-simpletype)**: The HexInt64Type simple type is a string that is restricted by the following pattern:
+ 
+  >**[Patterns](https://docs.microsoft.com/en-us/windows/desktop/WES/eventschema-hexint64type-simpletype)**: The HexInt64Type simple type is a string that is restricted by the following pattern:
     `0[xX][0-9A-Fa-f]{1,16}`<br>
     The value can contain from one to sixteen hexadecimal characters (for example, 0xa or 0xac7bd361004fe190).
+ 
+ >**[keywords property](https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.eventing.reader.eventrecord.keywords?view=netframework-4.8)**: The keywords for an event are used to group the event with other similar events based on the usage of the events. <br>Each keyword is a bit in a 64-bit mask. <br>Predefined bit values and reserved bits occupy the top 16 positions of this mask, leaving the manifest to use any bits between 0x0000000000000001 and 0x0000800000000000.<br>
+The standard event keywords are defined in the [StandardEventKeywords enumeration](https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.eventing.reader.standardeventkeywords?view=netframework-4.8).<br>
+
+
 
  
  

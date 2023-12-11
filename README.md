@@ -3,6 +3,8 @@
 
 | **File**                         |**Description**
 | :--------                        |     :---    
+|[Automatic/Custom Destinations, BagMRU & ShellLNK (LNK) Browser](https://github.com/kacos2000/Jumplist-Browser)| <img src="https://github.com/kacos2000/Win10/assets/11378310/4bd0394f-955d-4969-a83b-f0bc68619389" width="300">
+|[$MFT directory tree reconstruction & FILE record browser](https://github.com/kacos2000/MFT_Browser)| <img src="https://user-images.githubusercontent.com/11378310/211606446-1213ff95-a8f8-4a7a-9691-e24931b9f69b.png" width="300">
 |[Background Activity Moderator (Win10 v1803/1809/1903)](https://github.com/kacos2000/Win10-Research/blob/master/Bam/readme.md) |![Bam preview](bam.jpg) <br>Background Activity Service and registry entries. Powershell parsers & info.
 |[PowerShell History (pdf)](ConsoleHost_history.pdf) |[PowerShell script](https://github.com/kacos2000/Win10/blob/master/PS-History.ps1) to read the current user's log(s).
 |[SQLite queries](https://github.com/kacos2000/queries/blob/master/README.md) |Various sqlite queries *(Browser data, Skype etc)*

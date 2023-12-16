@@ -5,7 +5,8 @@
   Powershell script to list all eventlog keywords and the resulting list *(from Win10 Pro version 1803)*
 - [keywords2](https://github.com/kacos2000/Win10/blob/master/EventLogs/keywords2.md) - 
   Powershell script to list all event specific generated keywords and sample list *(from the Win10 Pro version 1803 "Microsoft-Windows-PushNotifications-Platform" event provider)*
- - [OpCodes](https://github.com/kacos2000/Win10/blob/master/EventLogs/OpCodes.md)  - Powershell script to list all OpCodes, their Name & DisplayName for AllEvent providers, and 2 csv lists 
+ - [OpCodes](https://github.com/kacos2000/Win10/blob/master/EventLogs/OpCodes.md)  - Powershell script to list all OpCodes, their Name & DisplayName for AllEvent providers, and 2 csv lists
+ - ['Task Categories'](https://github.com/kacos2000/Win10/blob/master/EventLogs/Listprovider_Task_Categories.ps1)  - Powershell script to list all Task Categories, their Name & DisplayName for AllEvent providers. [Full csv list here](https://github.com/kacos2000/Win10/blob/master/EventLogs/Listprovider_Task_Categories.csv). 
 
 ###  Win 10 *(version 1709+)* Microsoft-Windows-Partition/Diagnostic.evtx EventID: 1006 parser  ###
 

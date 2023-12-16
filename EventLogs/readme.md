@@ -86,7 +86,12 @@ The main difference between “[4647: User initiated logoff](https://docs.micros
           1 = An application or system component changed the time<br>
           2 = System time synchronized with the hardware clock<br>
           3 = System time adjusted to the new time zone
-      
+    -  Event Provider Task Descriptions:    
+      `(Get-WinEvent -Listprovider 'Microsoft-Windows-Kernel-General' -ErrorAction SilentlyContinue).Tasks`
+         <br><br> Example of the above:<br>
+         <img src="https://github.com/kacos2000/Win10/assets/11378310/262f20c6-a6fc-4fd3-ac31-919f273d9a2f" width=650><br>
+
+    
      - "Microsoft-Windows-Security-Auditing" (ID: 4616)<br>
         `(Get-WinEvent -ListProvider "Microsoft-Windows-Security-Auditing").Events|Where-Object {$_.Id -eq 4616}`
 

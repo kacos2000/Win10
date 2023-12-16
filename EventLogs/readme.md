@@ -71,7 +71,12 @@ The main difference between “[4647: User initiated logoff](https://docs.micros
 
 ###  Win 10 Security.evtx EventID: 4648 parser  ###
 
-- [Win 10 Security EventID: 4648 parser](https://github.com/kacos2000/Win10/blob/master/EventLogs/LogonAttempted.ps1) - PowerShell script to read a live or offline **security.evtx** log and list all the [EventID: 4648](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4648) entries *(A logon was attempted using explicit credentials)* in a window. 
+- [Win 10 Security EventID: 4648 parser](https://github.com/kacos2000/Win10/blob/master/EventLogs/LogonAttempted.ps1) - PowerShell script to read a live or offline **security.evtx** log and list all the [EventID: 4648](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4648) entries *(A logon was attempted using explicit credentials)* in a window.
+
+###  Win 10 System.evtx EventIDs: 1,12,13,24 parser ###
+
+- [Win 10 System.evtx EventIDs: 1,12,13,24 parser](https://github.com/kacos2000/Win10/blob/master/EventLogs/System%20Start-Stop%20events.ps1) - PowerShell script to list Windows Start-Up/Shutdown & Timechange events.
+
 
 ###  Win 10 Security.evtx EventID: 4616 & System.evtx EventID: 1 parser ###
 
@@ -141,6 +146,7 @@ eg: 528 *(Successful Logon)* + 4096 = 4624<br>
        - [X] [List all event log *'keywords'*](keywords.md)
        - [X] [List all eventlog-generated *'keywords'*](keywords2.md)
        - [X] List all [OpCodes](OpCodes.md) 
+       - [X] List all [Task Categories](https://github.com/kacos2000/Win10/blob/master/EventLogs/Listprovider_Task_Categories.csv) 
        - [X] Parse EventID 4616
        - [X] Parse EventID 4624/4634/4647 together 
        - [X] Parse EventIDs 4624/4528/4540 (Audit Logon = Success & Failure)

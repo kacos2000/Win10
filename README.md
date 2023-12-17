@@ -1,5 +1,5 @@
 <!-- saved from url=(0044) https://kacos2000.github.io/Win10/ --> 
-## Windows 10 stuff ##
+## Windows 10/11 stuff ##
 
 | **File**                         |**Description**
 | :--------                        |     :---    

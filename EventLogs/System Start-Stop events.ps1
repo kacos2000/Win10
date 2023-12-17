@@ -8,150 +8,180 @@
 
 # Show an Open File Dialog and return the file selected by the user
 Function Get-Folder($initialDirectory)
-
 {
-    [System.Reflection.Assembly]::LoadWithPartialName("System.windows.forms")|Out-Null
-    $foldername = New-Object System.Windows.Forms.FolderBrowserDialog
-    $foldername.SelectedPath = "C:\Windows\System32\WinEvt\logs\"
+	[System.Reflection.Assembly]::LoadWithPartialName("System.windows.forms") | Out-Null
+	$foldername = New-Object System.Windows.Forms.FolderBrowserDialog
+	$foldername.SelectedPath = "C:\Windows\System32\WinEvt\logs\"
 	$foldername.Description = "Select the location of System.evtx log (\System32\WinEvt\logs\)"
 	$foldername.ShowNewFolderButton = $false
 	
-    if($foldername.ShowDialog() -eq "OK")
-		{
-        $folder += $foldername.SelectedPath
-		 }
-	        else  
-        {
-            Write-Host " User Cancelled" -f White
-			exit
-        }
-    clear
-    return $Folder
-    }
+	if ($foldername.ShowDialog() -eq "OK")
+	{
+		$folder += $foldername.SelectedPath
+	}
+	else
+	{
+		Write-Host " User Cancelled" -f White
+		exit
+	}
+	clear
+	return $Folder
+}
 
 $F = Get-Folder +"\"
-$Folder = $F +"\"
-$DesktopPath = ($Env:WinDir+"\System32\winevt\Logs\")
+$Folder = $F + "\"
+$DesktopPath = ($Env:WinDir + "\System32\winevt\Logs\")
 
 $File = $Folder + "System.evtx"
-$e=0
+$e = 0
 $sw = [Diagnostics.Stopwatch]::StartNew()
 
-Try { 
-    Write-host "Selected System Event Log: ($File)" -f White 
-	$log = (Get-WinEvent -FilterHashtable @{path = $File; ProviderName="Microsoft-Windows-Kernel-General" ; ID=1,12,13,24} -ErrorAction Stop)
-    }
-	catch [Exception] {
-        if ($_.Exception -match "No events were found that match the specified selection criteria") 
-		{Write-host "No Matching Events Found" -f Red; exit}
-		}
+Try
+{
+	Write-host "Selected System Event Log: ($File)" -f White
+	$log = (Get-WinEvent -FilterHashtable @{ path = $File; ProviderName = "Microsoft-Windows-Kernel-General", "Microsoft-Windows-Kernel-Boot"; ID = 1, 12, 13, 24, 20, 238 } -ErrorAction Stop)
+}
+catch [Exception] {
+	if ($_.Exception -match "No events were found that match the specified selection criteria")
+	{ Write-host "No Matching Events Found" -f Red; exit }
+}
 
 [xml[]]$xmllog = $log.toXml()
 $Lcount = $xmllog.Count
 Write-host "Found: $Lcount entries" -f White
 
 $tasks = @{
-    "1" = "System Start"
-    "2" = "System Stop"
-    "3" = "Soft Boot Info"
-    "4" = "Boot Performance Data"
-    "5" = "System Time Change"
-    "6" = "Leap Second Data Update"
-    "7" = "Leap SecondData Parse Failure"
-    "8" = "Time Zone Bias Change"
-    "9" = "Vsm Performance Data"
-    "10" = "Reorganize Hive"
-    "11" = "TimeZone Information Refresh"
+	"1"  = "System Start"
+	"2"  = "System Stop"
+	"3"  = "Soft Boot Info"
+	"4"  = "Boot Performance Data"
+	"5"  = "System Time Change"
+	"6"  = "Leap Second Data Update"
+	"7"  = "Leap SecondData Parse Failure"
+	"8"  = "Time Zone Bias Change"
+	"9"  = "Vsm Performance Data"
+	"10" = "Reorganize Hive"
+	"11" = "TimeZone Information Refresh"
 }
 
 $Reasons = @{
-    "1" = "An application or system component changed the time"
-    "2" = "System time synchronized with the hardware clock"
-    "3" = "System time adjusted to the new time zone"
+	"1" = "An application or system component changed the time"
+	"2" = "System time synchronized with the hardware clock"
+	"3" = "System time adjusted to the new time zone"
 }
 
 $BootModes = @{
-    "0" = "Normal Start-Up"
-    "1" = "Safe Mode"
-    "2" = "Safe Mode with Networking"
+	"0" = "Normal Start-Up"
+	"1" = "Safe Mode"
+	"2" = "Safe Mode with Networking"
+}
+
+$KBootTasks = $x = (Get-WinEvent -Listprovider 'Microsoft-Windows-Kernel-Boot' -ErrorAction SilentlyContinue).Tasks | Select-Object -Property Value, Name
+
+
+$Events = foreach ($l in $xmllog)
+{
+	$e++
+	
+	#Progress Bar
+	write-progress -id 1 -activity "Collecting System entries with EventIDs = 1,12,13,24,20,238 - $e of $($Lcount)" -PercentComplete (($e / $Lcount) * 100)
+	
+	# skip leap second events
+	if ($l.Event.System.EventID -eq '20' -and $l.Event.System.Provider.Name -eq 'Microsoft-Windows-Kernel-General') { continue }
+	
+	# Format output fields
+	$ID = $l.Event.System.EventID
+	$version = $l.Event.System.Version
+	
+	$Level = if ($l.Event.System.Level -eq 0) { "Undefined" }
+	elseif ($l.Event.System.Level -eq 1) { "Critical" }
+	elseif ($l.Event.System.Level -eq 2) { "Error" }
+	elseif ($l.Event.System.Level -eq 3) { "Warning" }
+	elseif ($l.Event.System.Level -eq 4) { "Information" }
+	elseif ($l.Event.System.Level -eq 5) { "Verbose" }
+	
+	$Date = (Get-Date ($l.Event.System.TimeCreated.SystemTime) -f o)
+	$BootMode = $WinVersion = $Reason = $NewTime = $OldTime = $CMOSTime = $Bias = $RTUniversal = $CMOSmode = $ProcessName = $EFIBias = $EFIDaylightFlags = $null
+	
+	if ($ID -eq '12')
+	{
+		$StartStopTime = $l.Event.EventData.Data[6].'#Text'
+		$BootMode = $l.Event.EventData.Data[5].'#Text'
+		$WinVersion = "$($l.Event.EventData.Data[0].'#Text').$($l.Event.EventData.Data[1].'#Text').$($l.Event.EventData.Data[2].'#Text').$($l.Event.EventData.Data[3].'#Text')"
+	}
+	elseif ($ID -eq '13')
+	{
+		$StartStopTime = $l.Event.EventData.Data.'#text'
+	}
+	elseif ($ID -eq '1')
+	{
+		$StartStopTime = $l.Event.EventData.Data[1].'#text'
+		$NewTime = "$($l.Event.EventData.Data[0].'#text') ($($l.Event.EventData.Data[2].'#text'))"
+		$CMOSTime = $l.Event.EventData.Data[6].'#text'
+		$Bias = $l.Event.EventData.Data[7].'#text'
+		$Reason = "$($Reasons[$l.Event.EventData.Data[3].'#text']) ($($l.Event.EventData.Data[3].'#text'))"
+		$RTUniversal = $l.Event.EventData.Data[7].'#text'
+		$CMOSmode = $l.Event.EventData.Data[7].'#text'
+		$ProcessName = $l.Event.EventData.Data[4].'#text'
+	}
+	elseif ($ID -eq '24')
+	{
+		$Bias = $l.Event.EventData.Data[1].'#text'
+		$Reason = $l.Event.EventData.Data[0].'#text'
+		$StartStopTime = $null
+	}
+	elseif ($ID -eq '238')
+	{
+		$EFIBias = $l.Event.EventData.Data[0].'#text'
+		$EFIDaylightFlags = $l.Event.EventData.Data[1].'#text'
+		$CMOSTime = $l.Event.EventData.Data[2].'#text'
+	}
+	elseif ($ID -eq '20' -and $l.Event.System.Provider.Name -eq 'Microsoft-Windows-Kernel-Boot')
+	{
+		$Reason = "$($l.Event.EventData.Data[0].Name):$($l.Event.EventData.Data[0].'#text') - $($l.Event.EventData.Data[1].Name):$($l.Event.EventData.Data[1].'#text')"
+	}
+	
+	
+	$event_task = if ($ID -in ('20', '238')) { "$($KBootTasks.Where{ $_.Value -eq $l.Event.System.Task }.Name) ($($l.Event.System.Task))" }
+	else { "$($tasks[$l.Event.System.Task]) ($($l.Event.System.Task))" }
+	
+	[PSCustomObject]@{
+		'EventID'				  = $l.Event.System.EventID
+		'Time Created'		      = $Date
+		'RecordID'			      = $l.Event.System.EventRecordID
+		'Version'				  = $version
+		'Level'				      = $Level
+		'Task'				      = $event_task
+		'Start/Stop Time (Delta)' = $StartStopTime
+		'New Time'			      = $NewTime
+		'CMOS/EFI Time'		      = $CMOSTime
+		'Bias'				      = $Bias
+		'EFI Bias/Flags'		  = "$($EFIBias) ($($EFIDaylightFlags))"
+		'BootMode'			      = if (!!$BootMode) { "$($BootModes[$BootMode]) ($($BootMode))" }else{ $null }
+		'Windows Version'		  = if (!!$WinVersion) { $WinVersion }else{ $null }
+		'PID'					  = ([Convert]::ToInt64(($l.Event.System.Execution.ProcessID), 16))
+		'ThreadID'			      = $l.Event.System.Execution.ThreadID
+		'Reason'				  = $Reason
+		'ProcessName'			  = $ProcessName
+		'Computer'			      = $l.Event.System.Computer
+		'User'				      = $l.Event.System.Security.UserID
+		'Channel'				  = $l.Event.System.Channel
+		'Provider'			      = $l.Event.System.Provider.Name
+		'Opcode'				  = $l.Event.System.Opcode
+		'Keywords'			      = $l.Event.System.Keywords
+	}
 }
 
 
-
-$Events = foreach ($l in $xmllog) {$e++
-			
-			#Progress Bar
-			write-progress -id 1 -activity "Collecting System entries with EventIDs = 1,12,13,24 - $e of $($Lcount)"  -PercentComplete (($e / $Lcount) * 100)		
-			
-			# Format output fields
-             $ID = $l.Event.System.EventID
-            $version =  $l.Event.System.Version
-             
-            $Level =       if ($l.Event.System.Level -eq 0){"Undefined"}
-                        elseif($l.Event.System.Level -eq 1){"Critical"}
-                        elseif($l.Event.System.Level -eq 2){"Error"}
-                        elseif($l.Event.System.Level -eq 3){"Warning"}
-                        elseif($l.Event.System.Level -eq 4){"Information"}
-                        elseif($l.Event.System.Level -eq 5){"Verbose"}
-            
-            $Date = (Get-Date ($l.Event.System.TimeCreated.SystemTime) -f o)
-            $BootMode = $WinVersion = $Reason= $OldTime = $CMOSTime = $Bias = $RTUniversal = $CMOSmode = $ProcessName = $null
-
-            if($ID -eq '12'){$StartStopTime = $l.Event.EventData.Data[6].'#Text'
-                         $BootMode = $l.Event.EventData.Data[5].'#Text'
-                         $WinVersion = "$($l.Event.EventData.Data[0].'#Text').$($l.Event.EventData.Data[1].'#Text').$($l.Event.EventData.Data[2].'#Text').$($l.Event.EventData.Data[3].'#Text')"
-                         }
-            elseif($ID -eq '13'){$StartStopTime = $l.Event.EventData.Data.'#text' 
-            }
-            elseif($ID -eq '1'){$StartStopTime = $l.Event.EventData.Data[1].'#text' 
-                                $NewTime = "$($l.Event.EventData.Data[0].'#text') ($($l.Event.EventData.Data[2].'#text'))" 
-                                $CMOSTime = $l.Event.EventData.Data[6].'#text' 
-                                $Bias = $l.Event.EventData.Data[7].'#text' 
-                                $Reason = "$($Reasons[$l.Event.EventData.Data[3].'#text']) ($($l.Event.EventData.Data[3].'#text'))"
-                                $RTUniversal = $l.Event.EventData.Data[7].'#text' 
-                                $CMOSmode = $l.Event.EventData.Data[7].'#text' 
-                                $ProcessName = $l.Event.EventData.Data[4].'#text' 
-                                }
-           elseif($ID -eq '24'){$Bias = $l.Event.EventData.Data[1].'#text'
-                                $Reason = $l.Event.EventData.Data[0].'#text'
-                                }
-                       
-
-			[PSCustomObject]@{
- 			'EventID' =           $l.Event.System.EventID
-            'Time Created' =      $Date  
-			'RecordID' =          $l.Event.System.EventRecordID
-            'Version' =           $version
-            'Level' =             $Level
-            'Task' =              "$($tasks[$l.Event.System.Task]) ($($l.Event.System.Task))"
-            'Start/Stop Timestamp' = $StartStopTime
-            'New Time' =          $OldTime
-            'CMOS Time' =         $CMOSTime
-            'Bias' =              $Bias
-            'BootMode' =          if(!!$BootMode){"$($BootModes[$BootMode]) ($($BootMode))"}else{$null} 
-            'Windows Version' =   if(!!$WinVersion){$WinVersion}else{$null}           
-            'PID' =               ([Convert]::ToInt64(($l.Event.System.Execution.ProcessID),16))
-			'ThreadID' =          $l.Event.System.Execution.ThreadID
-            'Reason' =            $Reason
-            'ProcessName' =       $ProcessName
-            'Computer' =          $l.Event.System.Computer  
-            'User'=               $l.Event.System.Security.UserID 
-            'Channel' =           $l.Event.System.Channel
-            'Provider' =          $l.Event.System.Provider.Name
-            'Opcode' =            $l.Event.System.Opcode
-            'Keywords' =          $l.Event.System.Keywords
-			}
-        }
-
-
-function Result{
-$Events
+function Result
+{
+	$Events
 }
 
 $sw.stop()
-$t=$sw.Elapsed
-Result |Out-GridView -PassThru -Title "Processed $Lcount EventsIDs 1,12,13,24 - in $t"
-write-host "Processed $Lcount EventsIDs 1,12,13,24 - in $t" -f Yellow
+$t = $sw.Elapsed
+Result | Out-GridView -PassThru -Title "Processed $Lcount EventsIDs 1,12,13,24,20,238 - in $t"
+write-host "Processed $Lcount EventsIDs 1,12,13,24,20,238 - in $t" -f Yellow
 
 
 [gc]::Collect()
@@ -159,8 +189,8 @@ write-host "Processed $Lcount EventsIDs 1,12,13,24 - in $t" -f Yellow
 # SIG # Begin signature block
 # MIIviAYJKoZIhvcNAQcCoIIveTCCL3UCAQExDzANBglghkgBZQMEAgEFADB5Bgor
 # BgEEAYI3AgEEoGswaTA0BgorBgEEAYI3AgEeMCYCAwEAAAQQH8w7YFlLCE63JNLG
-# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCDi9hkprTEFW21K
-# lY1jOKHz4GCvs6oprkQYasHZWgNKK6CCKI0wggQyMIIDGqADAgECAgEBMA0GCSqG
+# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCBa31MkX5BmWNgN
+# ZzLFWYyuMWdxUBDAAJ+F9oQTSXPlNqCCKI0wggQyMIIDGqADAgECAgEBMA0GCSqG
 # SIb3DQEBBQUAMHsxCzAJBgNVBAYTAkdCMRswGQYDVQQIDBJHcmVhdGVyIE1hbmNo
 # ZXN0ZXIxEDAOBgNVBAcMB1NhbGZvcmQxGjAYBgNVBAoMEUNvbW9kbyBDQSBMaW1p
 # dGVkMSEwHwYDVQQDDBhBQUEgQ2VydGlmaWNhdGUgU2VydmljZXMwHhcNMDQwMTAx
@@ -380,35 +410,35 @@ write-host "Processed $Lcount EventsIDs 1,12,13,24 - in $t" -f Yellow
 # AQEwaDBUMQswCQYDVQQGEwJHQjEYMBYGA1UEChMPU2VjdGlnbyBMaW1pdGVkMSsw
 # KQYDVQQDEyJTZWN0aWdvIFB1YmxpYyBDb2RlIFNpZ25pbmcgQ0EgUjM2AhALYufv
 # MdbwtA/sWXrOPd+kMA0GCWCGSAFlAwQCAQUAoEwwGQYJKoZIhvcNAQkDMQwGCisG
-# AQQBgjcCAQQwLwYJKoZIhvcNAQkEMSIEIEpNVno2AskggCZBdUr+vMhTrlKxzTnl
-# ojIY7CdMCrHQMA0GCSqGSIb3DQEBAQUABIICAFjfrLTNktg9FqewErrmB28t6IoH
-# goxdPsItsYvuKkM53Zjlu0RJlUX6rtl2goleoEV7p6QX/jzTSrgpaJmGyWMnWZMa
-# WtbnEoQqryC+UJortDH/hSQjMj2++TtQ8/TryUh7r+RUxhw0gm4c5Q6BoTba9asp
-# RZ5662nmvjLOkwESg2j6lzBeKiOsQuzejUZUnuDkQ+wklyZqlxvvsytShOHHv9TO
-# PSMIDuX7JkU2PTt4k6wro21IQ5wJQtY88hNvfeSkFnyzQ97ATpUKBpvhEEfFOARS
-# 1oNN67VCFXbjB2GGb71gsPH0uWTUexChHyzXR94LZVnoMXOZFRoR5H9XcCJKrmuW
-# 1xe4eqN3IPPWXqDMQi6UZVdE/v3M6jnqVXL4xNArebF0UAW4sZLcspebbuCF/J/z
-# uXL28d25g8Vb9PTLeD3TYJL88cvaS/4awutEu42Pe82ZGBjVAb99yHmULjrbaIZu
-# Wp3K8R7jHnW1LlRnXafRXF6RPEHcR6zJTw6PsB6IKlz8JqdfwYNWp+v7axpaGp77
-# BuII8BmKJmbV8JQKLDxk2lkpp1LFUhj0ZGZps/SYPBC4JIJQbeUohZJ78P10VBvs
-# sKvU3NmJwgWATHugv4MQhnzZhqZiAKxilKpfyB5bfl7DFpbZHkmeLJ29PZv0ql40
-# A2c7f47hOYN2P7thoYIDbDCCA2gGCSqGSIb3DQEJBjGCA1kwggNVAgEBMG8wWzEL
+# AQQBgjcCAQQwLwYJKoZIhvcNAQkEMSIEIDzb/QZBj2C97+GuMBu7isGi4rkhFXl6
+# OsSL/9LYqGicMA0GCSqGSIb3DQEBAQUABIICAHnTvL66qlHY19Kfq6dPGKuNfQJj
+# MlTwgg3AGx1E2JwlH9WsXz3qh2m3Wap4YWIws6Bc/15T8aDTW00dlwedknuoShbW
+# inxNrTjbxiJ34PkT7iGMBNw1wjMCYg1tNFuVfiTF+ZtetgeEO28KOm6MqeGYALWS
+# DOTvvk1ELDQm8yMxFxU4/FzzpttgvLBjtiAA0cY6ibB2cwgdTOg2+qomGv/dpPOy
+# x2mEPwrb5+tFOCkHA0BisEPMCkZPmOQtP5yvjCM1Au2Q2EUe6xdFojiL/vYm+S/b
+# IjYpN88/r7YvF0nOE9KwZOFvgpSiCk5weMbuXu0GJoAheIwOO4AznXBGSosVrc92
+# rpAiyChPavwehvmpCckkN40G8xbkUBkhtYjyC4xzS/9AH3q0I8KVLTjlkbkurom6
+# alzyoGAIHQqVgwor7nns1zrpKCJzzEQ5NCmDRWcgfqQfbUGkDAmB74lOL64zgD3S
+# lLhBVa6cKjFEWD/3Z7z8FuH7r4xOI8f6pIVK4B1dLgj+M+y4tSBPdy3+ztKwB2mz
+# aAP0CasCUCZ12WP2uDOtiEnO4JN2lglUHA486s3MYCTEuzq4BWjwc1fsa6Tq+0xX
+# xbob/Qv3T4NJOAhc5csZdindEqkTbOzrI5b/ul6A0QilbZ19tIzncipquAg+9Qkp
+# IKs4v8lp7Xbeiu0XoYIDbDCCA2gGCSqGSIb3DQEJBjGCA1kwggNVAgEBMG8wWzEL
 # MAkGA1UEBhMCQkUxGTAXBgNVBAoTEEdsb2JhbFNpZ24gbnYtc2ExMTAvBgNVBAMT
 # KEdsb2JhbFNpZ24gVGltZXN0YW1waW5nIENBIC0gU0hBMzg0IC0gRzQCEAFIkD3C
 # irynoRlNDBxXuCkwCwYJYIZIAWUDBAIBoIIBPTAYBgkqhkiG9w0BCQMxCwYJKoZI
-# hvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0yMzEyMTYyMjM2MzNaMCsGCSqGSIb3DQEJ
+# hvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0yMzEyMTcxMzM2MDVaMCsGCSqGSIb3DQEJ
 # NDEeMBwwCwYJYIZIAWUDBAIBoQ0GCSqGSIb3DQEBCwUAMC8GCSqGSIb3DQEJBDEi
-# BCB8X+mmuafjKzEV1WgJawZyYnSQ1G6dIwFQWuymL2+yWjCBpAYLKoZIhvcNAQkQ
+# BCAogHpbXnJhqmz1br8pOq/YKcmqdy04GCSW0m/vPB3QuDCBpAYLKoZIhvcNAQkQ
 # AgwxgZQwgZEwgY4wgYsEFDEDDhdqpFkuqyyLregymfy1WF3PMHMwX6RdMFsxCzAJ
 # BgNVBAYTAkJFMRkwFwYDVQQKExBHbG9iYWxTaWduIG52LXNhMTEwLwYDVQQDEyhH
 # bG9iYWxTaWduIFRpbWVzdGFtcGluZyBDQSAtIFNIQTM4NCAtIEc0AhABSJA9woq8
-# p6EZTQwcV7gpMA0GCSqGSIb3DQEBCwUABIIBgJ97e0taFH/cU1Oe2r07si7SpGa9
-# 4ANy0Oh9uQUi91UEZE/yPl4ggfBMGI/+HYxhUuLJBOCnE1AVxeW6VBoRkxSd1xDW
-# dzYSu2zEzhIunppKXqqoVoifXk4VL/8SQA/asV5dD5n3l6SU8X7Nsox1kVu09jDt
-# Dx23l/8+jMxMrDSeajW3Q5TosuWF6tQNQEKRKdanQY0pMYIXWbQmE2yWrVSiiTOl
-# fkF2Ck0JRU++W9eur1AEcc0qqKIADnIdAOZC1czCnyRRdNo1lVL8q5gWCP+kLkKM
-# dzQr5xPxLHZpIVzH+KSkLUWKsmt0DZWK7vC6WWSDMhaQO0rwvykeAjSkVFkBzwrF
-# w57lYtASXIEoL0DitwmbbjoI780f7XJIoC2tQ5X2+DH8gp9w62BpTjx7qeBKaqb0
-# xRFUYGi5JKUEtoLe1stQIj8EGKrC2carkqnB5XaDar3MTW6ZjksmASpu/a05OP8f
-# K4WRxfdMCmcpgqLKSqHc2NzJ3s3begoJ2Q6RJg==
+# p6EZTQwcV7gpMA0GCSqGSIb3DQEBCwUABIIBgH8rpBeWIDaCz/ZgE1LlSw8b+D2b
+# QGm5Ul+gDTfF6umn5wZhEg8dCsaqfFifkWD0YQFeQ6IA0mgoZ2mCE6Gw9eYQQAiI
+# sx+yNEJBpqsSHe4TDcPTixOBsvR9UMlFETuWAU+aSGvXH6VaL5T9bqUJg3Wqbo6Z
+# t7JKCz6XjmQPnk8Qo1GmVfPprhgS96TwIjaqpOkgJWZqOP5JTyDqqt1IJBR6OTJ2
+# d3DjysX9hg/VNe3Oal1/7Oq7gTKVS5QquyOcv0Svk0x3toCfQNFRwhiia9N/PZWm
+# mdCPvFJSZMZc3SwVIJsLqlY11DcnxCj4eIS9jF75z+6/IzmXFsye0i43Hwyoy8So
+# T93ae17vzjAleRpHP5DLbzCl1fnyy9vTKmnXCpcYo6uDi1QpPcPWEy1WLKFc2lmf
+# WY+Xkpp2PS13W/8YfmMGx6g2UMTKvJ6iwvZb8CoDENXfRilwXlPSgJmXcvvfVgY7
+# V8dftxHQRL1JpX4/FKL7Z9oDU+HHZctV6R6tBw==
 # SIG # End signature block

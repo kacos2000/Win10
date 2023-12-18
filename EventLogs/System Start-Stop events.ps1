@@ -76,8 +76,32 @@ $BootModes = @{
 	"2" = "Safe Mode with Networking"
 }
 
-$KBootTasks = $x = (Get-WinEvent -Listprovider 'Microsoft-Windows-Kernel-Boot' -ErrorAction SilentlyContinue).Tasks | Select-Object -Property Value, Name
+$KBootTasks = (Get-WinEvent -Listprovider 'Microsoft-Windows-Kernel-Boot' -ErrorAction SilentlyContinue).Tasks | Select-Object -Property Value, Name
 
+function ConvertFrom-SID
+{
+	[CmdletBinding()]
+	[OutputType([string])]
+	param
+	(
+		[Parameter(Mandatory = $true,
+				   ValueFromPipeline = $true,
+				   ValueFromPipelineByPropertyName = $true)]
+		[Alias('Value')]
+		$Sid
+	)
+	
+	process
+	{
+		try
+		{
+			$objSID = New-Object System.Security.Principal.SecurityIdentifier($sid)
+			$objUser = $objSID.Translate([System.Security.Principal.NTAccount])
+			$objUser.Value
+		}
+		catch { $null }
+	}
+}
 
 $Events = foreach ($l in $xmllog)
 {
@@ -140,8 +164,7 @@ $Events = foreach ($l in $xmllog)
 	{
 		$Reason = "$($l.Event.EventData.Data[0].Name):$($l.Event.EventData.Data[0].'#text') - $($l.Event.EventData.Data[1].Name):$($l.Event.EventData.Data[1].'#text')"
 	}
-	
-	
+		
 	$event_task = if ($ID -in ('20', '238')) { "$($KBootTasks.Where{ $_.Value -eq $l.Event.System.Task }.Name) ($($l.Event.System.Task))" }
 	else { "$($tasks[$l.Event.System.Task]) ($($l.Event.System.Task))" }
 	
@@ -164,7 +187,7 @@ $Events = foreach ($l in $xmllog)
 		'Reason'				  = $Reason
 		'ProcessName'			  = $ProcessName
 		'Computer'			      = $l.Event.System.Computer
-		'User'				      = $l.Event.System.Security.UserID
+		'User'				      = if (!!$l.Event.System.Security.UserID) { "$(ConvertFrom-SID -Sid $l.Event.System.Security.UserID) ($($l.Event.System.Security.UserID))" }else{$null}
 		'Channel'				  = $l.Event.System.Channel
 		'Provider'			      = $l.Event.System.Provider.Name
 		'Opcode'				  = $l.Event.System.Opcode
@@ -189,8 +212,8 @@ write-host "Processed $Lcount EventsIDs 1,12,13,24,20,238 - in $t" -f Yellow
 # SIG # Begin signature block
 # MIIviAYJKoZIhvcNAQcCoIIveTCCL3UCAQExDzANBglghkgBZQMEAgEFADB5Bgor
 # BgEEAYI3AgEEoGswaTA0BgorBgEEAYI3AgEeMCYCAwEAAAQQH8w7YFlLCE63JNLG
-# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCBa31MkX5BmWNgN
-# ZzLFWYyuMWdxUBDAAJ+F9oQTSXPlNqCCKI0wggQyMIIDGqADAgECAgEBMA0GCSqG
+# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCDIIR9/eCOcmGIU
+# G8lhusyinrL5dW0KTkhhq0mw/kj0rKCCKI0wggQyMIIDGqADAgECAgEBMA0GCSqG
 # SIb3DQEBBQUAMHsxCzAJBgNVBAYTAkdCMRswGQYDVQQIDBJHcmVhdGVyIE1hbmNo
 # ZXN0ZXIxEDAOBgNVBAcMB1NhbGZvcmQxGjAYBgNVBAoMEUNvbW9kbyBDQSBMaW1p
 # dGVkMSEwHwYDVQQDDBhBQUEgQ2VydGlmaWNhdGUgU2VydmljZXMwHhcNMDQwMTAx
@@ -410,35 +433,35 @@ write-host "Processed $Lcount EventsIDs 1,12,13,24,20,238 - in $t" -f Yellow
 # AQEwaDBUMQswCQYDVQQGEwJHQjEYMBYGA1UEChMPU2VjdGlnbyBMaW1pdGVkMSsw
 # KQYDVQQDEyJTZWN0aWdvIFB1YmxpYyBDb2RlIFNpZ25pbmcgQ0EgUjM2AhALYufv
 # MdbwtA/sWXrOPd+kMA0GCWCGSAFlAwQCAQUAoEwwGQYJKoZIhvcNAQkDMQwGCisG
-# AQQBgjcCAQQwLwYJKoZIhvcNAQkEMSIEIDzb/QZBj2C97+GuMBu7isGi4rkhFXl6
-# OsSL/9LYqGicMA0GCSqGSIb3DQEBAQUABIICAHnTvL66qlHY19Kfq6dPGKuNfQJj
-# MlTwgg3AGx1E2JwlH9WsXz3qh2m3Wap4YWIws6Bc/15T8aDTW00dlwedknuoShbW
-# inxNrTjbxiJ34PkT7iGMBNw1wjMCYg1tNFuVfiTF+ZtetgeEO28KOm6MqeGYALWS
-# DOTvvk1ELDQm8yMxFxU4/FzzpttgvLBjtiAA0cY6ibB2cwgdTOg2+qomGv/dpPOy
-# x2mEPwrb5+tFOCkHA0BisEPMCkZPmOQtP5yvjCM1Au2Q2EUe6xdFojiL/vYm+S/b
-# IjYpN88/r7YvF0nOE9KwZOFvgpSiCk5weMbuXu0GJoAheIwOO4AznXBGSosVrc92
-# rpAiyChPavwehvmpCckkN40G8xbkUBkhtYjyC4xzS/9AH3q0I8KVLTjlkbkurom6
-# alzyoGAIHQqVgwor7nns1zrpKCJzzEQ5NCmDRWcgfqQfbUGkDAmB74lOL64zgD3S
-# lLhBVa6cKjFEWD/3Z7z8FuH7r4xOI8f6pIVK4B1dLgj+M+y4tSBPdy3+ztKwB2mz
-# aAP0CasCUCZ12WP2uDOtiEnO4JN2lglUHA486s3MYCTEuzq4BWjwc1fsa6Tq+0xX
-# xbob/Qv3T4NJOAhc5csZdindEqkTbOzrI5b/ul6A0QilbZ19tIzncipquAg+9Qkp
-# IKs4v8lp7Xbeiu0XoYIDbDCCA2gGCSqGSIb3DQEJBjGCA1kwggNVAgEBMG8wWzEL
+# AQQBgjcCAQQwLwYJKoZIhvcNAQkEMSIEIMcKQDP3i4ZPkRk3ccn9u1WMm0+ff82k
+# +j7+Omg/nIgSMA0GCSqGSIb3DQEBAQUABIICAEqzEu5w9sGwYfLjoJ0lje2E4nUd
+# OSLlgHg8FuCbjXcdmOVc8FFbJRxckSVISZqnQZYKQ2qCus712e0JKKQRpaQ655u2
+# li5MlkGLh+QX8zU0EK064ekYAJAhbeLi+AVVULuEwPEDB9YdOvuBHo4aL+MYPJ3H
+# 1AOljABmjkqo/JJX9IT97lpySm5GthqWTniNaKTAVx/pjhBBGj3H0ubqTuB5qqYs
+# Og5n/77bHw2Th8hmC8JlKahJnt3Gwz+oW0xk0idLjHfLOW1SUTtgBSnSB1JMqWo4
+# R3mCaF11Zo5nCJOY5gdntYWmopZD6t53Fg5vLBWfH5Mbgf/dM7rXcxjdB7EhzeOs
+# xbZ3ptGprvEtAJ/J2p+EY/nkOvbePPgtjjeUmMjb8fxro0+e8WrvSKWnFGdvKaSp
+# L0zHArEPzPCO7wHMcjc7FDoFr2bV5bdutrt4qMBY9oYgvhJZivQdgFVol4mX4+mW
+# LnoGtfKkWKFRPOryJJzD3vYZHLO+LE9QkcUG5QYzDvZTReKhx8a48re7aQ6e65H1
+# A2FnWWlypFIR/FQLZwNkAEsC7ZMaqSL0aUxSIwVyr5U9fYCyPKhULeqHDxjCkA5U
+# p4N+HDOBRduFAqQEUfgzC8ejlomrABWHarNIR5TKBOhPpphHIMIEsS+6qZspJI4M
+# ksrONPBeyWuE/dKOoYIDbDCCA2gGCSqGSIb3DQEJBjGCA1kwggNVAgEBMG8wWzEL
 # MAkGA1UEBhMCQkUxGTAXBgNVBAoTEEdsb2JhbFNpZ24gbnYtc2ExMTAvBgNVBAMT
 # KEdsb2JhbFNpZ24gVGltZXN0YW1waW5nIENBIC0gU0hBMzg0IC0gRzQCEAFIkD3C
 # irynoRlNDBxXuCkwCwYJYIZIAWUDBAIBoIIBPTAYBgkqhkiG9w0BCQMxCwYJKoZI
-# hvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0yMzEyMTcxMzM2MDVaMCsGCSqGSIb3DQEJ
+# hvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0yMzEyMTgxOTE5MTBaMCsGCSqGSIb3DQEJ
 # NDEeMBwwCwYJYIZIAWUDBAIBoQ0GCSqGSIb3DQEBCwUAMC8GCSqGSIb3DQEJBDEi
-# BCAogHpbXnJhqmz1br8pOq/YKcmqdy04GCSW0m/vPB3QuDCBpAYLKoZIhvcNAQkQ
+# BCBnoFyAzaY2+qfrosk2lbazS+9HBdLDaHQT3VIgfcvBmjCBpAYLKoZIhvcNAQkQ
 # AgwxgZQwgZEwgY4wgYsEFDEDDhdqpFkuqyyLregymfy1WF3PMHMwX6RdMFsxCzAJ
 # BgNVBAYTAkJFMRkwFwYDVQQKExBHbG9iYWxTaWduIG52LXNhMTEwLwYDVQQDEyhH
 # bG9iYWxTaWduIFRpbWVzdGFtcGluZyBDQSAtIFNIQTM4NCAtIEc0AhABSJA9woq8
-# p6EZTQwcV7gpMA0GCSqGSIb3DQEBCwUABIIBgH8rpBeWIDaCz/ZgE1LlSw8b+D2b
-# QGm5Ul+gDTfF6umn5wZhEg8dCsaqfFifkWD0YQFeQ6IA0mgoZ2mCE6Gw9eYQQAiI
-# sx+yNEJBpqsSHe4TDcPTixOBsvR9UMlFETuWAU+aSGvXH6VaL5T9bqUJg3Wqbo6Z
-# t7JKCz6XjmQPnk8Qo1GmVfPprhgS96TwIjaqpOkgJWZqOP5JTyDqqt1IJBR6OTJ2
-# d3DjysX9hg/VNe3Oal1/7Oq7gTKVS5QquyOcv0Svk0x3toCfQNFRwhiia9N/PZWm
-# mdCPvFJSZMZc3SwVIJsLqlY11DcnxCj4eIS9jF75z+6/IzmXFsye0i43Hwyoy8So
-# T93ae17vzjAleRpHP5DLbzCl1fnyy9vTKmnXCpcYo6uDi1QpPcPWEy1WLKFc2lmf
-# WY+Xkpp2PS13W/8YfmMGx6g2UMTKvJ6iwvZb8CoDENXfRilwXlPSgJmXcvvfVgY7
-# V8dftxHQRL1JpX4/FKL7Z9oDU+HHZctV6R6tBw==
+# p6EZTQwcV7gpMA0GCSqGSIb3DQEBCwUABIIBgEpIesDUR6RD7QaUFQVEvzFwXsVI
+# qWMt+HikjbzsK9d6Ni3zh6/9Diopf7r47cKCgK68FPO3QvVsw0eRH4BZ1qLx23F2
+# wS+/jnIrR7DFkkXFaF5FmvNr5kLW60gJcFvegvC7twnaPFhs1VtnkOTubwxa+2nb
+# eqTJ+nRmCSbCx5QvZhPjR5JxzenfvtW4kqzwQuRMZlZM+wE8JfCixvVsxuUT9ewg
+# o5bovjOD99qp2KDYNVgAyE5iksChXSU3T9fqx6VGET26YVNpenAnFVDohGjiK55P
+# O7kPBA3HHdb8u/kfectu40m1QXGD9Dn0Us6RQOHWycewhcpBdyv6scdaQgqCiD24
+# WNt70RjI6fLcFiyJXft2mN/wFDdE3vdzDYYvYjssV3Mj7ZWbT7xU/Zr/FQw0ACSM
+# G9RdwtDvLxxmhaivO7HBPfp1iITyFtw/HLiR69y6wK3NUJNlSeiJ1BKztUZzLn8b
+# v1YhhXbuWoNXP8lo76vboEx+nEOlQpsTtZU/Cw==
 # SIG # End signature block

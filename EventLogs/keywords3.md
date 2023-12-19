@@ -61,3 +61,5 @@ ________________________________________________________________________________
 1. [keywords.md](keywords.md)<br>
 2. [keywords2.md](keywords2.md)<br>
 2. [OpCodes.md](OpCodes.md)<br>
+3. ['Task Categories' (ps1)](https://github.com/kacos2000/Win10/blob/master/EventLogs/Listprovider_Task_Categories.ps1)  - All Task Categories, their Name & DisplayName for AllEvent providers.
+4. ['Task Categories' (csv) full list](https://github.com/kacos2000/Win10/blob/master/EventLogs/Listprovider_Task_Categories.csv)

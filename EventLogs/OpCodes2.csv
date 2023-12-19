@@ -219,7 +219,7 @@ Microsoft-User Experience Virtualization-App Agent, 8330, 15, UevGenerator, UE-V
 Microsoft-Windows-NetworkProvider, 1004, 15, UnsupportedPropertyName, Unsupported Property Name 
 Windows-ApplicationModel-Store-SDK, 2001, 15, Verbose, Verbose 
 Microsoft-Windows-Diagnosis-DPS, 115, 15, WDI_DPS_OPCODE_TROUBLESHOOT_END_WITH_IMMEDIATE_RESOLUTION, A diagnostic module completed troubleshooting and set an immediate resolution 
-Microsoft-Windows-Kernel-WDI, 35, 15, WDI_SEM_TASK_SCENARIO_OPCODE_INFLIGHT_MAX, The SEM received a request to start a new scenario, but the maximum number of scenarios were already in-flight 
+Microsoft-Windows-Kernel-WDI, 35, 15, WDI_SEM_TASK_SCENARIO_OPCODE_INFLIGHT_MAX, The SEM received a request to start a new scenario but the maximum number of scenarios were already in-flight 
 Microsoft-Windows-AppHost, 10000, 15, WWAHOST_OPCODE_APPLICATION_ERROR, AppHost Application Error 
 Microsoft-Windows-Winsock-AFD, 1002, 16, AFD_OPCODE_FREED, Freed 
 Microsoft-User Experience Virtualization-App Agent, 5003, 16, AppAgent, App Agent 

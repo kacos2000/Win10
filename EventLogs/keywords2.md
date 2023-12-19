@@ -133,4 +133,6 @@ ________________________________________________________________________________
 
 * Back to [keywords.md](keywords.md)<br>
 * Complete list of keywords in [keywords3.md](keywords3.md)<br>
-* Other info: [OpCodes](OpCodes.md)
+* Other info:
+   - [OpCodes](OpCodes.md)
+   - ['Task Categories'](https://github.com/kacos2000/Win10/blob/master/EventLogs/Listprovider_Task_Categories.ps1)  - Powershell script to list all Task Categories, their Name & DisplayName for AllEvent providers. [Full csv list here](https://github.com/kacos2000/Win10/blob/master/EventLogs/Listprovider_Task_Categories.csv). 
